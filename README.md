@@ -3,9 +3,9 @@
 ## Introduction
 
 dbLinter is a suite for checking and improving the quality of database applications. Quality is assessed using static
-code analysis and database queries based on a configuration. A configuration is primarily centrally managed.
-It contains include/exclude file patterns, rules, validators, tests, parameters, custom parameters, test results to
-ignore, and connect information for read-only database access within checks and tests.
+code analysis and database queries based on a configuration. A configuration is primarily centrally managed. It contains
+file patterns, rules, validators, SQL-based tests, parameters, and connect information for read-only database access
+within checks and tests.
 
 The following subscription plans are in progress:
 
@@ -20,7 +20,7 @@ The following subscription plans are in progress:
 | dbLinter VS Code extension                           |    yes    | yes  |    yes    |     yes      |
 | Run all accessible checks and tests                  |     -     |  -   |    yes    |     yes      |
 | Quick fixes in dbLinter VS Code extension            |     -     |  -   |    yes    |     yes      |
-| Ignore chosen SQL-based tests findings               |     -     |  -   |    yes    |     yes      |
+| Ignore chosen SQL-based test findings                |     -     |  -   |    yes    |     yes      |
 | dbLinter CLI with SonarCloud integration             |     -     |  -   |    yes    |     yes      |
 | Manage user access                                   |     -     |  -   |    yes    |     yes      |
 | dbLinter SonarQube plugin                            |     -     |  -   |     -     |     yes      |
