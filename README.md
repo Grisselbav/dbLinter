@@ -17,10 +17,10 @@ The following subscription plans are in progress:
 | Manage configurations                                |     -     | yes  |    yes    |     yes      |
 | Run checks                                           |    yes    | yes  |    yes    |     yes      |
 | Run SQL-based tests                                  |     -     | yes  |    yes    |     yes      |
+| Ignore chosen SQL-based test findings                |     -     | yes  |    yes    |     yes      |
 | dbLinter VS Code extension                           |    yes    | yes  |    yes    |     yes      |
 | Run all accessible checks and tests                  |     -     |  -   |    yes    |     yes      |
 | Quick fixes in dbLinter VS Code extension            |     -     |  -   |    yes    |     yes      |
-| Ignore chosen SQL-based test findings                |     -     |  -   |    yes    |     yes      |
 | dbLinter CLI with SonarCloud integration             |     -     |  -   |    yes    |     yes      |
 | Manage user access                                   |     -     |  -   |    yes    |     yes      |
 | dbLinter SonarQube plugin                            |     -     |  -   |     -     |     yes      |
