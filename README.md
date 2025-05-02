@@ -97,13 +97,13 @@ The following rules should be configured to produce a reasonable results. Theref
 
 The dbLinter suite consists of the following components:
 
-| Component                                                     | Description                                                                                             |
-|---------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| Web-GUI                                                       | Managing tenant-specific data, like rules, configurations, user access.                                 |
-| VS Code Extension                                             | Checking and fixing SQL files while editing. Running SQL-based tests.                                   |
-| CLI                                                           | Running checks and SQL-based tests from the command line producing output for 3rd party tools.          |
-| SonarQube Plugin                                              | Running checks via SonarScanner with integration into SonarQube's repository with all its features.     |
-| [Static Rules Site](https://dblinter-rules.united-codes.com/) | Generated, static website with all public rules. Rules are referenced in problems panel within VS Code. |
+| Component                                                                                     | Description                                                                                             |
+|-----------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| [Web-GUI](https://preview.dblinter.app/)                                                      | Managing tenant-specific data, like rules, configurations, user access.                                 |
+| [VS Code Extension]((https://marketplace.visualstudio.com/items?itemName=Grisselbav.dblinter) | Checking and fixing SQL files while editing. Running SQL-based tests.                                   |
+| CLI                                                                                           | Running checks and SQL-based tests from the command line producing output for 3rd party tools.          |
+| SonarQube Plugin                                                                              | Running checks via SonarScanner with integration into SonarQube's repository with all its features.     |
+| [Static Rules Site](https://dblinter-rules.united-codes.com/)                                 | Generated, static website with all public rules. Rules are referenced in problems panel within VS Code. |
 
 ## Releases
 
