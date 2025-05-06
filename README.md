@@ -48,6 +48,7 @@ The following rules are enabled for the Anonymous plan.
 - [G-4250: Avoid using identical conditions in different branches of the same IF or CASE statement.](https://dblinter-rules.united-codes.com/rules/G-4250)
 - [G-4310: Never use GOTO statements in your code.](https://dblinter-rules.united-codes.com/rules/G-4310/)
 - [G-4320: Always label your loops.](https://dblinter-rules.united-codes.com/rules/G-4320)
+- [G-5020: Never handle unnamed exceptions using the error number.](https://dblinter-rules.united-codes.com/rules/G-5020/)
 - [G-5080: Always use FORMAT_ERROR_BACKTRACE when using FORMAT_ERROR_STACK or SQLERRM.](https://dblinter-rules.united-codes.com/rules/G-5080)
 - [G-7230: Avoid declaring global variables public.](https://dblinter-rules.united-codes.com/rules/G-7230/)
 - [G-7810: Never use SQL inside PL/SQL to read sequence numbers (or SYSDATE).](https://dblinter-rules.united-codes.com/rules/G-7810)
