@@ -47,6 +47,7 @@ The following rules are enabled for the Anonymous plan.
 - [G-2320: Never use VARCHAR data type.](https://dblinter-rules.united-codes.com/rules/G-2320/)
 - [G-2330: Never use zero-length strings to substitute NULL.](https://dblinter-rules.united-codes.com/rules/G-2330/)
 - [G-2340: Always define your VARCHAR2 variables using CHAR SEMANTIC (if not defined anchored).](https://dblinter-rules.united-codes.com/rules/G-2340/)
+- [G-3110: Always specify the target columns when coding an insert statement.](https://dblinter-rules.united-codes.com/rules/G-3110/)
 - [G-3185: Never use ROWNUM at the same query level as ORDER BY.](https://dblinter-rules.united-codes.com/rules/G-3185)
 - [G-4120: Avoid using \%NOTFOUND directly after the FETCH when working with BULK OPERATIONS and LIMIT clause.](https://dblinter-rules.united-codes.com/rules/G-4120)
 - [G-4230: Always use a COALESCE instead of a NVL command, if parameter 2 of the NVL function is a function call or a SELECT statement.](https://dblinter-rules.united-codes.com/rules/G-4230)
