@@ -33,6 +33,8 @@ The following subscription plans are in progress:
 
 The feature set and default configuration are subject to change.
 
+## Anonymous Plan
+
 The following rules are enabled for the Anonymous plan.
 
 - [G-1030: Avoid defining variables that are not used.](https://dblinter-rules.united-codes.com/rules/G-1030)
