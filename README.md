@@ -52,6 +52,7 @@ The following rules are enabled for the Anonymous plan.
 - [G-3110: Always specify the target columns when coding an insert statement.](https://dblinter-rules.united-codes.com/rules/G-3110/)
 - [G-3115: Avoid self-assigning a column.](https://dblinter-rules.united-codes.com/rules/G-3115/)
 - [G-3120: Always use table aliases when your SQL statement involves more than one source.](https://dblinter-rules.united-codes.com/rules/G-3120/)
+- [G-3145: Avoid using SELECT * directly from a table or view.](https://dblinter-rules.united-codes.com/rules/G-3145/)
 - [G-3185: Never use ROWNUM at the same query level as ORDER BY.](https://dblinter-rules.united-codes.com/rules/G-3185)
 - [G-4120: Avoid using \%NOTFOUND directly after the FETCH when working with BULK OPERATIONS and LIMIT clause.](https://dblinter-rules.united-codes.com/rules/G-4120)
 - [G-4230: Always use a COALESCE instead of a NVL command, if parameter 2 of the NVL function is a function call or a SELECT statement.](https://dblinter-rules.united-codes.com/rules/G-4230)
