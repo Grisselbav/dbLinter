@@ -77,6 +77,7 @@ The following rules are enabled for the Anonymous plan.
 - [G-7230: Avoid declaring global variables public.](https://dblinter-rules.united-codes.com/rules/G-7230/)
 - [G-7330: Always assign values to OUT parameters.](https://dblinter-rules.united-codes.com/rules/G-7330/)
 - [G-7450: Never return a NULL value from a BOOLEAN function.](https://dblinter-rules.united-codes.com/rules/G-7450/)
+- [G-7720: Never use multiple UPDATE OF in trigger event clause.](https://dblinter-rules.united-codes.com/rules/G-7720/)
 - [G-7810: Never use SQL inside PL/SQL to read sequence numbers (or SYSDATE).](https://dblinter-rules.united-codes.com/rules/G-7810)
 - [G-8110: Never use SELECT COUNT(\*) if you are only interested in the existence of a row.](https://dblinter-rules.united-codes.com/rules/G-8110/)
 - [G-9010: Always use a format model in string to date/time conversion functions.](https://dblinter-rules.united-codes.com/rules/G-9010)
