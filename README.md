@@ -111,6 +111,7 @@ The following rules should be configured to produce a reasonable results. Theref
 - [G-7460: Try to define your packaged/standalone function deterministic if appropriate.](https://dblinter-rules.united-codes.com/rules/G-7460)
 - [G-7510: Always prefix Oracle supplied packages with owner schema name.](https://dblinter-rules.united-codes.com/rules/G-7510)
 - [G-8210: Always use synonyms when accessing objects of another application schema.](https://dblinter-rules.united-codes.com/rules/G-8210/)
+- [G-8410: Always use application locks to ensure a program unit is only running once at a given time.](https://dblinter-rules.united-codes.com/rules/G-8410/)
 - [G-9101: Always follow naming conventions for global variables.](https://dblinter-rules.united-codes.com/rules/G-9101)
 - [G-9102: Always follow naming conventions for local variables.](https://dblinter-rules.united-codes.com/rules/G-9102)
 - [G-9103: Always follow naming conventions for cursor variables.](https://dblinter-rules.united-codes.com/rules/G-9103)
