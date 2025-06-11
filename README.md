@@ -90,8 +90,11 @@ The following rules are enabled for the Anonymous plan.
 - [G-9604: Never use an invalid stats method.](https://dblinter-rules.united-codes.com/rules/G-9604)
 - [G-9605: Never use an invalid stats keyword.](https://dblinter-rules.united-codes.com/rules/G-9605)
 
-The following rules should be configured to produce a reasonable results. Therefore, they are disabled for the Anonymous plan.
+The following rules should be configured: Either they require parameters that are not applicable to any project, or they are candidates for disabling on a project-by-project basis. Therefore, these rules are disabled for the Anonymous plan.
 
+To enable some or all rules you need to create a dbLinter account. Visit the [dbLinter Web-GUI](https://preview.dblinter.app/) click on `Sign in` and then on `Sign-up` and follow the instructions.
+
+- [G-1010: Try to label your sub blocks.](https://dblinter-rules.united-codes.com/rules/G-1010)
 - [G-1050: Avoid using literals in your code.](https://dblinter-rules.united-codes.com/rules/G-1050)
 - [G-1110: Avoid connect users that own database objects.](https://dblinter-rules.united-codes.com/rules/G-1110)
 - [G-1120: Avoid granting system privileges to connect users.](https://dblinter-rules.united-codes.com/rules/G-1120)
