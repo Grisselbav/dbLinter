@@ -95,6 +95,7 @@ The following rules should be configured: Either they require parameters that ar
 To enable some or all rules you need to create a dbLinter account. Visit the [dbLinter Web-GUI](https://preview.dblinter.app/) click on `Sign in` and then on `Sign-up` and follow the instructions.
 
 - [G-1010: Try to label your sub blocks.](https://dblinter-rules.united-codes.com/rules/G-1010)
+- [G-1020: Always have a matching loop or block label.](https://dblinter-rules.united-codes.com/rules/G-1020)
 - [G-1050: Avoid using literals in your code.](https://dblinter-rules.united-codes.com/rules/G-1050)
 - [G-1110: Avoid connect users that own database objects.](https://dblinter-rules.united-codes.com/rules/G-1110)
 - [G-1120: Avoid granting system privileges to connect users.](https://dblinter-rules.united-codes.com/rules/G-1120)
