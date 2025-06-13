@@ -98,6 +98,7 @@ To enable some or all rules you need to create a dbLinter account. Visit the [db
 - [G-1020: Always have a matching loop or block label.](https://dblinter-rules.united-codes.com/rules/G-1020)
 - [G-1040: Avoid dead code.](https://dblinter-rules.united-codes.com/rules/G-1040)
 - [G-1050: Avoid using literals in your code.](https://dblinter-rules.united-codes.com/rules/G-1050)
+- [G-1070: Avoid nesting comment blocks.](https://dblinter-rules.united-codes.com/rules/G-1070)
 - [G-1110: Avoid connect users that own database objects.](https://dblinter-rules.united-codes.com/rules/G-1110)
 - [G-1120: Avoid granting system privileges to connect users.](https://dblinter-rules.united-codes.com/rules/G-1120)
 - [G-1130: Avoid granting table access to API roles.](https://dblinter-rules.united-codes.com/rules/G-1130)
