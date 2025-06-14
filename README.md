@@ -114,6 +114,7 @@ To enable some or all rules you need to create a dbLinter account. Visit the [db
 - [G-1280: Try to use domains instead of raw datatypes for table columns.](https://dblinter-rules.united-codes.com/rules/G-1280)
 - [G-1310: Never keep database objects in an invalid state.](https://dblinter-rules.united-codes.com/rules/G-1310)
 - [G-2110: Try to use anchored declarations for variables, constants and types.](https://dblinter-rules.united-codes.com/rules/G-2110)
+- [G-2120: Try to have a single location to define your types.](https://dblinter-rules.united-codes.com/rules/G-2120)
 - [G-3160: Avoid visible virtual columns.](https://dblinter-rules.united-codes.com/rules/G-3160)
 - [G-4320: Always label your loops.](https://dblinter-rules.united-codes.com/rules/G-4320)
 - [G-7460: Try to define your packaged/standalone function deterministic if appropriate.](https://dblinter-rules.united-codes.com/rules/G-7460)
