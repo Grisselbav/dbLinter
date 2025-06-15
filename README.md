@@ -42,6 +42,7 @@ The following rules are enabled for the Anonymous plan.
 - [G-1080: Avoid using the same expression on both sides of a relational comparison operator or a logical operator.](https://dblinter-rules.united-codes.com/rules/G-1080)
 - [G-1910: Avoid using the NOSONAR marker.](https://dblinter-rules.united-codes.com/rules/G-1910)
 - [G-1920: Avoid syntax errors.](https://dblinter-rules.united-codes.com/rules/G-1920)
+- [G-2135: Avoid assigning values to local variables that are not used by a subsequent statement.](https://dblinter-rules.united-codes.com/rules/G-2135/)
 - [G-2145: Never self-assign a variable.](https://dblinter-rules.united-codes.com/rules/G-2145/)
 - [G-2150: Avoid comparisons with NULL value, consider using IS \[NOT\] NULL.](https://dblinter-rules.united-codes.com/rules/G-2150)
 - [G-2190: Avoid using ROWID or UROWID.](https://dblinter-rules.united-codes.com/rules/G-2190/)
