@@ -120,6 +120,7 @@ To enable some or all rules you need to create a dbLinter account. Visit the [db
 - [G-2120: Try to have a single location to define your types.](https://dblinter-rules.united-codes.com/rules/G-2120)
 - [G-2130: Try to use subtypes for constructs used often in your code.](https://dblinter-rules.united-codes.com/rules/G-2130)
 - [G-2160: Avoid initializing variables using functions in the declaration section.](https://dblinter-rules.united-codes.com/rules/G-2160)
+- [G-2185: Avoid using overly short names for explicitly or implicitly declared identifiers.](https://dblinter-rules.united-codes.com/rules/G-2185)
 - [G-3160: Avoid visible virtual columns.](https://dblinter-rules.united-codes.com/rules/G-3160)
 - [G-4320: Always label your loops.](https://dblinter-rules.united-codes.com/rules/G-4320)
 - [G-7460: Try to define your packaged/standalone function deterministic if appropriate.](https://dblinter-rules.united-codes.com/rules/G-7460)
