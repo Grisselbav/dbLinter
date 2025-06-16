@@ -47,6 +47,7 @@ The following rules are enabled for the Anonymous plan.
 - [G-2170: Never overload variables.](https://dblinter-rules.united-codes.com/rules/G-2170)
 - [G-2180: Never use quoted identifiers.](https://dblinter-rules.united-codes.com/rules/G-2180)
 - [G-2190: Avoid using ROWID or UROWID.](https://dblinter-rules.united-codes.com/rules/G-2190/)
+- [G-2210: Avoid declaring NUMBER variables, constants or subtypes with no precision.](https://dblinter-rules.united-codes.com/rules/G-2210/)
 - [G-2310: Avoid using CHAR data type.](https://dblinter-rules.united-codes.com/rules/G-2310/)
 - [G-2320: Never use VARCHAR data type.](https://dblinter-rules.united-codes.com/rules/G-2320/)
 - [G-2330: Never use zero-length strings to substitute NULL.](https://dblinter-rules.united-codes.com/rules/G-2330/)
