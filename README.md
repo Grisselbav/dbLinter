@@ -55,6 +55,7 @@ The following rules are enabled for the Anonymous plan.
 - [G-2330: Never use zero-length strings to substitute NULL.](https://dblinter-rules.united-codes.com/rules/G-2330/)
 - [G-2340: Always define your VARCHAR2 variables using CHAR SEMANTIC (if not defined anchored).](https://dblinter-rules.united-codes.com/rules/G-2340/)
 - [G-2510: Avoid using the LONG and LONG RAW data types.](https://dblinter-rules.united-codes.com/rules/G-2510/)
+- [G-2610: Never use self-defined weak ref cursor types.](https://dblinter-rules.united-codes.com/rules/G-2610/)
 - [G-3110: Always specify the target columns when coding an insert statement.](https://dblinter-rules.united-codes.com/rules/G-3110/)
 - [G-3115: Avoid self-assigning a column.](https://dblinter-rules.united-codes.com/rules/G-3115/)
 - [G-3120: Always use table aliases when your SQL statement involves more than one source.](https://dblinter-rules.united-codes.com/rules/G-3120/)
