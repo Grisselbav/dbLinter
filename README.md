@@ -61,6 +61,7 @@ The following rules are enabled for the Anonymous plan.
 - [G-3120: Always use table aliases when your SQL statement involves more than one source.](https://dblinter-rules.united-codes.com/rules/G-3120/)
 - [G-3145: Avoid using SELECT * directly from a table or view.](https://dblinter-rules.united-codes.com/rules/G-3145/)
 - [G-3170: Always use DEFAULT ON NULL declarations to assign default values to table columns if you refuse to store NULL values.](https://dblinter-rules.united-codes.com/rules/G-3170/)
+- [G-3180: Always specify column names instead of positional references in ORDER BY clauses.](https://dblinter-rules.united-codes.com/rules/G-3180/)
 - [G-3182: Always specify column names/aliases instead of positional references in GROUP BY clauses.](https://dblinter-rules.united-codes.com/rules/G-3182/)
 - [G-3185: Never use ROWNUM at the same query level as ORDER BY.](https://dblinter-rules.united-codes.com/rules/G-3185)
 - [G-3190: Avoid using NATURAL JOIN.](https://dblinter-rules.united-codes.com/rules/G-3190)
