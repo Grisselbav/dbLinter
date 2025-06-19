@@ -38,10 +38,12 @@ The feature set and default configuration are subject to change.
 The following rules are enabled for the Anonymous plan.
 
 - [G-1030: Avoid defining variables that are not used.](https://dblinter-rules.united-codes.com/rules/G-1030)
+- [G-1040: Avoid dead code.](https://dblinter-rules.united-codes.com/rules/G-1040)
 - [G-1060: Avoid storing ROWIDs or UROWIDs in database tables.](https://dblinter-rules.united-codes.com/rules/G-1060)
 - [G-1080: Avoid using the same expression on both sides of a relational comparison operator or a logical operator.](https://dblinter-rules.united-codes.com/rules/G-1080)
 - [G-1920: Avoid syntax errors.](https://dblinter-rules.united-codes.com/rules/G-1920)
 - [G-2135: Avoid assigning values to local variables that are not used by a subsequent statement.](https://dblinter-rules.united-codes.com/rules/G-2135/)
+- [G-2140: Never initialize variables with NULL.](https://dblinter-rules.united-codes.com/rules/G-2140/)
 - [G-2145: Never self-assign a variable.](https://dblinter-rules.united-codes.com/rules/G-2145/)
 - [G-2150: Avoid comparisons with NULL value, consider using IS \[NOT\] NULL.](https://dblinter-rules.united-codes.com/rules/G-2150)
 - [G-2170: Never overload variables.](https://dblinter-rules.united-codes.com/rules/G-2170)
@@ -104,7 +106,6 @@ To enable some or all rules you need to create a dbLinter account. Visit the [db
 
 - [G-1010: Try to label your sub blocks.](https://dblinter-rules.united-codes.com/rules/G-1010)
 - [G-1020: Always have a matching loop or block label.](https://dblinter-rules.united-codes.com/rules/G-1020)
-- [G-1040: Avoid dead code.](https://dblinter-rules.united-codes.com/rules/G-1040)
 - [G-1050: Avoid using literals in your code.](https://dblinter-rules.united-codes.com/rules/G-1050)
 - [G-1070: Avoid nesting comment blocks.](https://dblinter-rules.united-codes.com/rules/G-1070)
 - [G-1110: Avoid connect users that own database objects.](https://dblinter-rules.united-codes.com/rules/G-1110)
