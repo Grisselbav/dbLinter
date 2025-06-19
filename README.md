@@ -129,6 +129,7 @@ To enable some or all rules you need to create a dbLinter account. Visit the [db
 - [G-2410: Try to use boolean data type for values with dual meaning.](https://dblinter-rules.united-codes.com/rules/G-2410)
 - [G-3130: Try to use ANSI SQL-92 join syntax.](https://dblinter-rules.united-codes.com/rules/G-3130)
 - [G-3140: Try to use anchored records as targets for your cursors.](https://dblinter-rules.united-codes.com/rules/G-3140)
+- [G-3150: Try to use identity columns for surrogate keys.](https://dblinter-rules.united-codes.com/rules/G-3150)
 - [G-3160: Avoid visible virtual columns.](https://dblinter-rules.united-codes.com/rules/G-3160)
 - [G-4320: Always label your loops.](https://dblinter-rules.united-codes.com/rules/G-4320)
 - [G-7460: Try to define your packaged/standalone function deterministic if appropriate.](https://dblinter-rules.united-codes.com/rules/G-7460)
