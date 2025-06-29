@@ -68,6 +68,7 @@ The following rules are enabled for the Anonymous plan.
 - [G-3185: Never use ROWNUM at the same query level as ORDER BY.](https://dblinter-rules.united-codes.com/rules/G-3185)
 - [G-3190: Avoid using NATURAL JOIN.](https://dblinter-rules.united-codes.com/rules/G-3190)
 - [G-3195: Always use wildcards in a LIKE clause.](https://dblinter-rules.united-codes.com/rules/G-3195)
+- [G-3220: Always process saved exceptions from a FORALL statement.](https://dblinter-rules.united-codes.com/rules/G-3220)
 - [G-3310: Never commit within a cursor loop.](https://dblinter-rules.united-codes.com/rules/G-3310)
 - [G-3330: Avoid autonomous transactions.](https://dblinter-rules.united-codes.com/rules/G-3330)
 - [G-4120: Avoid using \%NOTFOUND directly after the FETCH when working with BULK OPERATIONS and LIMIT clause.](https://dblinter-rules.united-codes.com/rules/G-4120)
