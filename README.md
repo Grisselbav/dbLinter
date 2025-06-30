@@ -141,6 +141,7 @@ To enable some or all rules you need to create a dbLinter account. Visit the [db
 - [G-4210: Try to use CASE rather than an IF statement with multiple ELSIF paths.](https://dblinter-rules.united-codes.com/rules/G-4210)
 - [G-4220: Try to use CASE rather than DECODE.](https://dblinter-rules.united-codes.com/rules/G-4220)
 - [G-4260: Avoid inverting boolean conditions with NOT.](https://dblinter-rules.united-codes.com/rules/G-4260)
+- [G-4270: Avoid comparing boolean values to boolean literals.](https://dblinter-rules.united-codes.com/rules/G-4270)
 - [G-4320: Always label your loops.](https://dblinter-rules.united-codes.com/rules/G-4320)
 - [G-7460: Try to define your packaged/standalone function deterministic if appropriate.](https://dblinter-rules.united-codes.com/rules/G-7460)
 - [G-7510: Always prefix Oracle supplied packages with owner schema name.](https://dblinter-rules.united-codes.com/rules/G-7510)
