@@ -137,6 +137,7 @@ To enable some or all rules you need to create a dbLinter account. Visit the [db
 - [G-3183: Always specify column aliases instead of expressions in GROUP BY clauses.](https://dblinter-rules.united-codes.com/rules/G-3183/)
 - [G-3210: Always use BULK OPERATIONS (BULK COLLECT, FORALL) whenever you have to execute a DML statement for more than 4 times.](https://dblinter-rules.united-codes.com/rules/G-3210)
 - [G-3320: Try to move transactions within a non-cursor loop into procedures.](https://dblinter-rules.united-codes.com/rules/G-3320)
+- [G-4110: Always use %NOTFOUND instead of NOT %FOUND to check whether a cursor returned data.](https://dblinter-rules.united-codes.com/rules/G-4110)
 - [G-4320: Always label your loops.](https://dblinter-rules.united-codes.com/rules/G-4320)
 - [G-7460: Try to define your packaged/standalone function deterministic if appropriate.](https://dblinter-rules.united-codes.com/rules/G-7460)
 - [G-7510: Always prefix Oracle supplied packages with owner schema name.](https://dblinter-rules.united-codes.com/rules/G-7510)
