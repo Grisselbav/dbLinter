@@ -78,6 +78,7 @@ The following rules are enabled for the Anonymous plan.
 - [G-4240: Always use a CASE instead of a NVL2 command if parameter 2 or 3 of NVL2 is either a function call or a SELECT statement.](https://dblinter-rules.united-codes.com/rules/G-4240/)
 - [G-4250: Avoid using identical conditions in different branches of the same IF or CASE statement.](https://dblinter-rules.united-codes.com/rules/G-4250)
 - [G-4310: Never use GOTO statements in your code.](https://dblinter-rules.united-codes.com/rules/G-4310/)
+- [G-4325: Never reuse labels in inner scope.](https://dblinter-rules.united-codes.com/rules/G-4325/)
 - [G-4350: Always use 1 as lower and COUNT() as upper bound when looping through a dense array.](https://dblinter-rules.united-codes.com/rules/G-4350)
 - [G-4387: Never use a FOR LOOP for a query that should return not more than one row.](https://dblinter-rules.united-codes.com/rules/G-4387)
 - [G-5020: Never handle unnamed exceptions using the error number.](https://dblinter-rules.united-codes.com/rules/G-5020/)
