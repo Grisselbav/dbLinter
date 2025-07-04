@@ -201,6 +201,6 @@ The dbLinter suite consists of the following components:
 
 ## Releases
 
-Releases of the VS Code extensions are published in the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Grisselbav.dblinter).
+Releases of the VS Code extensions are published in the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Grisselbav.dblinter) and the [Open VSX Registry](https://open-vsx.org/extension/Grisselbav/dblinter).
 
 Releases of CLI and SonarQube Plugin will be published on the [Releases page](https://github.com/Grisselbav/dbLinter/releases) of this repository.
