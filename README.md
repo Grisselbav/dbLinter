@@ -149,6 +149,7 @@ To enable some or all rules you need to create a dbLinter account. Visit the [db
 - [G-4340: Always use a NUMERIC FOR loop to process a dense array.](https://dblinter-rules.united-codes.com/rules/G-4340)
 - [G-4365: Never use unconditional CONTINUE or EXIT in a loop.](https://dblinter-rules.united-codes.com/rules/G-4365)
 - [G-4370: Avoid using EXIT to stop loop processing unless you are in a basic loop.](https://dblinter-rules.united-codes.com/rules/G-4370)
+- [G-4375: Always use EXIT WHEN instead of an IF statement to exit from a loop.](https://dblinter-rules.united-codes.com/rules/G-4375)
 - [G-7460: Try to define your packaged/standalone function deterministic if appropriate.](https://dblinter-rules.united-codes.com/rules/G-7460)
 - [G-7510: Always prefix Oracle supplied packages with owner schema name.](https://dblinter-rules.united-codes.com/rules/G-7510)
 - [G-8210: Always use synonyms when accessing objects of another application schema.](https://dblinter-rules.united-codes.com/rules/G-8210/)
