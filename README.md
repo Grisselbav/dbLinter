@@ -81,6 +81,7 @@ The following rules are enabled for the Anonymous plan.
 - [G-4325: Never reuse labels in inner scope.](https://dblinter-rules.united-codes.com/rules/G-4325/)
 - [G-4350: Always use 1 as lower and COUNT() as upper bound when looping through a dense array.](https://dblinter-rules.united-codes.com/rules/G-4350)
 - [G-4360: Always use a WHILE loop to process a loose array.](https://dblinter-rules.united-codes.com/rules/G-4360)
+- [G-4385: Never use a cursor for loop to check whether a cursor returns data.](https://dblinter-rules.united-codes.com/rules/G-4385)
 - [G-4387: Never use a FOR LOOP for a query that should return not more than one row.](https://dblinter-rules.united-codes.com/rules/G-4387)
 - [G-5020: Never handle unnamed exceptions using the error number.](https://dblinter-rules.united-codes.com/rules/G-5020/)
 - [G-5030: Never assign predefined exception names to user defined exceptions.](https://dblinter-rules.united-codes.com/rules/G-5030/)
