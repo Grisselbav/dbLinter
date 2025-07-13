@@ -154,6 +154,7 @@ To enable some or all rules you need to create a dbLinter account. Visit the [db
 - [G-4380: Try to label your EXIT WHEN statements.](https://dblinter-rules.united-codes.com/rules/G-4380)
 - [G-4390: Avoid use of unreferenced FOR loop indexes.](https://dblinter-rules.united-codes.com/rules/G-4390)
 - [G-4395: Avoid hard-coded upper or lower bound values with FOR loops.](https://dblinter-rules.united-codes.com/rules/G-4395)
+- [G-5010: Try to use a error/logging framework for your application.](https://dblinter-rules.united-codes.com/rules/G-5010)
 - [G-7460: Try to define your packaged/standalone function deterministic if appropriate.](https://dblinter-rules.united-codes.com/rules/G-7460)
 - [G-7510: Always prefix Oracle supplied packages with owner schema name.](https://dblinter-rules.united-codes.com/rules/G-7510)
 - [G-8210: Always use synonyms when accessing objects of another application schema.](https://dblinter-rules.united-codes.com/rules/G-8210/)
