@@ -159,6 +159,7 @@ To enable some or all rules you need to create a dbLinter account. Visit the [db
 - [G-5050: Avoid use of the RAISE_APPLICATION_ERROR built-in procedure with a hard-coded 20nnn error number or hard-coded message.](https://dblinter-rules.united-codes.com/rules/G-5050)
 - [G-5060: Avoid unhandled exceptions.](https://dblinter-rules.united-codes.com/rules/G-5060)
 - [G-6010: Always use a character variable to execute dynamic SQL.](https://dblinter-rules.united-codes.com/rules/G-6010)
+- [G-6020: Try to use output bind arguments in the RETURNING INTO clause of dynamic DML statements rather than the USING clause.](https://dblinter-rules.united-codes.com/rules/G-6020)
 - [G-7460: Try to define your packaged/standalone function deterministic if appropriate.](https://dblinter-rules.united-codes.com/rules/G-7460)
 - [G-7510: Always prefix Oracle supplied packages with owner schema name.](https://dblinter-rules.united-codes.com/rules/G-7510)
 - [G-8210: Always use synonyms when accessing objects of another application schema.](https://dblinter-rules.united-codes.com/rules/G-8210/)
