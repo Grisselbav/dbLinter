@@ -87,6 +87,7 @@ The following rules are enabled for the Anonymous plan.
 - [G-5030: Never assign predefined exception names to user defined exceptions.](https://dblinter-rules.united-codes.com/rules/G-5030/)
 - [G-5070: Avoid using Oracle predefined exceptions.](https://dblinter-rules.united-codes.com/rules/G-5070/)
 - [G-5080: Always use FORMAT_ERROR_BACKTRACE when using FORMAT_ERROR_STACK or SQLERRM.](https://dblinter-rules.united-codes.com/rules/G-5080)
+- [G-7140: Always ensure that locally defined procedures or functions are referenced.](https://dblinter-rules.united-codes.com/rules/G-7140)
 - [G-7230: Avoid declaring global variables public.](https://dblinter-rules.united-codes.com/rules/G-7230/)
 - [G-7330: Always assign values to OUT parameters.](https://dblinter-rules.united-codes.com/rules/G-7330/)
 - [G-7450: Never return a NULL value from a BOOLEAN function.](https://dblinter-rules.united-codes.com/rules/G-7450/)
