@@ -169,6 +169,7 @@ To enable some or all rules you need to create a dbLinter account. Visit the [db
 - [G-7160: Always explicitly state parameter mode.](https://dblinter-rules.united-codes.com/rules/G-7160)
 - [G-7170: Avoid using an IN OUT parameter as IN or OUT only.](https://dblinter-rules.united-codes.com/rules/G-7170)
 - [G-7210: Try to keep your packages small. Include only few procedures and functions that are used in the same context.](https://dblinter-rules.united-codes.com/rules/G-7210)
+- [G-7220: Always use forward declaration for private functions and procedures.](https://dblinter-rules.united-codes.com/rules/G-7220)
 - [G-7460: Try to define your packaged/standalone function deterministic if appropriate.](https://dblinter-rules.united-codes.com/rules/G-7460)
 - [G-7510: Always prefix Oracle supplied packages with owner schema name.](https://dblinter-rules.united-codes.com/rules/G-7510)
 - [G-8210: Always use synonyms when accessing objects of another application schema.](https://dblinter-rules.united-codes.com/rules/G-8210/)
