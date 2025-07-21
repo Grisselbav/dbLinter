@@ -166,6 +166,7 @@ To enable some or all rules you need to create a dbLinter account. Visit the [db
 - [G-7125: Always use CREATE OR REPLACE instead of CREATE alone.](https://dblinter-rules.united-codes.com/rules/G-7125)
 - [G-7130: Always use parameters or pull in definitions rather than referencing external variables in a local program unit.](https://dblinter-rules.united-codes.com/rules/G-7130)
 - [G-7150: Try to remove unused parameters.](https://dblinter-rules.united-codes.com/rules/G-7150)
+- [G-7160: Always explicitly state parameter mode.](https://dblinter-rules.united-codes.com/rules/G-7160)
 - [G-7170: Avoid using an IN OUT parameter as IN or OUT only.](https://dblinter-rules.united-codes.com/rules/G-7170)
 - [G-7460: Try to define your packaged/standalone function deterministic if appropriate.](https://dblinter-rules.united-codes.com/rules/G-7460)
 - [G-7510: Always prefix Oracle supplied packages with owner schema name.](https://dblinter-rules.united-codes.com/rules/G-7510)
