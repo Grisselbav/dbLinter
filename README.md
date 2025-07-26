@@ -180,6 +180,7 @@ To enable some or all rules you need to create a dbLinter account. Visit the [db
 - [G-7460: Try to define your packaged/standalone function deterministic if appropriate.](https://dblinter-rules.united-codes.com/rules/G-7460)
 - [G-7510: Always prefix Oracle supplied packages with owner schema name.](https://dblinter-rules.united-codes.com/rules/G-7510)
 - [G-7520: Avoid using deprecated units in your own code.](https://dblinter-rules.united-codes.com/rules/G-7520)
+- [G-7710: Avoid cascading triggers.](https://dblinter-rules.united-codes.com/rules/G-7710)
 - [G-8210: Always use synonyms when accessing objects of another application schema.](https://dblinter-rules.united-codes.com/rules/G-8210/)
 - [G-8410: Always use application locks to ensure a program unit is only running once at a given time.](https://dblinter-rules.united-codes.com/rules/G-8410/)
 - [G-9020: Try to use a format model and NLS_NUMERIC_CHARACTERS in string to number conversion functions.](https://dblinter-rules.united-codes.com/rules/G-9020/)
