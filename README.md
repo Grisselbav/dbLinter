@@ -185,6 +185,7 @@ To enable some or all rules you need to create a dbLinter account. Visit the [db
 - [G-7730: Avoid multiple DML events per trigger.](https://dblinter-rules.united-codes.com/rules/G-7730)
 - [G-7740: Never handle multiple DML events per trigger if primary key is assigned in trigger.](https://dblinter-rules.united-codes.com/rules/G-7740)
 - [G-8210: Always use synonyms when accessing objects of another application schema.](https://dblinter-rules.united-codes.com/rules/G-8210/)
+- [G-8310: Always validate input parameter size by assigning the parameter to a size limited variable in the declaration section of program unit.](https://dblinter-rules.united-codes.com/rules/G-8310/)
 - [G-8410: Always use application locks to ensure a program unit is only running once at a given time.](https://dblinter-rules.united-codes.com/rules/G-8410/)
 - [G-9020: Try to use a format model and NLS_NUMERIC_CHARACTERS in string to number conversion functions.](https://dblinter-rules.united-codes.com/rules/G-9020/)
 - [G-9030: Try to define a default value on conversion errors.](https://dblinter-rules.united-codes.com/rules/G-9030)
