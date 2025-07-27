@@ -95,6 +95,7 @@ The following rules are enabled for the Anonymous plan.
 - [G-7810: Never use SQL inside PL/SQL to read sequence numbers (or SYSDATE).](https://dblinter-rules.united-codes.com/rules/G-7810)
 - [G-7910: Never use DML within a SQL macro.](https://dblinter-rules.united-codes.com/rules/G-7910)
 - [G-8110: Never use SELECT COUNT(\*) if you are only interested in the existence of a row.](https://dblinter-rules.united-codes.com/rules/G-8110/)
+- [G-8120: Never check existence of a row to decide whether to create it or not.](https://dblinter-rules.united-codes.com/rules/G-8120/)
 - [G-9010: Always use a format model in string to date/time conversion functions.](https://dblinter-rules.united-codes.com/rules/G-9010)
 - [G-9040: Try using FX in string to date/time conversion format model to avoid fuzzy conversion.](https://dblinter-rules.united-codes.com/rules/G-9040)
 - [G-9501: Never use parameter in string expression of dynamic SQL. Use asserted local variable instead.](https://dblinter-rules.united-codes.com/rules/G-9501)
