@@ -35,7 +35,7 @@ The feature set and default configuration are subject to change.
 
 ## Anonymous Plan
 
-The following rules are enabled for the Anonymous plan.
+The following 68 rules are enabled for the Anonymous plan.
 
 - [G-1030: Avoid defining variables that are not used.](https://dblinter-rules.united-codes.com/rules/G-1030)
 - [G-1040: Avoid dead code.](https://dblinter-rules.united-codes.com/rules/G-1040)
@@ -106,7 +106,7 @@ The following rules are enabled for the Anonymous plan.
 - [G-9604: Never use an invalid stats method.](https://dblinter-rules.united-codes.com/rules/G-9604)
 - [G-9605: Never use an invalid stats keyword.](https://dblinter-rules.united-codes.com/rules/G-9605)
 
-The following rules should be configured: Either they require parameters that are not applicable to any project, or they are candidates for disabling on a project-by-project basis. Therefore, these rules are disabled for the Anonymous plan.
+The following 115 rules should be configured: Either they require parameters that are not applicable to any project, or they are candidates for disabling on a project-by-project basis. Therefore, these rules are disabled for the Anonymous plan.
 
 To enable some or all rules you need to create a dbLinter account. Visit the [dbLinter Web-GUI](https://preview.dblinter.app/) click on `Sign in` and then on `Sign-up` and follow the instructions.
 
