@@ -33,6 +33,7 @@ hs_err_pid*
 .antlr
 **/.settings
 *.vsix
+package-lock.json
 
 # VS Code files to be managed via Git
 !.vscode/launch.json
