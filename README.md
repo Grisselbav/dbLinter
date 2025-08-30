@@ -7,31 +7,36 @@ code analysis and database queries based on a configuration. A configuration is 
 file patterns, rules, validators, SQL-based tests, parameters, and connect information for read-only database access
 within checks and tests.
 
-The following subscription plans are in progress:
+dbLinter is a joint project between United Codes and Grisselbav.
+You can get commercial subscription plans through United Codes.
+See the [dbLinter product site](https://newsite.united-codes.com/products/dblinter/) for details.
 
-|                                                      | Anonymous | Free | Essential | Professional |
-|------------------------------------------------------|:---------:|:----:|:---------:|:------------:|
-| Number of seats                                      | unlimited |  1   |    1-n    |     1-n      |
-| Number of configurations                             |     -     |  1   | unlimited |  unlimited   |
-| View rules and related data                          |    yes    | yes  |    yes    |     yes      |
-| Manage configurations                                |     -     | yes  |    yes    |     yes      |
-| Run checks                                           |    yes    | yes  |    yes    |     yes      |
-| Run SQL-based tests                                  |     -     | yes  |    yes    |     yes      |
-| Ignore chosen SQL-based test findings                |     -     | yes  |    yes    |     yes      |
-| dbLinter VS Code extension                           |    yes    | yes  |    yes    |     yes      |
-| Run all accessible checks and tests                  |     -     |  -   |    yes    |     yes      |
-| Quick fixes in dbLinter VS Code extension            |     -     |  -   |    yes    |     yes      |
-| dbLinter CLI with SonarCloud integration             |     -     |  -   |    yes    |     yes      |
-| Manage user access                                   |     -     |  -   |    yes    |     yes      |
-| dbLinter SonarQube plugin                            |     -     |  -   |     -     |     yes      |
-| Access to dbLinter test repository                   |     -     |  -   |     -     |     yes      |
-| Custom rules, checks and SQL-based tests             |     -     |  -   |     -     |     yes      |
-| Generate Java project for checks and SQL-based tests |     -     |  -   |     -     |     yes      |
-| Manage custom validators (plugins)                   |     -     |  -   |     -     |     yes      |
-| Export rules and configurations                      |     -     |  -   |     -     |     yes      |
-| Import rules and configurations                      |     -     |  -   |     -     |     yes      |
+Here are the features that come with the different subscription plans:
 
-The feature set and default configuration are subject to change.
+|                                                      | Anonymous |  Starter  | Essential | Professional |
+|------------------------------------------------------|:---------:|:---------:|:---------:|:------------:|
+| Number of seats                                      | unlimited |     1     |    1-n    |     1-n      |
+| Number of configurations                             |     -     |     1     | unlimited |  unlimited   |
+| View rules and related data                          |    yes    |    yes    |    yes    |     yes      |
+| Manage configurations                                |     -     |    yes    |    yes    |     yes      |
+| Run checks                                           |    yes    |    yes    |    yes    |     yes      |
+| Run SQL-based tests                                  |     -     |    yes    |    yes    |     yes      |
+| Ignore chosen SQL-based test findings                |     -     |    yes    |    yes    |     yes      |
+| dbLinter VS Code extension                           |    yes    |    yes    |    yes    |     yes      |
+| Run all accessible checks and tests                  | (preview) | (preview) |    yes    |     yes      |
+| Quick fixes in dbLinter VS Code extension            | (preview) | (preview) |    yes    |     yes      |
+| dbLinter CLI with SonarCloud integration             |     -     | (preview) |    yes    |     yes      |
+| Manage user access                                   |     -     |     -     |    yes    |     yes      |
+| dbLinter SonarQube plugin                            |     -     |     -     |     -     |     yes      |
+| Access to dbLinter test repository                   |     -     |     -     |     -     |     yes      |
+| Custom rules, checks and SQL-based tests             |     -     |     -     |     -     |     yes      |
+| Generate Java project for checks and SQL-based tests |     -     |     -     |     -     |     yes      |
+| Manage custom validators (plugins)                   |     -     |     -     |     -     |     yes      |
+| Export rules and configurations                      |     -     |     -     |     -     |     yes      |
+| Import rules and configurations                      |     -     |     -     |     -     |     yes      |
+
+The features marked with `(preview)` are only available during the preview phase. Once the Essential plan is released,
+these features will be removed from the free Anonymous and Starter plans.
 
 ## Anonymous Plan
 
@@ -234,7 +239,7 @@ The dbLinter suite consists of the following components:
 |----------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
 | [Web-GUI](https://preview.dblinter.app/)                                                     | Managing tenant-specific data, like rules, configurations, user access.                                 |
 | [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=Grisselbav.dblinter) | Checking and fixing SQL files while editing. Running SQL-based tests.                                   |
-| CLI                                                                                          | Running checks and SQL-based tests from the command line producing output for 3rd party tools.          |
+| [CLI](https://github.com/Grisselbav/dbLinter/releases/tag/cli-v0.2.0)                        | Running checks and SQL-based tests from the command line producing output for 3rd party tools.          |
 | SonarQube Plugin                                                                             | Running checks via SonarScanner with integration into SonarQube's repository with all its features.     |
 | [Static Rules Site](https://dblinter-rules.united-codes.com/)                                | Generated, static website with all public rules. Rules are referenced in problems panel within VS Code. |
 
@@ -242,4 +247,4 @@ The dbLinter suite consists of the following components:
 
 Releases of the VS Code extensions are published in the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Grisselbav.dblinter) and the [Open VSX Registry](https://open-vsx.org/extension/Grisselbav/dblinter).
 
-Releases of CLI and SonarQube Plugin will be published on the [Releases page](https://github.com/Grisselbav/dbLinter/releases) of this repository.
+Releases of the CLI and the SonarQube Plugin are published on the [Releases page](https://github.com/Grisselbav/dbLinter/releases) of this repository.
