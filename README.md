@@ -174,6 +174,7 @@ To enable some or all rules you need to create a dbLinter account. Visit the [db
 - [G-7150: Try to remove unused parameters.](https://dblinter-rules.united-codes.com/rules/G-7150)
 - [G-7160: Always explicitly state parameter mode.](https://dblinter-rules.united-codes.com/rules/G-7160)
 - [G-7170: Avoid using an IN OUT parameter as IN or OUT only.](https://dblinter-rules.united-codes.com/rules/G-7170)
+- [G-7180: Try to keep the complexity of functions, procedures and triggers simple.](https://dblinter-rules.united-codes.com/rules/G-7180)
 - [G-7210: Try to keep your packages small. Include only few procedures and functions that are used in the same context.](https://dblinter-rules.united-codes.com/rules/G-7210)
 - [G-7220: Always use forward declaration for private functions and procedures.](https://dblinter-rules.united-codes.com/rules/G-7220)
 - [G-7250: Never use RETURN in package initialization block.](https://dblinter-rules.united-codes.com/rules/G-7250)
