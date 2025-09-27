@@ -40,7 +40,7 @@ these features will be removed from the free Anonymous and Starter plans.
 
 ## Anonymous Plan
 
-The following 68 rules are enabled for the Anonymous plan.
+The following 47 rules are enabled for the Anonymous plan.
 
 - [G-1030: Avoid defining variables that are not used.](https://dblinter-rules.united-codes.com/rules/G-1030)
 - [G-1040: Avoid dead code.](https://dblinter-rules.united-codes.com/rules/G-1040)
@@ -67,51 +67,30 @@ The following 68 rules are enabled for the Anonymous plan.
 - [G-3115: Avoid self-assigning a column.](https://dblinter-rules.united-codes.com/rules/G-3115/)
 - [G-3120: Always use table aliases when your SQL statement involves more than one source.](https://dblinter-rules.united-codes.com/rules/G-3120/)
 - [G-3145: Avoid using SELECT * directly from a table or view.](https://dblinter-rules.united-codes.com/rules/G-3145/)
-- [G-3170: Always use DEFAULT ON NULL declarations to assign default values to table columns if you refuse to store NULL values.](https://dblinter-rules.united-codes.com/rules/G-3170/)
 - [G-3180: Always specify column names instead of positional references in ORDER BY clauses.](https://dblinter-rules.united-codes.com/rules/G-3180/)
 - [G-3182: Always specify column names/aliases instead of positional references in GROUP BY clauses.](https://dblinter-rules.united-codes.com/rules/G-3182/)
 - [G-3185: Never use ROWNUM at the same query level as ORDER BY.](https://dblinter-rules.united-codes.com/rules/G-3185)
-- [G-3190: Avoid using NATURAL JOIN.](https://dblinter-rules.united-codes.com/rules/G-3190)
 - [G-3195: Always use wildcards in a LIKE clause.](https://dblinter-rules.united-codes.com/rules/G-3195)
 - [G-3220: Always process saved exceptions from a FORALL statement.](https://dblinter-rules.united-codes.com/rules/G-3220)
 - [G-3310: Never commit within a cursor loop.](https://dblinter-rules.united-codes.com/rules/G-3310)
-- [G-3330: Avoid autonomous transactions.](https://dblinter-rules.united-codes.com/rules/G-3330)
-- [G-4120: Avoid using \%NOTFOUND directly after the FETCH when working with BULK OPERATIONS and LIMIT clause.](https://dblinter-rules.united-codes.com/rules/G-4120)
 - [G-4130: Always close locally opened cursors.](https://dblinter-rules.united-codes.com/rules/G-4130)
-- [G-4140: Avoid executing any statements between a SQL operation and the usage of an implicit cursor attribute.](https://dblinter-rules.united-codes.com/rules/G-4140)
 - [G-4230: Always use a COALESCE instead of a NVL command, if parameter 2 of the NVL function is a function call or a SELECT statement.](https://dblinter-rules.united-codes.com/rules/G-4230)
-- [G-4240: Always use a CASE instead of a NVL2 command if parameter 2 or 3 of NVL2 is either a function call or a SELECT statement.](https://dblinter-rules.united-codes.com/rules/G-4240/)
 - [G-4250: Avoid using identical conditions in different branches of the same IF or CASE statement.](https://dblinter-rules.united-codes.com/rules/G-4250)
 - [G-4310: Never use GOTO statements in your code.](https://dblinter-rules.united-codes.com/rules/G-4310/)
 - [G-4325: Never reuse labels in inner scope.](https://dblinter-rules.united-codes.com/rules/G-4325/)
-- [G-4350: Always use 1 as lower and COUNT() as upper bound when looping through a dense array.](https://dblinter-rules.united-codes.com/rules/G-4350)
 - [G-4360: Always use a WHILE loop to process a loose array.](https://dblinter-rules.united-codes.com/rules/G-4360)
-- [G-4385: Never use a cursor for loop to check whether a cursor returns data.](https://dblinter-rules.united-codes.com/rules/G-4385)
-- [G-4387: Never use a FOR LOOP for a query that should return not more than one row.](https://dblinter-rules.united-codes.com/rules/G-4387)
-- [G-5020: Never handle unnamed exceptions using the error number.](https://dblinter-rules.united-codes.com/rules/G-5020/)
 - [G-5030: Never assign predefined exception names to user defined exceptions.](https://dblinter-rules.united-codes.com/rules/G-5030/)
 - [G-5070: Avoid using Oracle predefined exceptions.](https://dblinter-rules.united-codes.com/rules/G-5070/)
 - [G-5080: Always use FORMAT_ERROR_BACKTRACE when using FORMAT_ERROR_STACK or SQLERRM.](https://dblinter-rules.united-codes.com/rules/G-5080)
 - [G-7140: Always ensure that locally defined procedures or functions are referenced.](https://dblinter-rules.united-codes.com/rules/G-7140)
 - [G-7230: Avoid declaring global variables public.](https://dblinter-rules.united-codes.com/rules/G-7230/)
 - [G-7330: Always assign values to OUT parameters.](https://dblinter-rules.united-codes.com/rules/G-7330/)
-- [G-7450: Never return a NULL value from a BOOLEAN function.](https://dblinter-rules.united-codes.com/rules/G-7450/)
 - [G-7720: Never use multiple UPDATE OF in trigger event clause.](https://dblinter-rules.united-codes.com/rules/G-7720/)
 - [G-7810: Never use SQL inside PL/SQL to read sequence numbers (or SYSDATE).](https://dblinter-rules.united-codes.com/rules/G-7810)
-- [G-7910: Never use DML within a SQL macro.](https://dblinter-rules.united-codes.com/rules/G-7910)
-- [G-8110: Never use SELECT COUNT(\*) if you are only interested in the existence of a row.](https://dblinter-rules.united-codes.com/rules/G-8110/)
-- [G-8120: Never check existence of a row to decide whether to create it or not.](https://dblinter-rules.united-codes.com/rules/G-8120/)
 - [G-9010: Always use a format model in string to date/time conversion functions.](https://dblinter-rules.united-codes.com/rules/G-9010)
-- [G-9040: Try using FX in string to date/time conversion format model to avoid fuzzy conversion.](https://dblinter-rules.united-codes.com/rules/G-9040)
-- [G-9501: Never use parameter in string expression of dynamic SQL. Use asserted local variable instead.](https://dblinter-rules.united-codes.com/rules/G-9501)
-- [G-9600: Never define more than one comment with hints.](https://dblinter-rules.united-codes.com/rules/G-9600)
 - [G-9601: Never use unknown hints.](https://dblinter-rules.united-codes.com/rules/G-9601)
-- [G-9602: Always use the alias name instead of the table name.](https://dblinter-rules.united-codes.com/rules/G-9602)
-- [G-9603: Never reference an unknown table/alias.](https://dblinter-rules.united-codes.com/rules/G-9603)
-- [G-9604: Never use an invalid stats method.](https://dblinter-rules.united-codes.com/rules/G-9604)
-- [G-9605: Never use an invalid stats keyword.](https://dblinter-rules.united-codes.com/rules/G-9605)
 
-The following 115 rules should be configured: Either they require parameters that are not applicable to any project, or they are candidates for disabling on a project-by-project basis. Therefore, these rules are disabled for the Anonymous plan.
+The following 114 rules should be configured: Either they require parameters that are not applicable to any project, or they are candidates for disabling on a project-by-project basis. Therefore, these rules are disabled for the Anonymous plan.
 
 To enable some or all rules you need to create a dbLinter account. Visit the [dbLinter Web-GUI](https://preview.dblinter.app/) click on `Sign in` and then on `Sign-up` and follow the instructions.
 
@@ -185,11 +164,9 @@ To enable some or all rules you need to create a dbLinter account. Visit the [db
 - [G-7430: Try to use no more than one RETURN statement within a function.](https://dblinter-rules.united-codes.com/rules/G-7430)
 - [G-7440: Never use OUT parameters to return values from a function.](https://dblinter-rules.united-codes.com/rules/G-7440)
 - [G-7460: Try to define your packaged/standalone function deterministic if appropriate.](https://dblinter-rules.united-codes.com/rules/G-7460)
-- [G-7510: Always prefix Oracle supplied packages with owner schema name.](https://dblinter-rules.united-codes.com/rules/G-7510)
 - [G-7520: Avoid using deprecated units in your own code.](https://dblinter-rules.united-codes.com/rules/G-7520)
 - [G-7710: Avoid cascading triggers.](https://dblinter-rules.united-codes.com/rules/G-7710)
 - [G-7730: Avoid multiple DML events per trigger.](https://dblinter-rules.united-codes.com/rules/G-7730)
-- [G-7740: Never handle multiple DML events per trigger if primary key is assigned in trigger.](https://dblinter-rules.united-codes.com/rules/G-7740)
 - [G-8210: Always use synonyms when accessing objects of another application schema.](https://dblinter-rules.united-codes.com/rules/G-8210/)
 - [G-8310: Always validate input parameter size by assigning the parameter to a size limited variable in the declaration section of program unit.](https://dblinter-rules.united-codes.com/rules/G-8310/)
 - [G-8410: Always use application locks to ensure a program unit is only running once at a given time.](https://dblinter-rules.united-codes.com/rules/G-8410/)
@@ -231,6 +208,32 @@ To enable some or all rules you need to create a dbLinter account. Visit the [db
 - [G-9217: Always follow naming conventions for object types.](https://dblinter-rules.united-codes.com/rules/G-9217)
 - [G-9218: Always follow naming conventions for object type attributes.](https://dblinter-rules.united-codes.com/rules/G-9218)
 - [G-9219: Always follow naming conventions for collection types.](https://dblinter-rules.united-codes.com/rules/G-9219)
+
+The following 23 rule checks are only available with a paid subscription:
+
+- [G-3170: Always use DEFAULT ON NULL declarations to assign default values to table columns if you refuse to store NULL values.](https://dblinter-rules.united-codes.com/rules/G-3170/)
+- [G-3190: Avoid using NATURAL JOIN.](https://dblinter-rules.united-codes.com/rules/G-3190)
+- [G-3330: Avoid autonomous transactions.](https://dblinter-rules.united-codes.com/rules/G-3330)
+- [G-4120: Avoid using \%NOTFOUND directly after the FETCH when working with BULK OPERATIONS and LIMIT clause.](https://dblinter-rules.united-codes.com/rules/G-4120)
+- [G-4140: Avoid executing any statements between a SQL operation and the usage of an implicit cursor attribute.](https://dblinter-rules.united-codes.com/rules/G-4140)
+- [G-4240: Always use a CASE instead of a NVL2 command if parameter 2 or 3 of NVL2 is either a function call or a SELECT statement.](https://dblinter-rules.united-codes.com/rules/G-4240/)
+- [G-4350: Always use 1 as lower and COUNT() as upper bound when looping through a dense array.](https://dblinter-rules.united-codes.com/rules/G-4350)
+- [G-4385: Never use a cursor for loop to check whether a cursor returns data.](https://dblinter-rules.united-codes.com/rules/G-4385)
+- [G-4387: Never use a FOR LOOP for a query that should return not more than one row.](https://dblinter-rules.united-codes.com/rules/G-4387)
+- [G-5020: Never handle unnamed exceptions using the error number.](https://dblinter-rules.united-codes.com/rules/G-5020/)
+- [G-7450: Never return a NULL value from a BOOLEAN function.](https://dblinter-rules.united-codes.com/rules/G-7450/)
+- [G-7510: Always prefix Oracle supplied packages with owner schema name.](https://dblinter-rules.united-codes.com/rules/G-7510)
+- [G-7740: Never handle multiple DML events per trigger if primary key is assigned in trigger.](https://dblinter-rules.united-codes.com/rules/G-7740)
+- [G-7910: Never use DML within a SQL macro.](https://dblinter-rules.united-codes.com/rules/G-7910)
+- [G-8110: Never use SELECT COUNT(\*) if you are only interested in the existence of a row.](https://dblinter-rules.united-codes.com/rules/G-8110/)
+- [G-8120: Never check existence of a row to decide whether to create it or not.](https://dblinter-rules.united-codes.com/rules/G-8120/)
+- [G-9040: Try using FX in string to date/time conversion format model to avoid fuzzy conversion.](https://dblinter-rules.united-codes.com/rules/G-9040)
+- [G-9501: Never use parameter in string expression of dynamic SQL. Use asserted local variable instead.](https://dblinter-rules.united-codes.com/rules/G-9501)
+- [G-9600: Never define more than one comment with hints.](https://dblinter-rules.united-codes.com/rules/G-9600)
+- [G-9602: Always use the alias name instead of the table name.](https://dblinter-rules.united-codes.com/rules/G-9602)
+- [G-9603: Never reference an unknown table/alias.](https://dblinter-rules.united-codes.com/rules/G-9603)
+- [G-9604: Never use an invalid stats method.](https://dblinter-rules.united-codes.com/rules/G-9604)
+- [G-9605: Never use an invalid stats keyword.](https://dblinter-rules.united-codes.com/rules/G-9605)
 
 ## Components
 
