@@ -44,7 +44,7 @@ Only those rules that should be applicable to any project without any configurat
 
 The free Starter plan includes all other rules, except for those reserved for the paid Essential and Professional plans.
 
-To enable, disable configure rules you need to create a dbLinter account. Visit the [dbLinter Web-GUI](https://preview.dblinter.app/) click on `Sign in` and then on `Sign-up` and follow the instructions.
+To enable, disable and configure rules you need to create a dbLinter account. Visit the [dbLinter Web-GUI](https://preview.dblinter.app/) click on `Sign in` and then on `Sign-up` and follow the instructions.
 
 | Rule                                                                                                                                                                                                    | Anonymous |  Starter  | Essential | Professional |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------:|:---------:|:---------:|:------------:|
