@@ -46,7 +46,7 @@ The free Starter plan includes all other rules, except for those reserved for th
 
 To enable, disable configure rules you need to create a dbLinter account. Visit the [dbLinter Web-GUI](https://preview.dblinter.app/) click on `Sign in` and then on `Sign-up` and follow the instructions.
 
-| Rule ID Link                                                                                                                                                                                            | Anonymous |  Starter  | Essential | Professional |
+| Rule                                                                                                                                                                                                    | Anonymous |  Starter  | Essential | Professional |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------:|:---------:|:---------:|:------------:|
 | [G-1010: Try to label your sub blocks.](https://dblinter-rules.united-codes.com/rules/G-1010)                                                                                                           |     -     |    yes    |    yes    |     yes      |
 | [G-1020: Always have a matching loop or block label.](https://dblinter-rules.united-codes.com/rules/G-1020)                                                                                             |     -     |    yes    |    yes    |     yes      |
