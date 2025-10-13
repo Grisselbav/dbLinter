@@ -36,7 +36,7 @@ html[data-theme="dark"] {
 }
 
 .site-title {
-	
+
 	display: flex;
 	align-items: center;
 
@@ -45,7 +45,7 @@ html[data-theme="dark"] {
 		margin-bottom: -3px;
 	}
 
-	& span { 
+	& span {
 		font-weight: 500;
 		padding-bottom: 1px;
 	}

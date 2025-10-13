@@ -10,7 +10,7 @@ export default defineConfig({
 	base: "/dbLinter",
 	integrations: [
 		starlight({
-			title: "dbLinter Docs",
+			title: "dbLinter",
 			logo: {
 				src: "./src/assets/logo/dbLinter-icon-color.svg",
 			},
@@ -23,13 +23,29 @@ export default defineConfig({
 			],
 			sidebar: [
 				{
-					label: "dbLinter",
-					items: ["index"],
+					label: "Home",
+					link: "/",
 				},
 				{
-					label: "Guides",
-					autogenerate: { directory: "guides" },
+					label: "Getting Started",
+					autogenerate : { directory: "getting-started" },
 				},
+				{
+					label: "Web GUI",
+					autogenerate : { directory: "web-gui" },
+				},
+				{
+					label: "VS Code Extension",
+					autogenerate : { directory: "vscode" },
+				},
+				{
+					label: "CLI",
+					autogenerate : { directory: "cli" },
+				},
+				{
+					label: "SonarQube Plugin",
+					autogenerate : { directory: "sonarqube" },
+				}
 			],
 			customCss: ["./src/styles/uc.css"],
 			components: {
