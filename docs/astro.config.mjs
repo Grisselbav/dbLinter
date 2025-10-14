@@ -3,6 +3,7 @@ import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
 import starlightImageZoom from "starlight-image-zoom";
 import starlightLinksValidator from "starlight-links-validator";
+import mermaid from 'astro-mermaid';
 
 // https://astro.build/config
 export default defineConfig({
@@ -33,7 +34,11 @@ export default defineConfig({
 				{
 					label: "Tools",
 					autogenerate : { directory: "tools" },
-				}
+				},
+				{
+					label: "Reference",
+					autogenerate : { directory: "reference" },
+			   }
 			],
 			customCss: ["./src/styles/uc.css"],
 			components: {
@@ -44,5 +49,9 @@ export default defineConfig({
 				starlightImageZoom(),
 			],
 		}),
+		mermaid({
+      	theme: 'forest',
+      	autoTheme: true
+    	})
 	],
 });

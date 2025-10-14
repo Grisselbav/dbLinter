@@ -1,0 +1,72 @@
+---
+title: Architecture
+description: dbLinter Architecture
+sidebar:
+  order: 40
+---
+
+## Big Picture
+
+Here is an overview of the components and their runtime dependencies (the target of an arrow means "used by").
+
+```mermaid
+flowchart
+    subgraph Server
+        Repo[(Repo
+              Database)] --> GUI
+        Repo --> Repo-REST-API(Repo
+                               REST API)
+        GUI(Web GUI)
+    end
+    Repo-REST-API --> Client
+    subgraph Client
+        Validator --> LS
+        LS --> CLI
+        LS --> VSCode(VS Code
+                      Extension)
+        LS --> SonarQube(SonarQube
+                         Plugin)
+        LS(Language
+           Server)
+    end
+```
+
+## Server Components
+
+tbd
+
+### Repo Database
+
+tbd
+
+### Web GUI
+
+tbd
+
+### Repo REST API
+
+tbd
+
+## Client Components
+
+tbd
+
+### Validator
+
+tbd
+
+### Language Server
+
+tbd
+
+### CLI
+
+tbd
+
+### VS Code Extension
+
+tbd
+
+### SonarQube Plugin
+
+tbd
