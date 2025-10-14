@@ -19,5 +19,21 @@ const year = new Date().getFullYear();
     & p {
       margin: 0.75rem 0;
     }
+
+    & a {
+      color: var(--sl-color-accent-high); /* Dark mode default */
+    }
+
+    & a:hover {
+      color:var(--sl-color-white); /* Dark mode hover */
+    }
+  }
+
+  :root[data-theme='light'] footer a {
+    color: var(--sl-color-accent); /* Light mode default */
+  }
+
+  :root[data-theme='light'] footer a:hover {
+    color: var(--sl-color-white); /* Light mode hover */
   }
 </style>

@@ -63,3 +63,13 @@ sup {
 		text-underline-offset: 2.1px;
 	}
 }
+
+/* Remove default underlines from all links */
+a {
+	text-decoration: none;
+}
+
+/* Add underline on hover for all links */
+a:hover {
+	text-decoration: underline;
+}
