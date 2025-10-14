@@ -1,0 +1,59 @@
+---
+title: Essential Subscription
+description: Unlock quick fixes, all checks, workspace analysis in the IDE and as part of a CI/CD pipeline
+sidebar:
+  order: 30
+---
+
+## Create a dbLinter Account
+
+Create a dbLinter account using your business e-mail address. You can skip this step,
+if you have already created such an account for a Starter subscription.
+
+import { Steps } from '@astrojs/starlight/components';
+
+<Steps>
+1. Open the [Web-GUI login dialog](https://preview.dblinter.app/ords/r/dblinter/dblinter-console/login) and click on `Sign up`.
+2. Enter your `E-mail address` and `Display name` and click on `Send token`.
+3. Check your e-mails and copy the confirmation token into the clipboard and paste it into the `Confirm sign-up` dialog. Enter a password (twice) and click on `Confirm`.
+</Steps>
+
+## Order a dbLinter Tenant
+
+In the last step, you set up a personal free tenant. For an essential subscription you need to order a dedicated tenant.
+Your business e-mail address will be registered as administrator.
+
+The the following information is needed:
+
+import { Card, CardGrid } from "@astrojs/starlight/components";
+
+<CardGrid>
+  <Card title="Tenant Name" icon="seti:favicon">
+    Identifies a tenant uniquely within a dbLinter repository.
+    For example a company name. The tenant name is case-insensitive.
+  </Card>
+  <Card title="Number of Seats" icon="setting">
+    Total number of developers and technical users (for CI/CD pipelines).
+    Moreover, the number of seats is equivalent to the maximum number of concurrent dbLinter sessions for a tenant.
+  </Card>
+</CardGrid>
+
+The subscription fee is calculated on the basis of the number of seats. See [product site](https://www.united-codes.com/products/dblinter/#pricing)
+where you can also place your order.
+
+## Unlocked Features
+
+<CardGrid>
+  <Card title="Quick Fixes" icon="approve-check-circle">
+    Apply quick fixes in the IDE. For example, to fix [G-3130: Try to use ANSI SQL-92 join syntax](https://dblinter-rules.united-codes.com/rules/G-3130/).
+  </Card>
+  <Card title="CLI" icon="rocket">
+    Run checks and tests for a workspace from the IDE or the command line to integrate dbLinter results in your CI/CD pipelines.
+  </Card>
+  <Card title="More Rules" icon="list-format">
+    Additional 20+ predefined rules. For example, [G-9501: Never use parameter in string expression of dynamic SQL. Use asserted local variable instead](https://dblinter-rules.united-codes.com/rules/G-9501/).
+  </Card>
+  <Card title="More Configs" icon="setting">
+    Unlimited number of configurations that can be used from all clients.
+  </Card>
+</CardGrid>
