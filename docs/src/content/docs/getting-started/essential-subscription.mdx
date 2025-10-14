@@ -38,8 +38,15 @@ import { Card, CardGrid } from "@astrojs/starlight/components";
   </Card>
 </CardGrid>
 
-The subscription fee is calculated on the basis of the number of seats. See [product site](https://www.united-codes.com/products/dblinter/#pricing)
-where you can also place your order.
+The subscription fee is calculated on the basis of the number of seats.
+
+import { LinkCard } from '@astrojs/starlight/components';
+
+<LinkCard
+  title="Place Order"
+  description="Compare the different subscription plans and prices, choose the number of seats you need and place your order."
+  href="https://www.united-codes.com/products/dblinter/#pricing"
+/>
 
 ## Unlocked Features
 
