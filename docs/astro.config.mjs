@@ -31,20 +31,8 @@ export default defineConfig({
 					autogenerate : { directory: "getting-started" },
 				},
 				{
-					label: "Web GUI",
-					autogenerate : { directory: "web-gui" },
-				},
-				{
-					label: "VS Code Extension",
-					autogenerate : { directory: "vscode" },
-				},
-				{
-					label: "CLI",
-					autogenerate : { directory: "cli" },
-				},
-				{
-					label: "SonarQube Plugin",
-					autogenerate : { directory: "sonarqube" },
+					label: "Tools",
+					autogenerate : { directory: "tools" },
 				}
 			],
 			customCss: ["./src/styles/uc.css"],
