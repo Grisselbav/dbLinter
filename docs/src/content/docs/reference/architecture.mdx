@@ -7,51 +7,78 @@ sidebar:
 
 ## Big Picture
 
-Here is an overview of the components and their runtime dependencies (the target of an arrow means "used by").
+Here is an overview of the dbLinter components and their major data flows.
 
 ```mermaid
 flowchart
-    subgraph Server
-        Repo[(Repo
-              Database)] --> GUI
-        Repo --> Repo-REST-API(Repo
-                               REST API)
-        GUI(Web GUI)
+    subgraph Cloud ["⛅ Cloud"]
+        Repo[(Repo)] <--> GUI([Web GUI])
+        Repo <--> REST-API(REST-API)
+        REST-API --rules--> Rule-Site([Static
+                                      Rule Site])
+        click Repo "#repo"
+        click GUI "#web-gui"
+        click REST-API "#rest-api"
+        click Rule-Site "#static-rule-site"
     end
-    Repo-REST-API --> Client
-    subgraph Client
-        Validator --> LS
-        LS --> CLI
-        LS --> VSCode(VS Code
-                      Extension)
-        LS --> SonarQube(SonarQube
-                         Plugin)
-        LS(Language
-           Server)
+
+    subgraph Client ["💻 Local⠀⠀⠀⠀⠀⠀⠀"]
+        LS[[Language
+            Server]] <--> CLI(CLI)
+        LS <--> VSCode(VS Code
+                       Extension)
+        LS <--> SonarQube(SonarQube
+                          Plugin)
+        click LS "#language-server"
+        click CLI "#cli"
+        click VSCode "#vs-code-extension"
+        click SonarQube "#sonarqube-plugin"
     end
+
+    REST-API --config---> LS
+    LS --login--> REST-API
 ```
 
-## Server Components
+## Cloud Components
 
-tbd
+Cloud components are installed on servers managed by United Codes and Grisselbav.
 
-### Repo Database
+### Repo
 
-tbd
+The dbLinter repository is implemented using the [PinkDB paradigm](https://www.salvis.com/blog/2018/07/18/the-pink-database-paradigm-pinkdb/)
+with an [Oracle AI Database 26ai](https://docs.oracle.com/en/database/oracle/oracle-database/26/index.html).
+For example, this means that the [Web GUI](#web-gui) and the [REST-API](#rest-api) access the database via dedicated users
+based on the [principle of least privileges](https://en.wikipedia.org/wiki/Principle_of_least_privilege).
 
 ### Web GUI
 
-tbd
+The dbLiner Web GUI is built with [Oracle APEX](https://apex.oracle.com/en/). It is used for managing tenant-specific data,
+such as rules, configurations and user access.
 
-### Repo REST API
+For more information, see [Web GUI](../../tools/web-gui) in the Tools section.
 
-tbd
+### REST-API
 
-## Client Components
+The dbLinter REST-API is a [SpringBoot](https://spring.io/projects/spring-boot) application. The following services are provided:
 
-tbd
+| Subject | Communication via | Description                                                                     |
+| ------- | ----------------- | ------------------------------------------------------------------------------- |
+| Email   | JMS               | Sending e-mails synchronously and asynchronously via Oracle AQ and Spring Mail. |
+| Rules   | REST              | Providing the rules for generating the static rules site.                       |
+| Config  | REST              | Get the configuration required to run checks and SQL-based tests.               |
+| Ignore  | REST              | Add tests to be ignored to prevent them from being reported in subsequent runs. |
 
-### Validator
+All REST-API calls require authentication using an API key consisting of the tenant name, the user's email address and a personal access token.
+
+### Static Rule Site
+
+The dbLinter static rule site is generated daily with [Svelte](https://svelte.dev/) using the latest public rules from the dbLinter repository.
+This website makes the dbLinter rules available independently of the dbLinter tool suite.
+
+This static rule site is used to reference the rules in the `Problems` panel in the [VS Code Extension](#vs-code-extension)
+and in reports produced by the [CLI](#cli).
+
+## Local Components
 
 tbd
 
