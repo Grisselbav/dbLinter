@@ -59,7 +59,8 @@ For more information, see [Web GUI](/dbLinter/tools/web-gui) in the Tools sectio
 
 ### REST-API
 
-The dbLinter REST-API is a [SpringBoot](https://spring.io/projects/spring-boot) application. The following services are provided:
+The dbLinter REST-API is a [SpringBoot](https://spring.io/projects/spring-boot) application. It is an internal API
+used only by other dbLinter components. The following subjects are covered:
 
 | Subject | Communication via | Description                                                                     |
 | ------- | ----------------- | ------------------------------------------------------------------------------- |
@@ -80,11 +81,41 @@ and in reports produced by the [CLI](#cli).
 
 ## Local Components
 
-tbd
+Local components run on machines controlled by the dbLinter users.
 
 ### Language Server
 
-tbd
+The dbLinter Language Server implements a subset of [Microsoft's Language Server Protocol (LSP)](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/)
+using [Eclipse LSP4J](https://projects.eclipse.org/projects/technology.lsp4j). The Language Server is embedded in the [CLI](#cli) and the [SonarQube Plugin](#sonarqube-plugin).
+
+The following LSP methods are implemented:
+
+- [initialize](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialize)
+- [shutdown](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#shutdown)
+- [exit](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#exit)
+- [setTrace](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#setTrace) (empty implementation)
+- [workspace/didChangeConfiguration](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#workspace_didChangeConfiguration)
+- [workspace/didChangeWatchedFiles](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#workspace_didChangeWatchedFiles) (empty implementation)
+- [textDocument/diagnostic](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_diagnostic)
+- [textDocument/didOpen](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_didOpen)
+- [textDocument/didChange](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_didChange)
+- [textDocument/didClose](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_didClose)
+- [textDocument/didSave](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_didSave) (empty implementation)
+- [textDocument/codeAction](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_codeAction)
+- [codeAction/resolve](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#codeAction_resolve)
+
+Additionally, the Language Server implements the following non-standard JSON-RPC methods used by other dbLinter components:
+
+| Method                     | Description                                                               |
+| -------------------------- | ------------------------------------------------------------------------- |
+| dbLinter/tests             | Get all SQL-based tests that are part of the configuration.               |
+| dbLinter/runTest           | Run a SQL-based test.                                                     |
+| dbLinter/ignoreTestResults | Save test results to be ignored in the configuration.                     |
+| dbLinter/hasFeature        | Check if a dbLinter feature is available.                                 |
+| dbLinter/isConfigLoaded    | Check if the configuration is loaded.                                     |
+| dbLinter/isUriIncluded     | Checks if a given URI should be processed according to the configuration. |
+| dbLinter/plsqlMetric       | Get the PL/SQL metrics for a given URI.                                   |
+| dbLinter/rules             | Get the rules defined in the configuration.                               |
 
 ### CLI
 
