@@ -76,8 +76,10 @@ All REST-API calls require authentication using an API key consisting of the ten
 The dbLinter static rule site is generated daily with [Svelte](https://svelte.dev/) using the latest public rules from the dbLinter repository.
 This website makes the dbLinter rules available independently of the dbLinter tool suite.
 
-This static rule site is used to reference the rules in the `Problems` panel in the [VS Code Extension](#vs-code-extension)
+During the preview phase, this static rule site was used to reference the rules in the `Problems` panel of the [VS Code Extension](#vs-code-extension),
 and in reports produced by the [CLI](#cli).
+
+After the preview phase, the dbLinter tools will no longer use the static rule site.
 
 ## Local Components
 
@@ -90,32 +92,32 @@ using [Eclipse LSP4J](https://projects.eclipse.org/projects/technology.lsp4j). T
 
 The following LSP methods are implemented:
 
-- [initialize](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialize)
-- [shutdown](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#shutdown)
-- [exit](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#exit)
-- [setTrace](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#setTrace) (empty implementation)
-- [workspace/didChangeConfiguration](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#workspace_didChangeConfiguration)
-- [workspace/didChangeWatchedFiles](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#workspace_didChangeWatchedFiles) (empty implementation)
-- [textDocument/diagnostic](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_diagnostic)
-- [textDocument/didOpen](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_didOpen)
-- [textDocument/didChange](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_didChange)
-- [textDocument/didClose](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_didClose)
-- [textDocument/didSave](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_didSave) (empty implementation)
-- [textDocument/codeAction](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_codeAction)
-- [codeAction/resolve](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#codeAction_resolve)
+| Method                                                                                                                                                           | Description                                             |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| [initialize](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialize)                                             | Initialize the language server.                         |
+| [shutdown](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#shutdown)                                                 | Close the dbLinter session and free resources.          |
+| [exit](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#exit)                                                         | Exit the language server.                               |
+| [workspace/didChangeConfiguration](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#workspace_didChangeConfiguration) | Apply a configuration according to the client settings. |
+| [textDocument/diagnostic](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_diagnostic)                   | Get the issues for an URI.                              |
+| [textDocument/didOpen](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_didOpen)                         | Add the content of an URI to the cache.                 |
+| [textDocument/didChange](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_didChange)                     | Update the cache with the content of the changed URI.   |
+| [textDocument/didClose](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_didClose)                       | Remove the URI from the cache.                          |
+| [textDocument/codeAction](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_codeAction)                   | Get the quick fixes for a document range of an URI.     |
+| [codeAction/resolve](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#codeAction_resolve)                             | Apply a quick fix.                                      |
 
-Additionally, the Language Server implements the following non-standard JSON-RPC methods used by other dbLinter components:
+Additionally, the Language Server implements the following non-standard JSON-RPC methods used by the [VS Code Extension](#vs-code-extension),
+the [CLI](#cli) and the [SonarQube Plugin](#sonarqube-plugin):
 
-| Method                     | Description                                                               |
-| -------------------------- | ------------------------------------------------------------------------- |
-| dbLinter/tests             | Get all SQL-based tests that are part of the configuration.               |
-| dbLinter/runTest           | Run a SQL-based test.                                                     |
-| dbLinter/ignoreTestResults | Save test results to be ignored in the configuration.                     |
-| dbLinter/hasFeature        | Check if a dbLinter feature is available.                                 |
-| dbLinter/isConfigLoaded    | Check if the configuration is loaded.                                     |
-| dbLinter/isUriIncluded     | Checks if a given URI should be processed according to the configuration. |
-| dbLinter/plsqlMetric       | Get the PL/SQL metrics for a given URI.                                   |
-| dbLinter/rules             | Get the rules defined in the configuration.                               |
+| Method                     | Description                                                              |
+| -------------------------- | ------------------------------------------------------------------------ |
+| dbLinter/tests             | Get all SQL-based tests that are part of the configuration.              |
+| dbLinter/runTest           | Run a SQL-based test.                                                    |
+| dbLinter/ignoreTestResults | Save test results to be ignored in the configuration.                    |
+| dbLinter/hasFeature        | Check if a dbLinter feature is available.                                |
+| dbLinter/isConfigLoaded    | Check if the configuration is loaded.                                    |
+| dbLinter/isUriIncluded     | Check if a given URI should be processed according to the configuration. |
+| dbLinter/plsqlMetric       | Get the PL/SQL metrics for a given URI.                                  |
+| dbLinter/rules             | Get the rules defined in the configuration.                              |
 
 ### CLI
 
