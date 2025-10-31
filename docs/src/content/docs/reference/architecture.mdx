@@ -62,12 +62,12 @@ For more information, see [Web GUI](/dbLinter/tools/web-gui) in the Tools sectio
 The dbLinter REST-API is a [SpringBoot](https://spring.io/projects/spring-boot) application. It is an internal API
 used only by other dbLinter components. The following subjects are covered:
 
-| Subject | Communication via | Description                                                                     |
-| ------- | ----------------- | ------------------------------------------------------------------------------- |
-| Email   | JMS               | Sending e-mails synchronously and asynchronously via Oracle AQ and Spring Mail. |
-| Rules   | REST              | Providing the rules for generating the static rules site.                       |
-| Config  | REST              | Get the configuration required to run checks and SQL-based tests.               |
-| Ignore  | REST              | Add tests to be ignored to prevent them from being reported in subsequent runs. |
+| Subject | Communication via | Description                                               |
+| ------- | ----------------- | --------------------------------------------------------- |
+| Email   | JMS               | Sending e-mails via Oracle AQ and Spring Mail.            |
+| Rules   | REST              | Providing the rules for generating the static rules site. |
+| Config  | REST              | Get the configuration to run checks and SQL-based tests.  |
+| Ignore  | REST              | Add test result to be ignored in subsequent runs.         |
 
 All REST-API calls require authentication using an API key consisting of the tenant name, the user's email address and a personal access token.
 
@@ -99,34 +99,49 @@ The following LSP methods are implemented:
 | [exit](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#exit)                                                         | Exit the language server.                               |
 | [workspace/didChangeConfiguration](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#workspace_didChangeConfiguration) | Apply a configuration according to the client settings. |
 | [textDocument/diagnostic](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_diagnostic)                   | Get the issues for an URI.                              |
-| [textDocument/didOpen](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_didOpen)                         | Add the content of an URI to the cache.                 |
-| [textDocument/didChange](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_didChange)                     | Update the cache with the content of the changed URI.   |
-| [textDocument/didClose](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_didClose)                       | Remove the URI from the cache.                          |
-| [textDocument/codeAction](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_codeAction)                   | Get the quick fixes for a document range of an URI.     |
+| [textDocument/didOpen](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_didOpen)                         | Add an URI and its content to the cache.                |
+| [textDocument/didChange](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_didChange)                     | Update the content of an URI in the cache.              |
+| [textDocument/didClose](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_didClose)                       | Remove an URI from the cache.                           |
+| [textDocument/codeAction](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_codeAction)                   | Get the quick fixes for a text range of an URI.         |
 | [codeAction/resolve](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#codeAction_resolve)                             | Apply a quick fix.                                      |
 
 Additionally, the Language Server implements the following non-standard JSON-RPC methods used by the [VS Code Extension](#vs-code-extension),
 the [CLI](#cli) and the [SonarQube Plugin](#sonarqube-plugin):
 
-| Method                     | Description                                                              |
-| -------------------------- | ------------------------------------------------------------------------ |
-| dbLinter/tests             | Get all SQL-based tests that are part of the configuration.              |
-| dbLinter/runTest           | Run a SQL-based test.                                                    |
-| dbLinter/ignoreTestResults | Save test results to be ignored in the configuration.                    |
-| dbLinter/hasFeature        | Check if a dbLinter feature is available.                                |
-| dbLinter/isConfigLoaded    | Check if the configuration is loaded.                                    |
-| dbLinter/isUriIncluded     | Check if a given URI should be processed according to the configuration. |
-| dbLinter/plsqlMetric       | Get the PL/SQL metrics for a given URI.                                  |
-| dbLinter/rules             | Get the rules defined in the configuration.                              |
+| Method                     | Description                             |
+| -------------------------- | ----------------------------------------|
+| dbLinter/tests             | Get all SQL-based tests.                |
+| dbLinter/runTest           | Run a SQL-based test.                   |
+| dbLinter/ignoreTestResults | Save test results to be ignored.        |
+| dbLinter/hasFeature        | Check if a dbLinter feature is enabled. |
+| dbLinter/isConfigLoaded    | Check if the configuration is loaded.   |
+| dbLinter/isUriIncluded     | Check if a given URI is in the scope.   |
+| dbLinter/plsqlMetric       | Get the PL/SQL metrics for a given URI. |
+| dbLinter/rules             | Get all rules.                          |
 
 ### CLI
 
-tbd
+The dbLinter Command Line Interface (CLI) is a [SpringBoot](https://spring.io/projects/spring-boot) application.
+It can start a language server and run checks and SQL-based tests, producing various output formats.
+The CLI is included in the VS Code extension, but it can also be used standalone,
+for example within a CI/CD pipeline.
+
+For more information, see [CLI](/dbLinter/tools/cli) in the Tools section.
 
 ### VS Code Extension
 
-tbd
+The dbLinter VS Code Extension can be installed in any IDE that implement the [VS Code extension API](https://code.visualstudio.com/api),
+such as [Visual Studio Code](https://code.visualstudio.com/), [VSCodium](https://vscodium.com/), [Cursor](https://cursor.com/), [Windsurf](https://windsurf.com/editor)
+and [Theia IDE](https://theia-ide.org/#theiaide).
+
+The extension provides the rule violations for URIs in scope via the included language server.
+It further can run SQL-based tests and CLI commands.
+
+For more information, see [VS Code Extension](/dbLinter/tools/vscode) in the Tools section.
 
 ### SonarQube Plugin
 
-tbd
+The dbLinter SonarQube Plugin can be installed in the free [SonarQube Community Build](https://www.sonarsource.com/open-source-editions/sonarqube-community-edition/)
+as well as in any commercial [SonarQube Server](https://www.sonarsource.com/products/sonarqube/server/) edition.
+
+For more information, see [SonarQube Plugin](/dbLinter/tools/sonarqube) in the Tools section.
