@@ -62,12 +62,12 @@ For more information, see [Web GUI](/dbLinter/tools/web-gui) in the Tools sectio
 The dbLinter REST-API is a [SpringBoot](https://spring.io/projects/spring-boot) application. It is an internal API
 used only by other dbLinter components. The following subjects are covered:
 
-| Subject | Communication via | Description                                               |
-| ------- | ----------------- | --------------------------------------------------------- |
-| Email   | JMS               | Sending e-mails via Oracle AQ and Spring Mail.            |
-| Rules   | REST              | Providing the rules for generating the static rules site. |
-| Config  | REST              | Get the configuration to run checks and SQL-based tests.  |
-| Ignore  | REST              | Add test result to be ignored in subsequent runs.         |
+| Subject | Communication via | Description                                              |
+| ------- | ----------------- | -------------------------------------------------------- |
+| Email   | JMS               | Send e-mails via Oracle AQ and Spring Mail.              |
+| Rules   | REST              | Get the rules for generating the static rules site.      |
+| Config  | REST              | Get the configuration to run checks and SQL-based tests. |
+| Ignore  | REST              | Add test result to be ignored in subsequent runs.        |
 
 All REST-API calls require authentication using an API key consisting of the tenant name, the user's email address and a personal access token.
 
