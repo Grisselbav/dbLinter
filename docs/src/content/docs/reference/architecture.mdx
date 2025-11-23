@@ -2,7 +2,7 @@
 title: Architecture
 description: dbLinter Architecture
 sidebar:
-  order: 40
+  order: 10
 ---
 
 ## Big Picture
@@ -54,8 +54,6 @@ based on the [principle of least privileges](https://en.wikipedia.org/wiki/Princ
 
 The dbLiner Web GUI is built with [Oracle APEX](https://apex.oracle.com/en/). It is used for managing tenant-specific data,
 such as rules, configurations and user access.
-
-For more information, see [Web GUI](/dbLinter/tools/web-gui) in the Tools section.
 
 ### REST-API
 
@@ -123,22 +121,18 @@ It can start a language server and run checks and SQL-based tests, producing var
 The CLI is included in the [VS Code Extension](#vs-code-extension), but it can also be used standalone,
 for example within a CI/CD pipeline.
 
-For more information, see [CLI](/dbLinter/tools/cli) in the Tools section.
-
 ### VS Code Extension
 
 The dbLinter VS Code Extension can be installed in any IDE that implement the [Visual Studio Code Extension API](https://code.visualstudio.com/api),
 such as [Visual Studio Code](https://code.visualstudio.com/), [VSCodium](https://vscodium.com/), [Cursor](https://cursor.com/), [Windsurf](https://windsurf.com/editor)
 and [Theia IDE](https://theia-ide.org/#theiaide).
 
-The extension provides the rule violations for URIs in the scope via the included language server.
+The extension provides rule violations and quick fixes for given URIs via the included language server.
 It further can run SQL-based tests and CLI commands.
-
-For more information, see [VS Code Extension](/dbLinter/tools/vscode) in the Tools section.
 
 ### SonarQube Plugin
 
 The dbLinter SonarQube Plugin can be installed in the free [SonarQube Community Build](https://www.sonarsource.com/open-source-editions/sonarqube-community-edition/)
 as well as in any commercial [SonarQube Server](https://www.sonarsource.com/products/sonarqube/server/) edition.
 
-For more information, see [SonarQube Plugin](/dbLinter/tools/sonarqube) in the Tools section.
+The plugin is used by the [SonarQube Scanner](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/scanners/sonarscanner) to analyse code and show the results on the SonarQube Server web application.
