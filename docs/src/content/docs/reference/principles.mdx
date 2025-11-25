@@ -1,0 +1,175 @@
+---
+title: Principles
+description: dbLinter principles for provided rules and quick fixes.
+sidebar:
+  order: 20
+---
+
+dbLinter principles for provided rules and quick fixes.
+
+## Principles for Rules
+
+### Don't Copy the Compiler
+
+A rule must not report anything that can be deduced by the compiler (PL/SQL stored objects or views).
+Such rules would not provide any additional value,
+even if some value may be considered for code in scripts that are not deployed to the database.
+This is not the scope of the dbLinter ruleset.
+Otherwise, we would end up providing a rule for every job the compiler can do.
+
+### No False Positives
+
+At best, a rule should produce no false positives.
+False positives are a pain for the developer.
+Marking them as "code smells" does not really help.
+A developer will stop relying on dbLinter if false positives occur in cases where they could be avoided.
+
+### Some False Negatives
+
+A rule may produce false negatives.
+False negatives are not as bad as false positives.
+
+### Static Code Analysis First
+
+A rule should be implemented using static code analysis without a database connection.
+A database connection is always optional.
+Producing no issues without a database connection is considered OK.
+
+### SQL-based Tests Second
+
+Implementing a rule using SQL-based tests is better than nothing,
+but the feedback is not as good as a diagnostic marker produced during coding.
+Nevertheless, the Oracle Data Dictionary contains a great deal of information for assessing application quality.
+
+### No Code Style
+
+Rules related to formatting are not part of the dbLinter ruleset.
+It will be a separate product/component with a separate configuration.
+A formatter can be applied to a selection of code, a file, or the entire project, and deals with whitespace between tokens.
+Case conventions for keywords and identifiers are sometimes also handled by a formatter.
+All these rules are not part of dbLinter.
+
+However, there are a lot of similarities between formatter rules and other rules.
+SQLFluff is a tooling that uses normal rules to configure its formatter.
+The impact of the formatter is something which can be shown quite well with rules.
+
+A main difference is, that some formatter rules are mandatory (e.g. setting the line length or the tab size etc.).
+As a result some rules cannot be disabled, they have to be configured. E.g. identifiers. upper/lower/ignore.
+
+For SQL-based tests we have found a way to combine them with static code analysis.
+We still need to define how we want to treat formatter rules.
+Therefore, for the time being we exclude formatter/code style rules.
+
+### Not Contradictory
+
+The ruleset provided must not contain contradictory rules.
+For example, a rule that says to use ANSI-92 joins and another rule that says to use Oracle joins.
+Either choose one style (in this case ANSI-92 joins) or provide a rule that can be configured using parameters.
+Even though all the rules can be configured and are similar to a buffet,
+we should give some guidance as to what we think is good practice.
+
+Of course, this can be overridden by custom rules.
+
+### Legit
+
+A rule should be based on common understanding, so we should include references to sources to legitimate the rule.
+
+### Easy To Understand
+
+A rule should be described using non-compliant and compliant examples.
+The example should be easy to follow.
+The examples may violate other rules to keep the examples as simple as possible.
+
+### Exception
+
+In the first version of dbLinter, we have adopted all the Trivadis rules "as is".
+In future versions, we will evaluate them for compliance with the principles outlined here.
+
+## Title and Reason of a Rule
+
+The Trivadis Guidelines used the following starting keywords in the rule title:
+
+| Keyword | Meaning                                                                         |
+|---------|---------------------------------------------------------------------------------|
+| Always  | Emphasizes this rule must be enforced.                                          |
+| Never   | Emphasizes this action must not happen.                                         |
+| Avoid   | Emphasizes that the action should be prevented, but some exceptions may exist.  |
+| Try     | Emphasizes that the rule should be attempted whenever possible and appropriate. |
+
+We use the same principle.
+
+However, even rules starting with `Always` and `Never` have a scope where they can be applied.
+This scope should be specified in the reason for the rule.
+Limitations and exceptions should be mentioned.
+
+## Principles for Quick Fixes
+
+### Never Break Code
+
+Applying a quick fix must never introduce syntax errors.
+And a quick fix must not change the runtime behaviour.
+A partial code fix, where the developer must amend the code after applying the quick fix, should be avoided.
+
+Exceptions:
+
+  - Code which is buggy before applying a quick fix. A `to_date` call without format model violating the rule
+    [G-9010: Always use a format model in string to date/time conversion functions.](https://dblinter-rules.united-codes.com/rules/G-9010/), for example.
+    A quick fix which adds a format mask can lead to a different runtime behaviour. However, in this case
+    an explicit format mask (even if wrong) is better than none. Providing a good default should minimise
+    issues (see "Improve Result with Database Access" below).
+
+  - Code which requires changes in other artifacts. The quick fix for
+    [G-8210: Always use synonyms when accessing objects of another application schema.](https://dblinter-rules.united-codes.com/rules/G-8210/)
+    removes a schema prefix. This leaves the code in invalid state if no synonym exists. The later compile error is
+    wanted and the first step in fixing the code. This quick fix may produce a semantic error, but no syntax error.
+
+  - Template quick fixes as first step in solving a problem. The quick fix `Add start label <<change_me>>.` for a violation of
+    [G-1010: Try to label your sub blocks.](https://dblinter-rules.united-codes.com/rules/G-1010/),
+    is good. It provides an intermediate working solution and after changing the intermediate start label,
+    the next quick fix can be applied to add the missing end label.
+
+### Add Rule to Parameter `DisableAllQuickFix` for Template Quick Fixes with `partOfFixAll`
+
+Template quick fixes require a code change after applying a quick fix.
+Therefore, it should not be applied to the whole file by default.
+
+### Enable `partOfFixAll` for Safe Quick Fixes Only
+
+If there is only one quick fix and it is safe to apply, this means there are no known false positives and
+it is **always** the right thing to do, then `partOfFixAll` should be enabled. Otherwise, it should be disabled,
+which is the default.
+
+### Improve Result with Database Access
+
+If a `CheckConfig.INSTANCE.getJdbcTemplate()` is available, it should be used to improve the quick fix result.
+However, if the JdbcTemplate is not available, the quick fix should still work.
+
+For example, the quick fix for a violation of
+[G-9010: Always use a format model in string to date/time conversion functions.](https://dblinter-rules.united-codes.com/rules/G-9010/)
+in a `to_date` conversion can provide the default format model `FXYYYY-MM-DD`
+when no database connection is available. However, when the database connection is available the result of
+`select value from nls_session_parameters where parameter = 'NLS_DATE_FORMAT';` should be used (adding a
+leading `FX` if it is not already part of the format model). It's the best default and leads probably to the
+same runtime behaviour as the code before applying the quick fix.
+
+The result of an SQL query should be cached to minimise the impact on the runtime performance.
+
+### Avoid `@dbLinter ignore(G-nnnn): False positive`
+
+We should add `addFalsePositiveQuickFix(ctx)` only if we are aware of cases where a false positive is possible
+and we cannot provide a reasonable default reason. However, we should add a comment before the
+call, to explain the case where a false positive is possible.
+
+The reason is, that we consider a false positive a bug, when it happens often. Hence, it helps to have it in the
+code to quantify the issue.
+
+For example [G-3330: Avoid autonomous transactions.](https://dblinter-rules.united-codes.com/rules/G-3330/)
+will report a violation in some parts of an application.
+It's expected and not a false positive.
+Therefore it is better to add a `addNoSonarQuickFix(ctx, 'Using autonomouse transaction because ...')` instead of an
+`addFalsePositiveQuickFix(ctx)` call. It's a template quick fix, which requires to add the reason for the rule violation.
+
+### A `@dbLinter` Quick Fix Does Not Count as Quick Fix
+
+In the rule repository we maintain the column `RULE_HAS_QUICK_FIX` in the table `DBL_RULES`.
+We set this value only to `true` if and only if we provide a real quick fix and not just a `@dbLiner` marker comment.
