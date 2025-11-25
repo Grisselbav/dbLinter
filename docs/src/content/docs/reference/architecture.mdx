@@ -50,6 +50,15 @@ with an [Oracle AI Database 26ai](https://docs.oracle.com/en/database/oracle/ora
 For example, this means that the [Web GUI](#web-gui) and the [REST-API](#rest-api) access the database via dedicated users
 based on the [principle of least privileges](https://en.wikipedia.org/wiki/Principle_of_least_privilege).
 
+The following data areas are maintained in the repo:
+
+- Users
+- Tenants
+- Rules
+- Validators (implemetation of checks and quick fixes)
+- Configurations
+- Runtime information (sessions, logs)
+
 ### Web GUI
 
 The dbLinter Web GUI is built with [Oracle APEX](https://apex.oracle.com/en/). It is used for managing tenant-specific data,
