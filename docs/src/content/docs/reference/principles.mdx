@@ -74,7 +74,7 @@ Of course, this can be overridden by custom rules.
 
 A rule should be based on common understanding, so we should include references to sources to legitimate the rule.
 
-### Easy To Understand
+### Easy to Understand
 
 A rule should be described using non-compliant and compliant examples.
 The example should be easy to follow.
@@ -166,7 +166,7 @@ code to quantify the issue.
 For example [G-3330: Avoid autonomous transactions.](https://dblinter-rules.united-codes.com/rules/G-3330/)
 will report a violation in some parts of an application.
 It's expected and not a false positive.
-Therefore it is better to add a `addNoSonarQuickFix(ctx, 'Using autonomouse transaction because ...')` instead of an
+Therefore it is better to add a `addNoSonarQuickFix(ctx, 'Using autonomous transaction because ...')` instead of an
 `addFalsePositiveQuickFix(ctx)` call. It's a template quick fix, which requires to add the reason for the rule violation.
 
 ### A `@dbLinter` Quick Fix Does Not Count as Quick Fix
