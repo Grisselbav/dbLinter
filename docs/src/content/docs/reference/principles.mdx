@@ -44,21 +44,28 @@ Nevertheless, the Oracle Data Dictionary contains a great deal of information fo
 ### No Code Style
 
 Rules related to formatting are not part of the dbLinter ruleset.
-It will be a separate product/component with a separate configuration.
+
 A formatter can be applied to a selection of code, a file, or the entire project, and deals with whitespace between tokens.
 Case conventions for keywords and identifiers are sometimes also handled by a formatter.
 All these rules are not part of dbLinter.
 
 However, there are a lot of similarities between formatter rules and other rules.
-SQLFluff is a tooling that uses normal rules to configure its formatter.
+SQLFluff or the ESLint Stylistic plugin use normal rules to configure the formatter.
 The impact of the formatter is something which can be shown quite well with rules.
 
 A main difference is, that some formatter rules are mandatory (e.g. setting the line length or the tab size etc.).
-As a result some rules cannot be disabled, they have to be configured. E.g. identifiers. upper/lower/ignore.
+As a result some rules cannot be disabled, they have to be configured.
+They need a behaviour. Either explicitly or implicitly by a default. For example:
 
-For SQL-based tests we have found a way to combine them with static code analysis.
-We still need to define how we want to treat formatter rules.
-Therefore, for the time being we exclude formatter/code style rules.
+- Keyword case: upper, lower, ignore (keep)
+- Identifier case: upper, lower, pascal, camel, ignore (keep)
+- Number of spaces used for an indentation: 2, 3, 4, 8, ...
+- Max. line length: 80, 100, 120, ...
+- Commas: leading, trailing
+
+There is an open [GitHub issue]((https://github.com/Grisselbav/dbLinter/issues/45)) suggesting a new rule:
+'Always format database code consistently'. This issue discusses how
+formatter rules can be integrated into dbLinter.
 
 ### Not Contradictory
 
