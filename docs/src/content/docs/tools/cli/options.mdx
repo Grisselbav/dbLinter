@@ -47,7 +47,7 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 - `accessToken`<span class="required">*</span><br/>
     The personal dbLinter access token used for authentication.
-    You can manage the access token in [Web GUI](https://dblinter.app/ords/r/dblinter/dblinter-console/access-tokens).
+    You can manage the access token in the [Web GUI](https://dblinter.app/ords/r/dblinter/dblinter-console/access-tokens).
     There you define the validity period and the access rights.
 
 - `configName`<span class="required">*</span><br/>
@@ -84,9 +84,9 @@ However, to achieve the best results, it is recommended that read-only database 
     This is the log level used to write log messages to the log file. The following levels are valid:<br/>
         - `off`: No log messages are written, produces an empty log file.
         - `error`: Log only errors.
-        - `warning`: Log only informational messages, warnings and errors.
-        - `info`: Only error, warning and info messages are written. This is the default.
-        - `debug`: Log only debug messages, informational messages, warnings and errors.
+        - `warning`: Log only warnings and errors.
+        - `info`: Log only info messages, warnings and errors. This is the default.
+        - `debug`: Log only debug messages, info messages, warnings and errors.
         - `trace`: Log all messages. This level helps developers diagnose the root cause of a problem. It also includes profiling information for parsing and checking operations that can slow overall performance.
     <br/>
 
