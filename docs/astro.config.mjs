@@ -61,6 +61,15 @@ export default defineConfig({
 				starlightLinksValidator({ errorOnLocalLinks: false }),
 				starlightImageZoom(),
 			],
+			head: [
+				{
+					tag: 'script',
+					attrs: {
+						src: '/dbLinter/keyboard-nav.js',
+						defer: true,
+					},
+				},
+			],
 		}),
 		mermaid({
       	theme: 'forest',
