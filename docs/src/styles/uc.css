@@ -85,6 +85,11 @@ a:hover {
 	color: var(--sl-color-text-accent);
 }
 
+/* Make aside links match normal content links when hovered */
 .starlight-aside__content a:hover {
 	color: var(--sl-color-accent-light);
+}
+/* Red asterisk for required options */
+.required {
+	color: #e63946;
 }

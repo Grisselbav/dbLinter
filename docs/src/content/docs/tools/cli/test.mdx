@@ -1,0 +1,120 @@
+---
+title: test
+description: test command
+sidebar:
+  order: 50
+---
+
+This command runs SQL-based tests using a configuration that is defined in the Web GUI.
+This feature is only available with an Essential or Professional subscription.
+
+## Syntax
+
+```
+dblinter [<options>] test [<args>]
+```
+
+## Options
+
+See [Options](/dbLinter/tools/cli/options/).
+Mandatory options are `tenantName`, `userName`, `accessToken` and `configName`.
+If the JDBC connection has not been fully configured via the Web GUI,
+the following options are also mandatory: `connJdbcUrl`, `connUserName` and `connPassword`.
+
+## Argument Syntax
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+<Tabs>
+<TabItem label="in Command Line">
+```
+--<argument>=<value>
+```
+</TabItem>
+<TabItem label="in Property File">
+```
+<argument>=<value>
+```
+</TabItem>
+</Tabs>
+
+## Arguments
+
+When calling dbLinter, the order of the arguments and options is flexible.
+In other words, the command name can appear either at the beginning or the end.
+
+- `outputFormats`<br/>
+    A comma-separated list of the output formats to be produced.
+    All formats are considered by default.
+    The following formats are supported:<br/>
+        - `vscode`: dbLinter Test Report as Markdown for VS Code. This report will open automatically when the analysis is run via the VS Code extension.
+        - `junit`: [JUnit](https://llg.cubic.org/docs/junit/) XML Report.
+    <br/>
+
+- `outputName`<br/>
+    This is the relative path from the working directory to the base name of the output files.
+    Missing target directories will be created.
+    For example, if you use the name `test` for an outputName, a file called `test.vscode.md` will be created in the working directory.
+
+- `parallel`<br/>
+    The number of SQL-based tests executed in parallel
+    The default is `1`.
+
+## Example
+
+```bash
+dbLinter test \
+    --tenantName=Demo \
+    --userName=philipp.salvisberg+42@gmail.com \
+    --accessToken=uEqvlBSnZeWHnsharUecfngaVGaayYtOoGnBJAchmuYzfKwTqE \
+    --configName=Default \
+    --outputFormats=vscode,junit \
+    --outputName=test \
+    --parallel=2
+```
+
+The console output for the [dbLinter-Demo](https://github.com/Grisselbav/dbLinter-Demo) project on GitHub looks like this:
+
+```
+Using connection to jdbc:oracle:thin:@localhost:1521/freepdb1 with user DBL_READ
+Processed Core G-9218: Always follow naming conventions for object type attributes. (1/35) in 0.062 sec.
+Processed Core G-1150: Always limit privileges of schema owners according to principle of least privileges. (2/35) in 0.077 sec.
+Processed Core G-9217: Always follow naming conventions for object types. (3/35) in 0.039 sec.
+Processed Core G-1250: Try to define a business key for each table. (4/35) in 0.442 sec. with 3 failures.
+Processed Core G-9216: Always follow naming conventions for procedures. (5/35) in 0.003 sec.
+Processed Core G-1270: Try to define a comment for each column. (6/35) in 0.271 sec.
+Processed Core G-9215: Always follow naming conventions for functions. (7/35) in 0.007 sec.
+Processed Core G-9214: Always follow naming conventions for PL/SQL packages. (8/35) in 0.004 sec.
+Processed Core G-1110: Avoid connect users that own database objects. (9/35) in 0.011 sec. with 2 failures.
+Processed Core G-1210: Never create a table without a primary key. (10/35) in 0.064 sec.
+Processed Core G-9213: Always follow naming conventions for triggers. (11/35) in 0.049 sec.
+Processed Core G-9212: Always follow naming conventions for synonyms. (12/35) in 0.003 sec.
+Processed Core G-1230: Avoid tables without relationships. (13/35) in 0.324 sec. with 2 failures.
+Processed Core G-9211: Always follow naming conventions for sequences. (14/35) in 0.005 sec.
+Processed Core G-1130: Avoid granting table access to API roles. (15/35) in 0.347 sec. with 1 failures.
+Processed Core G-1310: Never keep database objects in an invalid state. (16/35) in 0.035 sec.
+Processed Core G-9219: Always follow naming conventions for collection types. (17/35) in 0.041 sec.
+Processed Core G-9207: Always follow naming conventions for check constraints. (18/35) in 0.008 sec.
+Processed Core G-3160: Avoid visible virtual columns. (19/35) in 0.134 sec.
+Processed Core G-9206: Always follow naming conventions for foreign key constraints. (20/35) in 0.008 sec.
+Processed Core G-1260: Try to define a comment for each table. (21/35) in 0.057 sec.
+Processed Core G-9205: Always follow naming conventions for unique constraints. (22/35) in 0.008 sec.
+Processed Core G-1140: Avoid granting object privileges directly to connect users. (23/35) in 0.260 sec. with 84 failures.
+Processed Core G-9204: Always follow naming conventions for primary key constraints. (24/35) in 0.062 sec.
+Processed Core G-9203: Always follow naming conventions for indexes. (25/35) in 0.300 sec.
+Processed Core G-1220: Avoid composite primary keys. (26/35) in 0.010 sec.
+Processed Core G-8510: Always use dbms_application_info to track program process transiently. (27/35) in 0.087 sec. with 1 failures.
+Processed Core G-1280: Try to use domains instead of raw datatypes for table columns. (28/35) in 0.718 sec.
+Processed Core G-1120: Avoid granting system privileges to connect users. (29/35) in 0.076 sec. with 10 failures.
+Processed Core G-9201: Always follow naming conventions for tables. (30/35) in 0.004 sec.
+Processed Core G-1240: Try to index foreign key columns. (31/35) in 0.103 sec.
+Processed Core G-9209: Always follow naming conventions for global temporary tables. (32/35) in 0.004 sec.
+Processed Core G-9210: Always follow naming conventions for views. (33/35) in 0.004 sec.
+Processed Core G-9202: Always follow naming conventions for table/view columns. (34/35) in 0.411 sec.
+Processed Core G-3170: Always use DEFAULT ON NULL declarations to assign default values to table columns if you refuse to store NULL values. (35/35) in 0.121 sec.
+Test Summary
+- Duration: 2.117 sec.
+- Tests:    131
+- Errors:   0
+- Failures: 103
+```

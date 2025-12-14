@@ -1,0 +1,57 @@
+---
+title: help
+description: help command
+sidebar:
+  order: 70
+---
+
+This command displays the help message for the dbLinter CLI.
+
+## Syntax
+
+```
+dblinter help
+```
+
+## Example
+
+```bash
+dblinter help
+```
+
+The console output looks like this:
+
+```text
+Usage: dblinter [<options>] <command> [<args>]
+
+Options:
+  --workspace=<dir>            Working directory for the command.
+  --repoUrl=<url>              Repository URL.
+  --tenantName=<tenant>        Tenant for authentication.
+  --userName=<e-mail>          E-mail address for authentication.
+  --accessToken=<token>        Access token for authentication.
+  --configName=<config>        Configuration for checks and SQL-based tests.
+  --connJdbcUrl=<jdbcUrl>      JDBC URL for read-only database access.
+  --connUserName=<user>        JDBC user for read-only database access.
+  --connPassword=<password>    JDBC password for read-only database access.
+  --logLevel=<level>           Log level (off, error, warning, info, debug, trace).
+  --logFile=<logFile>          Name of the log file.
+  --logFormat=<format>         Log format (short, ext1, ext2, ext3).
+  --clearCacheThreshold=<mb>   ANTLR memory threshold in megabytes.
+  --options=<properties>       Load options from file.
+
+Commands:
+  ls                           Start language server.
+  check [<args>]               Run static analysis in current directory.
+    --outputFormats=<formats>  Comma-separated list of output formats (vscode,
+                               sonarqube, sarif, checkstyle, github, gitlab).
+    --outputName=<name>        Base name of the output files.
+    --parallel=<n>             Number of files analysed in parallel.
+  test [<args>]
+    --outputFormats=<formats>  Comma-separated list of output formats (vscode,
+                               junit).
+    --outputName=<name>        Base name of the output files without file extension.
+    --parallel=<n>             Number of SQL-based tests executed in parallel.
+  version                      Show version information.
+  help                         Show this help message.
+```

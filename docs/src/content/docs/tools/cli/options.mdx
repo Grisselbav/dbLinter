@@ -1,0 +1,138 @@
+---
+title: Options
+description: General options of the Command Line Interface (CLI).
+sidebar:
+  order: 20
+---
+
+Mandatory options are marked with an asterisk (<span class="required">*</span>).
+
+## Option Syntax
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+<Tabs>
+<TabItem label="in Command Line">
+```
+--<option>=<value>
+```
+</TabItem>
+<TabItem label="in Property File">
+```
+<option>=<value>
+```
+</TabItem>
+</Tabs>
+
+## Workspace
+
+- `workspace`<br/>
+    This is the absolute path to the working directory of the command.
+    The default is the current directory. The workspace defines where
+    dbLinter looks for files to analyse, and is also used to calculate
+    the relative path shown in various reports.
+
+## Remote Access
+
+- `repoUrl`<br/>
+    This is the URL of the dbLinter REST API. The default is https://api.dblinter.app/.
+    You only need to change this URL when developing and testing custom rules.
+    This requires a [Professional subscription](/dbLinter/getting-started/professional-subscription).
+
+- `tenantName`<span class="required">*</span><br/>
+    The dbLinter tenant used for authentication.
+
+- `userName`<span class="required">*</span><br/>
+    The dbLinter user name (email address) used for authentication.
+
+- `accessToken`<span class="required">*</span><br/>
+    The personal dbLinter access token used for authentication.
+    You can manage the access token in [Web GUI](https://dblinter.app/ords/r/dblinter/dblinter-console/access-tokens).
+    There you define the validity period and the access rights.
+
+- `configName`<span class="required">*</span><br/>
+    This is the name of the configuration to be used for checks and SQL-based tests.
+    This configuration consists of include/exclude file patterns and JDBC connection details.
+    It also includes enabled rules, parameters, and test results to be ignored.
+
+## Read-only Database Access
+
+Read-only access is required for the `test` command and optional for the `check` command.
+However, to achieve the best results, it is recommended that read-only database access is also defined for the check command.
+
+- `connJdbcUrl`<br/>
+    This is the JDBC URL for read-only database access.
+    This option takes precedence over the JDBC URL configured in the Web GUI.
+    The CLI comes with database drivers for Oracle Database and PostgreSQL.
+    Therefore, only JDBC URLs valid for these DBMSs will work.
+    Here are two examples:
+        - `jdbc:oracle:thin:@localhost:1521/FREEPDB1`
+        - `jdbc:postgresql://localhost:5432/postgres`
+    <br/>
+
+- `connUserName`<br/>
+    The JDBC user for read-only database access.
+    This option takes precedence over the JDBC user configured in the Web GUI.
+
+- `connPassword`<br/>
+    This is the password for the JDBC user for accessing the read-only database.
+    This option takes precedence over the password configured in the Web GUI.
+
+## Logging
+
+- `logLevel`<br/>
+    This is the log level used to write log messages to the log file. The following levels are valid:<br/>
+        - `off`: No log messages are written, produces an empty log file.
+        - `error`: Log only errors.
+        - `warning`: Log only informational messages, warnings and errors.
+        - `info`: Only error, warning and info messages are written. This is the default.
+        - `debug`: Log only debug messages, informational messages, warnings and errors.
+        - `trace`: Log all messages. This level helps developers diagnose the root cause of a problem. It also includes profiling information for parsing and checking operations that can slow overall performance.
+    <br/>
+
+- `logFile`<br/>
+    This is the relative path from the working directory to the log file.
+    The target directory must exist.
+    Per default no log file is created.
+
+- `logFormat`<br/>
+    This is the log format use to write log messages to the log file. The following formats are valid:<br/>
+        - `short`: Short messages. Date, time, log level, and log message. This is the default. Example:<br/><br/>
+           ```log
+           2025-12-13 18:42:42.420 [Info ] connect.
+           ```
+        - `ext1`: Like short messages, but with the thread name. Example: Example:<br/><br/>
+           ```log
+           2025-12-13 18:42:42.420 [Info ] [        main] connect.
+           ```
+        - `ext2`: Like short messages, but with logger class name. Example:<br/><br/>
+           ```log
+           2025-12-13 18:42:42.420 [Info ] [c.g.d.l.DbLinterLanguageServer] connect.
+           ```
+        - `ext3`: Like short messages, but with thread name and logger class name. Example:<br/><br/>
+           ```log
+           2025-12-13 18:42:42.420 [Info ] [        main] [c.g.d.l.DbLinterLanguageServer] connect.
+           ```
+
+## Cache
+- `clearCacheThreshold`<br/>
+    Memory threshold in megabytes. The default is calculated as follows:<br/><br/>
+    ```java
+    if (parallel == 1) {
+        clearCacheThreshold = Math.max(maxHeap * .7, maxHeap - 1024);
+    } else {
+        clearCacheThreshold = Math.max(maxHeap * .6, maxHeap - 2048);
+    }
+    ```
+    <br/>The [default `maxHeap` size in a JDK 17](https://docs.oracle.com/en/java/javase/17/gctuning/ergonomics.html#GUID-DA88B6A6-AF89-4423-95A6-BBCBD9FAE781)
+    is set to 25% of the physical memory. This can be changed by setting the `-Xmx` [JVM extra option](https://docs.oracle.com/en/java/javase/17/docs/specs/man/java.html#extra-options-for-java) via the `JAVA_OPTS` environment variable.<br/><br/>
+    The ANTLR caches are cleared once the heap size used by the language server exceeds this threshold.
+    While this frees up memory, subsequent parsing is slower.
+    Set the threshold to a negative value to retain the cache.
+    The cache is only cleared when analysing a file.
+
+## Properties File
+
+- `options`<br/>
+    Load options and command arguments from a [Java properties file](https://en.wikipedia.org/wiki/.properties).
+    See also [example in CLI Overview](/dbLinter/tools/cli/cli-overview/#options).

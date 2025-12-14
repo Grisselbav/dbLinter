@@ -1,0 +1,56 @@
+---
+title: ls
+description: ls command
+sidebar:
+  order: 30
+---
+
+This command starts the language server.
+
+The language server and the client communicate with each other via input and output streams.
+In the case of the language server, these are stdin and stdout. Log messages are sent over stderr.
+
+Both the client and the server send and receive [JSON-RPC 2.0](https://www.jsonrpc.org/specification) messages.
+The [supported message types](/dbLinter/reference/architecture/#language-server) are listed in the language Server
+section of the architecture chapter.
+
+The language server is designed for use by the dbLinter components, which start and stop it automatically.
+You should never need to start the language server manually.
+
+## Syntax
+
+```
+dblinter ls
+```
+
+## Example
+
+The next shell command sends a `shutdown` message, followed by an `exit` message, via `stdin` to a freshly started dbLinter
+language server. It then redirects the `stdout` to the `lsp-stdout.txt` and the `stderr` to the `lsp-stderr.txt`.
+
+```bash
+(
+    printf "%b" 'Content-Length: 44\n\n{"jsonrpc":"2.0","id":1,"method":"shutdown"}'
+    printf "%b" 'Content-Length: 33\n\n{"jsonrpc":"2.0","method":"exit"}'
+) | dblinter ls > lsp-stdout.txt 2> lsp-stderr.txt
+```
+
+The `lsp-stdout.txt` file contains the result message of the successful shutdown.
+
+```json title="lsp-stdout.txt"
+Content-Length: 36
+
+{"jsonrpc":"2.0","id":1,"result":{}}
+```
+
+And the `lsp-stderr.txt` file contains the log messages produced by the language server.
+
+```log title="lsp-stderr.txt"
+2025-12-14 10:41:24.848 [Info ] Starting dbLinter Language Server.
+2025-12-14 10:41:25.128 [Info ] connect.
+2025-12-14 10:41:25.133 [Info ] shutdown.
+```
+
+Currently, all the defaults are active.
+Different log formats or log levels are applied after the `workspace/didChangeConfiguration`
+message sent by the client has been processed.
