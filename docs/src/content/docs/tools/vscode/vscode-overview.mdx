@@ -13,3 +13,65 @@ such as [Visual Studio Code](https://code.visualstudio.com/), [VSCodium](https:/
 [Antigravity](https://antigravity.google/) and [Theia IDE](https://theia-ide.org/#theiaide).
 
 Releases of the dbLinter VS Code extensions are published in the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Grisselbav.dblinter) and the [Open VSX Registry](https://open-vsx.org/extension/Grisselbav/dblinter).
+
+## Installation
+
+import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+<Tabs>
+<TabItem label="via VS Code Marketplace">
+<Steps>
+1. Open VS Code
+2. Go to Extensions
+3. Search for "dbLinter"
+4. Click Install
+</Steps>
+</TabItem>
+<TabItem label="via Open VSX Registry">
+<Steps>
+1. Open VSCodium, Cursor, Windsurf, Antigravity or Theia IDE
+2. Go to Extensions
+3. Search for "dbLinter"
+4. Click Install
+</Steps>
+</TabItem>
+</Tabs>
+
+## Settings
+
+The default settings are for an anonymous subscription plan.
+This means that only around 50 rules are active.
+These are the free rules from the `Essential` and `Balanced` profiles.
+Which is a reasonable set for any project.
+
+To configure the set of rules to be applied, you need at least a free [Starter Subscription](/dbLinter/getting-started/starter-subscription/).
+
+## Examples
+
+### Checks
+
+![Manage Configuration](../../../../assets/images/vscode/g-2180-g-9601.png)
+
+### Quick Fixes
+
+![Manage Configuration](../../../../assets/images/vscode/g-2180-g-9601-quick-fix-context-menu.png)
+
+![Manage Configuration](../../../../assets/images/vscode/g-2180-g-9601-after-fix-all-problems.png)
+
+### Ignore Issue
+
+![Manage Configuration](../../../../assets/images/vscode/g-2180-quick-fix-context-menu.png)
+
+![Manage Configuration](../../../../assets/images/vscode/g-2180-after-ignore-fix.png)
+
+### Ignore Issues in File
+
+![Manage Configuration](../../../../assets/images/vscode/g-2180-g-9601-ignore-in-file.png)
+
+### SQL-based Tests
+
+![Connection Settings in VS Code](../../../../assets/images/vscode/sql-based-tests.png)
+
+### CLI Integration
+
+![Connection Settings in VS Code](../../../../assets/images/vscode/cli-integration.png)
