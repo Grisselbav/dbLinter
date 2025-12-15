@@ -20,14 +20,21 @@ to determine if the database version lets you add end labels to a `create type b
 - Quick fixes, e.g. to determine the default format model in [G-9010: Always use a format model in string to date/time conversion functions](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-9010).
 
 The password is stored encrypted in the dbLinter backend. However, you can omit the password here and define it in the client.
+In fact, you can configure all the attributes needed to establish a database connection directly in the client.
 
-The database user should not own any database objects. In this example the user `dbl_read` is created as follows:
+To check the code in the [dbLinter Repo](/dbLinter/reference/architecture/#repo), we enabled all rules.
+One of these is [G-1110: Avoid connect users that own database objects](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-1110).
+This rule is implemented as an SQL-based test, meaning a query must be run against the Data Dictionary to determine if connect users own any database objects.
+
+We therefore created a user called `dbl_read` in the database.
 
 ```sql
 create user if not exists dbl_read identified by "(...)";
 grant connect to dbl_read;
 grant select any dictionary to dbl_read;
 ```
+
+To run SQL-based tests, you need to create a database user with similar permissions in your development databases.
 
 ## Configurations
 
