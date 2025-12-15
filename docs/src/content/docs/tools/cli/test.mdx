@@ -40,8 +40,10 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## Arguments
 
-When calling dbLinter, the order of the arguments and options is flexible.
-In other words, the command name can appear either at the beginning or the end.
+In dbLinter, both arguments and options are treated in the same way.
+Therefore, they can be used in any order. For example, they can be used before or after the command name.
+We use options when the semantics are identical for each applicable command.
+Arguments are used when the semantics change for a command.
 
 - `outputFormats`<br/>
     A comma-separated list of the output formats to be produced.
