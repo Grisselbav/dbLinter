@@ -1,0 +1,130 @@
+---
+title: Settings
+description: Settings of the dbLinter VS Code Extension.
+sidebar:
+  order: 20
+---
+
+In VS Code, VSCodium and its forks, you can filter the dbLinter settings with `@ext:Grisselbav.dblinter`.
+This happens automatically when you select `Settings` in the Marketplace view's context menu for the the dbLinter extension.
+
+In Theila IDE, which is not a VS Code fork, you need to open the settings via the `File` menu and search for `dbLinter`.
+
+## Scope
+
+In VS Code, settings are scoped to control where they apply.
+
+- `User`<br/>
+    User settings apply globally to all projects and folders you open.
+
+- `Workspace`<br/>
+    Workspace settings apply only to the current project/workspace and override User settings.
+
+In other words, use `User` settings for preferences you want everywhere, and `Workspace` settings for project-specific behaviour.
+
+## Remote Access
+
+If you have created an account at https://dblinter.app, you can view your options in [How to set up VS Code](https://dblinter.app/ords/r/dblinter/dblinter-console/set-up-vs-code).
+
+- `Repo Url`<br/>
+    This is the URL of the dbLinter REST API. The default is https://api.dblinter.app/.
+    You only need to change this URL when developing and testing custom rules.
+    This requires a [Professional subscription](/dbLinter/getting-started/professional-subscription).
+
+- `Tenant Name`<br/>
+    The dbLinter tenant used for authentication.
+    The default is `Anonymous`.
+
+- `User Name`<br/>
+    The dbLinter user name (email address) used for authentication.
+    The default is `anonymous@dblinter.app`.
+
+- `Access Token`<br/>
+    The personal dbLinter access token used for authentication.
+    You can manage the access token in the [Web GUI](https://dblinter.app/ords/r/dblinter/dblinter-console/access-tokens).
+    There you define the validity period and the access rights.
+    The default is an access token owned by the anonymous user.
+
+- `Config Name`<br/>
+    This is the name of the configuration to be used for checks and SQL-based tests.
+    This configuration consists of include/exclude file patterns and JDBC connection details.
+    It also includes enabled rules, parameters, and test results to be ignored.
+    If the tenant name is not specified, the default is `Anonymous`, otherwise, it is `Default`.
+
+    For the Anonymous tenant the following config names are valid:
+
+    | Config Name | Description |
+    | ----------- | ----------- |
+    | <span style="white-space: nowrap">`Anonymous`</span> | Enables around 50 free rules from the `Essential` and `Balanced` profiles. Which is a reasonable set for any project. |
+    | `pg` | A subset of the `Anonymous` configuration which is applicable for PostgreSQL projects. |
+
+
+## Read-only Access
+
+Read-only access is required for SQL-based tests and optional for checks.
+However, to achieve the best results, it is recommended that read-only database access is also defined checks.
+
+- `Conn Jdbc Url`<br/>
+    This is the JDBC URL for read-only database access.
+    This option takes precedence over the JDBC URL configured in the Web GUI.
+    The language server embedded in the VS Code extension comes with database drivers for Oracle Database and PostgreSQL.
+    Therefore, only JDBC URLs valid for these DBMSs will work.
+    Here are two examples:
+        - `jdbc:oracle:thin:@localhost:1521/FREEPDB1`
+        - `jdbc:postgresql://localhost:5432/postgres`
+    <br/>
+
+- `Conn User Name`<br/>
+    The JDBC user for read-only database access.
+    This option takes precedence over the JDBC user configured in the Web GUI.
+
+- `Conn Password`<br/>
+    This is the password for the JDBC user for accessing the read-only database.
+    This option takes precedence over the password configured in the Web GUI.
+
+## Local Language Server
+
+- `Java Bin Directory`<br/>
+    This is the name of the directory that contains the 'java' executable for a JDK version 17 or higher.
+    If this directory is empty, the JDK included with Oracle SQL Developer for VS Code is used instead.
+    Otherwise, if this extension is not installed, the 'java' executable must be found in the operating system's path.
+    A restart or `reload window` is required for the changes to take effect.
+
+- `Log Level`<br/>
+    This is the log level used to write log messages to output panel of dbLinter and to log files when running CLI commands.
+    The following levels are valid:<br/>
+        - `error`: Log only errors.
+        - `warning`: Log only warnings and errors.
+        - `info`: Log only info messages, warnings and errors. This is the default.
+        - `debug`: Log only debug messages, info messages, warnings and errors.
+        - `trace`: Log all messages. This level helps developers diagnose the root cause of a problem. It also includes profiling information for parsing and checking operations that can slow overall performance.
+    <br/>
+
+- `Parallel Files`<br/>
+    The number of files analysed in parallel when using the CLI.
+    The default is `1`.
+    This setting is not used by the language server started by VS Code in order to minimise the resource consumption.
+
+- `Parallel SQL`<br/>
+    The number of SQL-based tests executed in parallel when using the CLI.
+    The default is `1`.
+
+- `Clear Cache Threshold`<br/>
+    Memory threshold in megabytes.
+    The ANTLR caches are cleared once the heap size used by the language server exceeds this threshold.
+    While this frees up memory, subsequent parsing is slower.
+    Set the threshold to a negative value to retain the cache.
+    The cache is only cleared when analysing a file.
+    This setting only applies to the language server started by VS Code, rather than those started by CLI calls.
+
+- `Enable Remote Debugging`<br/>
+    Enable remote JVM debugging.
+    When this option is enabled, VS Code is restricted to a single instance because the debugging port cannot be shared.
+    Requires a restart or `reload window` to take effect.
+    This setting only applies to the language server started by VS Code, rather than those started by CLI calls.
+
+- `Remote Debugging Port`<br/>
+    JVM debugging port.
+    Used when remote JVM debugging is enabled.
+    Requires a restart or `reload window` to take effect.
+    This setting only applies to the language server started by VS Code, rather than those started by CLI calls.
