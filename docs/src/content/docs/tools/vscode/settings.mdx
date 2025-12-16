@@ -64,6 +64,14 @@ If you have created an account at https://dblinter.app, you can view your option
 Read-only access is required for SQL-based tests and optional for checks.
 However, to achieve the best results, it is recommended that read-only database access is also defined checks.
 
+To enable read-only access, you will need to create a database user with the following permissions:
+
+```sql
+create user if not exists dbl_read identified by "(...)";
+grant connect to dbl_read;
+grant select any dictionary to dbl_read;
+```
+
 - `Conn Jdbc Url`<br/>
     This is the JDBC URL for read-only database access.
     This option takes precedence over the JDBC URL configured in the Web GUI.
