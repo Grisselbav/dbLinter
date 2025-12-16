@@ -9,7 +9,7 @@ within checks and tests.
 
 dbLinter is a joint project between United Codes and Grisselbav.
 You can get commercial subscription plans through United Codes.
-See the [dbLinter product site](https://newsite.united-codes.com/products/dblinter/) for details.
+See the [dbLinter product site](https://www.united-codes.com/products/dblinter/) for details.
 
 ## Documentation
 
