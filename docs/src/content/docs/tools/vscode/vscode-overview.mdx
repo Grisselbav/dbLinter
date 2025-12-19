@@ -42,7 +42,7 @@ import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 The default settings are for an anonymous subscription plan.
 This means that only around 50 rules are active.
 These are the free rules from the `Essential` and `Balanced` profiles.
-Which is a reasonable set for any project.
+Which is a reasonable set for any project using an Oracle Database.
 
 To configure the set of rules to be applied, you need at least a [Starter Subscription (Free)](/dbLinter/getting-started/starter-subscription/).
 
@@ -60,6 +60,8 @@ Available with an [Essential Subscription](/dbLinter/getting-started/essential-s
 
 ![Manage Configuration](../../../../assets/images/vscode/g-2180-g-9601-quick-fix-context-menu.png)
 
+After applying `Fix all problems`:
+
 ![Manage Configuration](../../../../assets/images/vscode/g-2180-g-9601-after-fix-all-problems.png)
 
 ### Ignore Issue
@@ -67,6 +69,8 @@ Available with an [Essential Subscription](/dbLinter/getting-started/essential-s
 Available with an [Anonymous Subscription (Free)](/dbLinter/getting-started/anonymous-subscription/).
 
 ![Manage Configuration](../../../../assets/images/vscode/g-2180-quick-fix-context-menu.png)
+
+After adding the `@dbLinter ignore` marker comment:
 
 ![Manage Configuration](../../../../assets/images/vscode/g-2180-after-ignore-fix.png)
 
