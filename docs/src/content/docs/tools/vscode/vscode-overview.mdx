@@ -8,9 +8,23 @@ sidebar:
 The dbLinter VS Code Extension provides rule violations and quick fixes for given URIs via the included language server.
 It further can run SQL-based tests and CLI commands.
 
-The extension can be installed in any IDE that implement the [Visual Studio Code Extension API](https://code.visualstudio.com/api),
-such as [Visual Studio Code](https://code.visualstudio.com/), [VSCodium](https://vscodium.com/), [Cursor](https://cursor.com/), [Windsurf](https://windsurf.com/editor),
-[Antigravity](https://antigravity.google/) and [Theia IDE](https://theia-ide.org/#theiaide).
+The extension can be installed in any IDE that implement the [Visual Studio Code Extension API](https://code.visualstudio.com/api).
+
+This are primarily IDEs based on [Code OSS](https://github.com/microsoft/vscode). Another option instead of forking [Code OSS](https://github.com/microsoft/vscode) is to implement
+the [Visual Studio Code Extension API](https://code.visualstudio.com/api) from scratch.
+
+The list below shows IDEs that run locally on a developer's machine. These IDEs have been successfully tested with dbLinter.
+
+| IDE | Based on [Code OSS](https://github.com/microsoft/vscode)? | First Release Date | Tested version |
+| --- | :---------------------------------------------------------: | :----------------: | :------------: |
+| [Visual Studio Code](https://code.visualstudio.com/) | yes | 2015-04 | 1.107.1 (2025-12-17) |
+| [Theia IDE](https://theia-ide.org/#theiaide) | no | 2017-03 | 1.67.100 (2025-12-15) |
+| [VSCodium](https://vscodium.com/) | yes | 2018-08 | 1.106.37943 (2025-11-26) |
+| [Cursor](https://cursor.com/) | yes | 2023-03 | 2.2.43 (2025-12-19) |
+| [Windsurf](https://windsurf.com/editor) | yes | 2024-11 | 1.12.47 (2025-12-16) |
+| [Void](https://voideditor.com/) | yes | 2025-01 | 1.4.9 (2025-06-23) |
+| [Kiro](https://kiro.dev/) | yes | 2025-07 | 0.8.0 (2025-12-18) |
+| [Antigravity](https://antigravity.google/) | yes | 2025-11 | 1.13.3 (2025-12-19) |
 
 Releases of the dbLinter VS Code extensions are published in the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Grisselbav.dblinter) and the [Open VSX Registry](https://open-vsx.org/extension/Grisselbav/dblinter).
 
@@ -29,7 +43,7 @@ import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 </TabItem>
 <TabItem label="via Open VSX Registry">
 <Steps>
-1. Open VSCodium, Cursor, Windsurf, Antigravity or Theia IDE
+1. Open IDE
 2. Go to Extensions
 3. Search for "dbLinter"
 4. Click Install
