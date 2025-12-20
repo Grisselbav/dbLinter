@@ -16,11 +16,42 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 ```
 --<option>=<value>
 ```
+Example:
+```
+--accessToken=IGsLxJQLnfZPFAkbMCaJntBjIaKtmYSOjnYiRTIlfYJYRggZgG
+```
 </TabItem>
 <TabItem label="in Property File">
 ```
 <option>=<value>
 ```
+Example:
+```
+accessToken=IGsLxJQLnfZPFAkbMCaJntBjIaKtmYSOjnYiRTIlfYJYRggZgG
+```
+</TabItem>
+<TabItem label="As Environment Variables">
+```
+DBLINTER_<option_IN_SCREAMING_SNAKE_CASE>=<value>
+```
+Example:
+<Tabs>
+<TabItem label="POSIX-compatible Systems">
+```
+export DBLINTER_ACCESS_TOKEN=IGsLxJQLnfZPFAkbMCaJntBjIaKtmYSOjnYiRTIlfYJYRggZgG
+```
+</TabItem>
+<TabItem label="Windows cmd.exe">
+```
+set DBLINTER_ACCESS_TOKEN=IGsLxJQLnfZPFAkbMCaJntBjIaKtmYSOjnYiRTIlfYJYRggZgG
+```
+</TabItem>
+<TabItem label="Windows PowerShell">
+```
+$env:DBLINTER_ACCESS_TOKEN="IGsLxJQLnfZPFAkbMCaJntBjIaKtmYSOjnYiRTIlfYJYRggZgG"
+```
+</TabItem>
+</Tabs>
 </TabItem>
 </Tabs>
 
