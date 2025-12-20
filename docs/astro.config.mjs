@@ -12,6 +12,7 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: "dbLinter",
+			favicon: '/favicon.ico',
 			pagination: true,
 			logo: {
 				src: "./src/assets/logo/dbLinter-icon-color.svg",
