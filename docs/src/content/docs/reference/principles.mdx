@@ -120,18 +120,18 @@ A partial code fix, where the developer must amend the code after applying the q
 Exceptions:
 
   - Code which is buggy before applying a quick fix. A `to_date` call without format model violating the rule
-    [G-9010: Always use a format model in string to date/time conversion functions.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-9010), for example.
+    [G-9010: Always use a format model in string to date/time conversion functions](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-9010), for example.
     A quick fix which adds a format mask can lead to a different runtime behaviour. However, in this case
     an explicit format mask (even if wrong) is better than none. Providing a good default should minimise
     issues (see [Improve Result with Database Access](#improve-result-with-database-access)).
 
   - Code which requires changes in other artifacts. The quick fix for
-    [G-8210: Always use synonyms when accessing objects of another application schema.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-8210)
+    [G-8210: Always use synonyms when accessing objects of another application schema](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-8210)
     removes a schema prefix. This leaves the code in invalid state if no synonym exists. The later compile error is
     wanted and the first step in fixing the code. This quick fix may produce a semantic error, but no syntax error.
 
   - Template quick fixes as first step in solving a problem. The quick fix `Add start label <<change_me>>.` for a violation of
-    [G-1010: Try to label your sub blocks.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-1010),
+    [G-1010: Try to label your sub blocks](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-1010),
     is good. It provides an intermediate working solution and after changing the intermediate start label,
     the next quick fix can be applied to add the missing end label.
 
@@ -152,7 +152,7 @@ If a `CheckConfig.INSTANCE.getJdbcTemplate()` is available, it should be used to
 However, if the JdbcTemplate is not available, the quick fix should still work.
 
 For example, the quick fix for a violation of
-[G-9010: Always use a format model in string to date/time conversion functions.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-9010)
+[G-9010: Always use a format model in string to date/time conversion functions](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-9010)
 in a `to_date` conversion can provide the default format model `FXYYYY-MM-DD`
 when no database connection is available. However, when the database connection is available the result of
 `select value from nls_session_parameters where parameter = 'NLS_DATE_FORMAT';` should be used (adding a
@@ -170,7 +170,7 @@ call, to explain the case where a false positive is possible.
 The reason is, that we consider a false positive a bug, when it happens often. Hence, it helps to have it in the
 code to quantify the issue.
 
-For example [G-3330: Avoid autonomous transactions.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-3330)
+For example [G-3330: Avoid autonomous transactions](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-3330)
 will report a violation in some parts of an application.
 It's expected and not a false positive.
 Therefore it is better to add a `addNoSonarQuickFix(ctx, 'Using autonomous transaction because ...')` instead of an
