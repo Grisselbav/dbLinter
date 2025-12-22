@@ -12,8 +12,8 @@
   "dependencies": {
     "@astrojs/starlight": "0.35.2",
     "astro": "5.12.9",
-    "sharp": "^0.34.4",
-    "starlight-image-zoom": "^0.13.1",
+    "sharp": "^0.34.5",
+    "starlight-image-zoom": "^0.13.2",
     "starlight-links-validator": "^0.17.2",
     "astro-mermaid": "1.1.0"
   }
