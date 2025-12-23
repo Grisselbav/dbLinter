@@ -13,7 +13,7 @@ A 'seat' is a is a licensing unit used by dbLinter.
 
 The number of licensed seats determines the maximum number of users that can be registered for a tenant.
 
-Furthermore, a seat is reserved for each unique combination of the following attributes of a client session:
+Furthermore, a seat is reserved for each unique combination of the following attributes of a session:
 
 | Attribute | Description |
 | --------- | ----------- |
@@ -22,9 +22,13 @@ Furthermore, a seat is reserved for each unique combination of the following att
 | MAC address | The first enabled MAC address of the client machine. This may change when switching between network connections. |
 | OS user | The operating system user name used to connect to the dbLinter REST API. |
 
-This definition enables an unlimited number of tools to open client sessions on a single machine, with only one seat reserved.
+This definition enables an unlimited number of tools to open sessions on a single machine, with only one seat reserved.
 
-### Who opens a client session?
+### Is a Web GUI session reserving a seat?
+
+No. Only sessions used to analyse code are reserving seats.
+
+### Who opens a session?
 
 | Tool | Open Session Event |
 | ---- | ------------------ |
@@ -34,18 +38,18 @@ This definition enables an unlimited number of tools to open client sessions on 
 |          | On start of a test command. |
 | SonarScanner | On start of a check run using the dbLinter SonarQube plugin. |
 
-### Who closes a client session?
+### Who closes a session?
 
 | Tool | Close Session Event |
 | ---- | ------------------- |
 | dbLinter VS Code Extension | On closing VS Code. |
 |  | On reload window. |
-| dbLinter CLI | On send of a check command. |
+| dbLinter CLI | On end of a check command. |
 |          | On end of a test command. |
 | SonarScanner | On end of a check run using the dbLinter SonarQube plugin. |
-| dbLinter Repo | On expiration of a client session. This is a logical change based on the server time. No update is necessary to handle this event. |
+| dbLinter Repo | On expiration of a session. This is a logical change based on the server time. Session are considered expired when the value of `Valid Until` is in the past. |
 
-### What is the TTL of a client session?
+### What is the TTL of a session?
 
 This is configured in the dbLinter Repo per tenant.
 The default value is 1800 seconds.
@@ -79,4 +83,4 @@ Typical root causes are:
 
 ### At what point is the configuration read?
 
-The configuration is read from the dbLinter repo when opening a client session.
+The configuration is read from the dbLinter repo when opening a session.
