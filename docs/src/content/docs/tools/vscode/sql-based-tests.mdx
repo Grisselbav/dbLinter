@@ -8,7 +8,7 @@ sidebar:
 Compliance with the rules in the dbLinter repository can be verified using checks, SQL-based tests, or both.
 In a SQL-based test, an SQL query is run against a non-production database via a configured read-only connection.
 The returned rows are treated as violations of the rule.
-Optionally, each return row may contain a migration script to fix the violation.
+Optionally, each result row may contain a migration script to fix the violation.
 
 ## Prerequisites
 
@@ -19,9 +19,10 @@ In order to run SQL-based tests, you must first configure [read-only access](/db
 Whether a SQL-based test is shown in the VS Code extension depends on the following:
 
 1. Is the rule enabled in the configuration?
-2. Does the database version fall within the minimal and maximal ranges defined in the rule?
+2. Is the test compatible with the connected DBMS?
+3. Does the database version fall within the minimal and maximal ranges defined for test?
 
-The SQL-based test is only considered applicable if both questions can be answered with 'yes'.
+The SQL-based test is only considered applicable if all questions can be answered with 'yes'.
 
 ## Activation
 
