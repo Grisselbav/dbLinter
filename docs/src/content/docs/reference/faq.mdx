@@ -5,7 +5,7 @@ sidebar:
   order: 30
 ---
 
-## Frequently Asked Questions
+## Licensing
 
 ### What is a seat?
 
@@ -24,9 +24,21 @@ Furthermore, a seat is reserved for each unique combination of the following att
 
 This definition enables an unlimited number of tools to open sessions on a single machine, with only one seat reserved.
 
+### How many seats do I need?
+
+The basic idea is to licence dbLinter for each developer working with a tenant configuration.
+The seat metric is simply a way of minimising misuse.
+
+If you're wondering how many seats you need, simply count the number of developers who will be working with dbLinter.
+Apart from very small teams using a large number of CI/CD runners in the cloud, the number of reserved seats will not be a limiting factor.
+
+In any case, using local CI/CD runners is an effective way of reducing the total number of reserved seats.
+
+For very small teams, it is advisable to licence an additional seat for CI/CD runners, to ensure that the number of seats is not exceeded during local development or CI/CD job execution.
+
 ### Is a Web GUI session reserving a seat?
 
-No. Only sessions used to analyse code are reserving seats.
+No, only sessions used for checking code and running tests reserve seats.
 
 ### Who opens a session?
 
@@ -47,7 +59,7 @@ No. Only sessions used to analyse code are reserving seats.
 | dbLinter CLI | On end of a check command. |
 |          | On end of a test command. |
 | SonarScanner | On end of a check run using the dbLinter SonarQube plugin. |
-| dbLinter Repo | On expiration of a session. This is a logical change based on the server time. Session are considered expired when the value of `Valid Until` is in the past. |
+| dbLinter Repo | On expiration of a session. This is a logical change based on the server time. Session are considered expired when the value of `Valid Until` is in the past. See also [Active Sessions](http://localhost:4321/dbLinter/tools/web-gui/administration/#active-sessions). |
 
 ### What is the TTL of a session?
 
@@ -69,6 +81,71 @@ They must not be shared between natural persons.
 | dbLinter CLI | An error is logged and CLI stops with an error. |
 | SonarScanner | An error is logged and SonarScanner stops with an error. |
 
+## Data And Privacy
+
+### Where is my code processed?
+
+The code is always analysed locally. This means it never leaves the local network.
+
+For example, when you check the code in VS Code or with the CLI, it is analysed by a language server that runs locally on your machine.
+
+### What happens with the data read from my databases?
+
+Data read from the database are used within checks and SQL-based tests to report rule violations and propose quick fixes or migration scripts.
+
+There are no further uses for the data read.
+
+### Is dbLinter changing the data in my databases?
+
+No.
+Never.
+
+However, a SQL-based test may generate a migration script in the VS Code editor.
+To create missing foreign key indexes, for example.
+In order to run such a script, you must connect to a database and execute the script.
+
+In any case, dbLinter cannot change data in your database automatically.
+
+### Is dbLinter changing my code?
+
+Yes, when applying quick fixes.
+
+However, you are in control.
+You decide which ones to apply.
+You decide to save or revert a change.
+
+In any case, it is recommended that you use a version control system such as Git so that you can see the changes applied by dbLinter's quick fixes.
+
+### Are quick fixes always correct?
+
+No, we cannot guarantee correctness.
+
+However, we have defined [Principles for Quick Fixes](/dbLinter/reference/principles/#principles-for-quick-fixes) and implemented unit tests to reduce the risk of bugs.
+But we cannot guarantee bug-free code.
+
+### Which components communicate with components outside of my local network?
+
+The language server is the only dbLinter client component that communicates with components outside the local network.
+Specifically, it only communicates with the dbLinter [REST-API](http://localhost:4321/dbLinter/reference/architecture/#rest-api).
+
+### What client-specific data does dbLinter store outside of the local network?
+
+The following table shows the client-specific data stored by dbLinter.
+
+| Component | Data Group | Details |
+| --------- | ---------- | ------- |
+| [REST-API](http://localhost:4321/dbLinter/reference/architecture/#rest-api) | Log | Messages on open session, close session, sent emails. May contain data from session group. |
+| [Repo](/dbLinter/reference/architecture/#repo) | User | Users (email, display name, password hash), tenant roles, access tokens (name, validity period, token hash). |
+| | Tenant | Tenants (name, session ttl), subscriptions (plan, validity period, number of seats), rules<sup>1</sup>, validators<sup>1</sup>. |
+| | Config | Configs (name, description, include/exclude patterns), ignored test results (identifier, comment), custom parameters, enabled rules, connection infos<sup>2</sup> (name, username, password, jdbc url). |
+| | Session | Active and historised sessions (tenant name, config name, email, start time, valid until time, end time, client type, ip address, mac address, os name, os version, os user name, java version) |
+| | Log | Log messages associated with code in the database, may contain data from session group. |
+
+<sup>1</sup> only for tenants with professional subscription<br/>
+<sup>2</sup> can be managed locally, either fully or partially
+
+## Errors
+
 ### Feature is not enabled for the current access token. Why?
 
 This error message is produced by the language server.
@@ -81,6 +158,21 @@ Typical root causes are:
 - Invalid [Remote Access](http://localhost:4321/dbLinter/tools/vscode/settings/#remote-access) settings.
 - Exceeded number of seats.
 
+## Common
+
 ### At what point is the configuration read?
 
 The configuration is read from the dbLinter repo when opening a session.
+
+### Is a fully on-premises subscription planned?
+
+Not yet.
+
+From a data and privacy perspective, we believe that dbLinter is suitable for use in an enterprise environment, since code analysis is always performed locally.
+This means that neither the code nor your database data ever leaves your local network.
+
+Before we can consider providing an on-premises offer for dbLinter, we need to understand why the current SaaS model is difficult to integrate into your enterprise environment.
+
+Please get in touch so that we can discuss your concerns.
+We are confident that we will find a suitable solution.
+Thank you.
