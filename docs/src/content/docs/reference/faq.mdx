@@ -1,0 +1,82 @@
+---
+title: FAQ
+description: Frequently asked questions.
+sidebar:
+  order: 30
+---
+
+## Frequently Aked Questions
+
+### What is a seat?
+
+A 'seat' is a is a licensing unit used by dbLinter.
+
+The number of licensed seats determines the maximum number of users that can be registered for a tenant.
+
+Furthermore, a seat is reserved for each unique combination of the following attributes of a client session:
+
+| Attribute | Description |
+| --------- | ----------- |
+| <span style="white-space: nowrap">Email address</span> | The email address of the dbLinter user used to connect to the dbLinter REST API. |
+| IP address | The public IP address used to connect to the dbLinter REST API. |
+| MAC address | The first enabled MAC address of the client machine. This may change when switching between network connections. |
+| OS user | The operating system user name used to connect to the dbLinter REST API. |
+
+This definition enables an unlimited number of tools to open client sessions on a single machine, with only one seat reserved.
+
+### Who opens a client session?
+
+| Tool | Open Session Event |
+| ---- | ------------------ |
+| dbLinter VS Code Extension | On activation of the extension. |
+|  | On session expiration while running checks or tests. |
+| dbLinter CLI | On start of a check command. |
+|          | On start of a test command. |
+| SonarScanner | On start of a check run using the dbLinter SonarQube plugin. |
+
+### Who closes a client session?
+
+| Tool | Close Session Event |
+| ---- | ------------------- |
+| dbLinter VS Code Extension | On closing VS Code. |
+|  | On reload window. |
+| dbLinter CLI | On send of a check command. |
+|          | On end of a test command. |
+| SonarScanner | On end of a check run using the dbLinter SonarQube plugin. |
+| dbLinter Repo | On expiration of a client session. This is a logical change based on the server time. No update is necessary to handle this event. |
+
+### What is the TTL of a client session?
+
+This is configured in the dbLinter Repo per tenant.
+The default value is 1800 seconds.
+The value can only be changed by a product administrator.
+
+### Is it allowed to use access tokens of another user?
+
+No.
+Access tokens are personal.
+They must not be shared between natural persons.
+
+### What happens when the number of seats is exceeded?
+
+| Tool | Impact |
+| ---- | ------ |
+| dbLinter VS Code Extension | An error is logged. Problems are no longer being reported. SQL-based tests cannot be run. Neither can CLI commands. |
+| dbLinter CLI | An error is logged and CLI stops with an error. |
+| SonarScanner | An error is logged and SonarScanner stops with an error. |
+
+### Feature is not enabled for the current access token. Why?
+
+This error message is produced by the language server.
+This occurs when the access token does not have the necessary dbLinter roles to run the requested operation.
+The same thing happens when an error occurs when reading the configuration, resulting in no roles being found for the access token.
+
+Check the logs for errors.
+
+Typical root causes are:
+- Invalid [Remote Access](http://localhost:4321/dbLinter/tools/vscode/settings/#remote-access) settings.
+- Exceeded number of seats.
+
+### At what point is the configuration read?
+
+The configuration is read from the dbLinter repo when opening a client session.
