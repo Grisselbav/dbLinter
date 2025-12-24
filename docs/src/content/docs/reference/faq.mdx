@@ -59,7 +59,7 @@ No, only sessions used for checking code and running tests reserve seats.
 | dbLinter CLI | On end of a check command. |
 |          | On end of a test command. |
 | SonarScanner | On end of a check run using the dbLinter SonarQube plugin. |
-| dbLinter Repo | On expiration of a session. This is a logical change based on the server time. Session are considered expired when the value of `Valid Until` is in the past. See also [Active Sessions](http://localhost:4321/dbLinter/tools/web-gui/administration/#active-sessions). |
+| dbLinter Repo | On expiration of a session. This is a logical change based on the server time. Session are considered expired when the value of `Valid Until` is in the past. See also [Active Sessions](/dbLinter/tools/web-gui/administration/#active-sessions). |
 
 ### What is the TTL of a session?
 
@@ -126,7 +126,7 @@ But we cannot guarantee bug-free code.
 ### Which components communicate with components outside of my local network?
 
 The language server is the only dbLinter client component that communicates with components outside the local network.
-Specifically, it only communicates with the dbLinter [REST-API](http://localhost:4321/dbLinter/reference/architecture/#rest-api).
+Specifically, it only communicates with the dbLinter [REST-API](/dbLinter/reference/architecture/#rest-api).
 
 ### What client-specific data does dbLinter store outside of the local network?
 
@@ -134,7 +134,7 @@ The following table shows the client-specific data stored by dbLinter.
 
 | Component | Data Group | Details |
 | --------- | ---------- | ------- |
-| [REST-API](http://localhost:4321/dbLinter/reference/architecture/#rest-api) | Log | Messages on open session, close session, sent emails. May contain data from session group. |
+| [REST-API](/dbLinter/reference/architecture/#rest-api) | Log | Messages on open session, close session, sent emails. May contain data from session group. |
 | [Repo](/dbLinter/reference/architecture/#repo) | User | Users (email, display name, password hash), tenant roles, access tokens (name, validity period, token hash). |
 | | Tenant | Tenants (name, session ttl), subscriptions (plan, validity period, number of seats), rules<sup>1</sup>, validators<sup>1</sup>. |
 | | Config | Configs (name, description, include/exclude patterns), ignored test results (identifier, comment), custom parameters, enabled rules, connection infos<sup>2</sup> (name, username, password, jdbc url). |
@@ -155,7 +155,7 @@ The same thing happens when an error occurs when reading the configuration, resu
 Check the logs for errors.
 
 Typical root causes are:
-- Invalid [Remote Access](http://localhost:4321/dbLinter/tools/vscode/settings/#remote-access) settings.
+- Invalid [Remote Access](/dbLinter/tools/vscode/settings/#remote-access) settings.
 - Exceeded number of seats.
 
 ## Common
