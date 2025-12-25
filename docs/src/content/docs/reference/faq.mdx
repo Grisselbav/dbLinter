@@ -67,11 +67,18 @@ This is configured in the dbLinter Repo per tenant.
 The default value is 1800 seconds.
 The value can only be changed by a product administrator.
 
-### Is it allowed to use access tokens of another user?
+### Can access tokens be shared?
 
-No.
-Access tokens are personal.
-They must not be shared between natural persons.
+Yes.
+In fact, that's what we're doing with the anonymous tenant.
+All anonymous dbLinter users share the same access token.
+This token only has the DB-Developer role.
+
+However, access tokens are personal.
+Therefore, you also need to share your email address (username) and tenant name.
+This is necessary when running dbLinter in a CI/CD pipeline.
+
+For optimal security, it is advisable to use separate access tokens, limiting each one to a single tenant and the necessary roles.
 
 ### What happens when the number of seats is exceeded?
 
@@ -143,6 +150,24 @@ The following table shows the client-specific data stored by dbLinter.
 
 <sup>1</sup> only for tenants with professional subscription<br/>
 <sup>2</sup> can be managed locally, either fully or partially
+
+### What is my email address used for?
+
+We use it for the following:
+
+- authentication
+- authorisation
+- sending emails as part of dbLinter workflows, for example
+   - confirmation emails
+   - password resets
+   - changing email addresses
+   - notifications about tenant access requests
+   - notifications about expiring access tokens
+- contacting you if we encounter any unexpected behaviour
+
+### Will my email address be shared with third parties?
+
+No.
 
 ## Errors
 
