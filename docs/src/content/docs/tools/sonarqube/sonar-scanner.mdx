@@ -1,0 +1,202 @@
+---
+title: SonarScanner
+description: SonarScanner for SonarQube.
+sidebar:
+  order: 50
+---
+
+Use the SonarScanner CLI to analyse your SQL, PL/SQL and PL/pgSQL projects.
+
+## Installation
+
+You can download the version of the SonarScanner CLI for your operating system from [here](https://docs.sonarsource.com/sonarqube-community-build/analyzing-source-code/scanners/sonarscanner#sonarscanner-8.0.1-or-issue-tracker).
+
+Extract the contents of the ZIP file to a directory of your choice and then add the `bin` directory to your path.
+
+## Settings
+
+One way to define the settings for the analysis run in `sonar-project.properties` file.
+See [Settings](/dbLinter/tools/sonarqube/settings) for other options.
+
+We use this slightly adapted properties file for the dbLinter database project.
+
+```properties title="sonar-project.properties"
+# SonarQube coordinates
+sonar.projectKey=dbLinter
+sonar.projectName=dbLinter
+sonar.projectVersion=1.1.0
+sonar.host.url=http://127.0.0.1:61011
+
+# Path is relative to the sonar-project.properties file.
+sonar.sources=main
+sonar.tests=test
+
+# Reports produced by coverage.sh
+sonar.coverageReportPaths=coverage.xml
+sonar.testExecutionReportPaths=test_results.xml
+
+# Exclude JS and Python files from analysis
+sonar.exclusions=**/*.js,**/*.py
+
+# Debugging output when running sonar-scanner
+#    true/false for sonar.verbose
+#    INFO/DEBUG/TRACE for sonar.log.level (Not working: OFF, FATAL, ERROR, WARN)
+sonar.verbose=false
+sonar.log.level=INFO
+
+# dbLinter specific
+sonar.dblinter.repo.url=https://api.dblinter.app
+sonar.dblinter.tenant.name=Grisselbav
+sonar.dblinter.user.name=philipp.salvisberg@grisselbav.com
+sonar.dblinter.access.token=...
+sonar.dblinter.config.name=dbLinter
+sonar.dblinter.ls.parallel.files=4
+
+# Python specific (required even if Python files are excluded to avoid warning in dashboard)
+sonar.python.version=3.9
+```
+
+## Run Analysis
+
+To run the analysis, start the SonarScanner CLI from the folder containing the `sonar-project.properties` file.
+Thanks to the `sonar-project.properties` file, there is no need to pass any parameters.
+
+```bash
+sonar-scanner
+```
+
+The console output looks like this:
+
+```
+10:59:59.987 INFO  Scanner configuration file: /opt/homebrew/Cellar/sonar-scanner/8.0.1.6346/libexec/conf/sonar-scanner.properties
+10:59:59.990 INFO  Project root configuration file: /Users/phs/github/Grisselbav/dbLinter-Server/database/src/sonar-project.properties
+10:59:59.996 INFO  SonarScanner CLI 8.0.1.6346
+10:59:59.997 INFO  Mac OS X 26.2 aarch64
+11:00:00.992 INFO  Communicating with SonarQube Community Build 26.1.0.118079
+11:00:00.993 INFO  JRE provisioning: os[macos], arch[arm64]
+11:00:01.231 INFO  Starting SonarScanner Engine...
+11:00:01.231 INFO  Java 21.0.9 Eclipse Adoptium (64-bit)
+11:00:02.276 INFO  Load global settings
+11:00:02.326 INFO  Load global settings (done) | time=49ms
+11:00:02.327 INFO  Server id: 243B8A4D-AZZzZrMrdIMnD4oed3bM
+11:00:02.333 INFO  Loading required plugins
+11:00:02.333 INFO  Load plugins index
+11:00:02.342 INFO  Load plugins index (done) | time=8ms
+11:00:02.342 INFO  Load/download plugins
+11:00:02.359 INFO  Load/download plugins (done) | time=18ms
+11:00:02.412 INFO  dbLinter SonarQube plugin is configured as primary plugin.
+11:00:02.522 INFO  Process project properties
+11:00:02.528 INFO  Process project properties (done) | time=7ms
+11:00:02.540 INFO  Project key: dbLinter
+11:00:02.540 INFO  Base dir: /Users/phs/github/Grisselbav/dbLinter-Server/database/src
+11:00:02.541 INFO  Working dir: /Users/phs/github/Grisselbav/dbLinter-Server/database/src/.scannerwork
+11:00:02.545 INFO  Load project settings for component key: 'dbLinter'
+11:00:02.554 INFO  Load project settings for component key: 'dbLinter' (done) | time=8ms
+11:00:02.566 INFO  Load quality profiles
+11:00:02.597 INFO  Load quality profiles (done) | time=31ms
+11:00:02.622 INFO  Load active rules
+11:00:02.741 INFO  Load active rules (done) | time=119ms
+11:00:02.743 INFO  Load analysis cache
+11:00:02.757 INFO  Load analysis cache (573 bytes) | time=14ms
+11:00:02.789 INFO  Preprocessing files...
+11:00:03.587 INFO  3 languages detected in 322 preprocessed files (done) | time=798ms
+11:00:03.587 INFO  4 files ignored because of inclusion/exclusion patterns
+11:00:03.588 INFO  195 files ignored because of scm ignore settings
+11:00:03.589 INFO  Loading plugins for detected languages
+11:00:03.589 INFO  Load/download plugins
+11:00:03.591 INFO  Load/download plugins (done) | time=2ms
+11:00:03.629 INFO  Load project repositories
+11:00:03.708 INFO  Load project repositories (done) | time=79ms
+11:00:03.717 INFO  Indexing files...
+11:00:03.718 INFO  Project configuration:
+11:00:03.718 INFO    Excluded sources: **/*.js, **/*.py
+11:00:03.730 INFO  322 files indexed (done) | time=13ms
+11:00:03.731 INFO  Quality profile for dblinter: dblinter
+11:00:03.731 INFO  Quality profile for json: Sonar way
+11:00:03.731 INFO  Quality profile for py: Sonar way
+11:00:03.731 INFO  ------------- Run sensors on module dbLinter
+11:00:03.733 INFO  dbLinter SonarQube plugin is configured as primary plugin.
+11:00:03.764 INFO  Load metrics repository
+11:00:03.778 INFO  Load metrics repository (done) | time=14ms
+11:00:03.788 INFO  Initialising dbLinter sensor for API Version: API Version: 13.4.3.4290, Product: SONARQUBE, Edition: COMMUNITY, Side: SCANNER
+11:00:03.789 INFO  SonarQube configuration: languageKey=dblinter, fileSuffixes=sql,prc,fnc,pks,pkb,trg,vw,tps,tpb,plb,pls,rcv,spc,typ,aqt,aqp,ctx,dbl,tab,dim,snp,con,collt,seq,syn,grt,sp,spb,sps,pck,sqlnb,apx,md, repoUrl=https://api.dblinter.app, tenantName=Grisselbav, userName=philipp.salvisberg@grisselbav.com, configName=dbLinter, connJdbcUrl=, connUserName=, lsParallelFiles=4, lsClearCacheThreshold=8192, lsLogFormat=short
+11:00:04.031 INFO  Sensor dbLinter Sensor [dblinter]
+11:00:06.718 INFO  Configuration loaded with 167 checks.
+11:00:06.747 INFO  Found /Users/phs/github/Grisselbav/dbLinter-Server/database/src files in 311 to be processed.
+11:00:06.879 INFO  Processed main/context/dbl_context.sql (1/311) in 0.131 sec.
+11:00:07.144 INFO  Processed main/data/dbl_dbms.sql (2/311) in 0.395 sec.
+11:00:07.144 INFO  Processed main/data/dbl_issue_fixing_times.sql (3/311) in 0.264 sec.
+...
+11:00:14.537 INFO  Processed test/package/test_dbl_domains.pkb (309/311) in 1.884 sec.
+11:00:14.664 INFO  Processed test/package/test_dbl_tenant_api.pkb (310/311) in 1.446 sec.
+11:00:14.980 INFO  Processed test/package/test_dbl_user_api.pkb (311/311) in 1.129 sec.
+11:00:15.048 INFO  Sensor dbLinter Sensor [dblinter] (done) | time=11018ms
+11:00:15.048 INFO  Sensor IaC CloudFormation Sensor [iac]
+11:00:15.656 INFO  There are no files to be analyzed for the CloudFormation language
+11:00:15.656 INFO  Sensor IaC CloudFormation Sensor [iac] (done) | time=608ms
+11:00:15.656 INFO  Sensor IaC cfn-lint report Sensor [iac]
+11:00:15.657 INFO  Sensor IaC cfn-lint report Sensor [iac] (done) | time=1ms
+11:00:15.657 INFO  Sensor IaC hadolint report Sensor [iac]
+11:00:15.657 INFO  Sensor IaC hadolint report Sensor [iac] (done) | time=0ms
+11:00:15.657 INFO  Sensor IaC Azure Resource Manager Sensor [iac]
+11:00:15.659 INFO  There are no files to be analyzed for the Azure Resource Manager language
+11:00:15.659 INFO  Sensor IaC Azure Resource Manager Sensor [iac] (done) | time=2ms
+11:00:15.659 INFO  Sensor Java Config Sensor [iac]
+11:00:15.661 INFO  There are no files to be analyzed for the Java language
+11:00:15.661 INFO  Sensor Java Config Sensor [iac] (done) | time=2ms
+11:00:15.661 INFO  Sensor IaC Docker Sensor [iac]
+11:00:15.662 INFO  There are no files to be analyzed for the Docker language
+11:00:15.662 INFO  Sensor IaC Docker Sensor [iac] (done) | time=1ms
+11:00:15.662 INFO  Sensor Python Sensor [python]
+11:00:15.727 INFO  Starting global symbols computation
+11:00:15.728 INFO  1 source file to be analyzed
+11:00:15.803 INFO  1/1 source file has been analyzed
+11:00:15.804 INFO  Finished step global symbols computation in 76ms
+11:00:15.817 INFO  Starting rules execution
+11:00:15.817 INFO  1 source file to be analyzed
+11:00:15.932 INFO  1/1 source file has been analyzed
+11:00:15.932 INFO  Finished step rules execution in 115ms
+11:00:15.933 INFO  The Python analyzer was able to leverage cached data from previous analyses for 0 out of 1 files. These files were not parsed.
+11:00:15.933 INFO  Sensor Python Sensor [python] (done) | time=271ms
+11:00:15.933 INFO  Sensor Cobertura Sensor for Python coverage [python]
+11:00:15.944 INFO  Sensor Cobertura Sensor for Python coverage [python] (done) | time=11ms
+11:00:15.944 INFO  Sensor Python Dependency Sensor [python]
+11:00:15.948 INFO  Sensor Python Dependency Sensor [python] (done) | time=4ms
+11:00:15.948 INFO  Sensor Generic Test Executions Report
+11:00:15.948 INFO  Parsing /Users/phs/github/Grisselbav/dbLinter-Server/database/src/test_results.xml
+11:00:15.959 INFO  Imported test execution data for 12 files
+11:00:15.959 INFO  Sensor Generic Test Executions Report (done) | time=11ms
+11:00:15.959 INFO  Sensor TextAndSecretsSensor [text]
+11:00:15.961 INFO  Available processors: 10
+11:00:15.961 INFO  Using 10 threads for analysis.
+11:00:16.084 INFO  Start fetching files for the text and secrets analysis
+11:00:16.100 INFO  Using Git CLI to retrieve untracked files
+11:00:16.132 INFO  Retrieving language associated files and files included via "sonar.text.inclusions" that are tracked by git
+11:00:16.133 INFO  Starting the text and secrets analysis
+11:00:16.133 INFO  321 source files to be analyzed for the text and secrets analysis
+11:00:19.175 INFO  321/321 source files have been analyzed for the text and secrets analysis
+11:00:19.179 INFO  Sensor TextAndSecretsSensor [text] (done) | time=3220ms
+11:00:19.181 INFO  ------------- Run sensors on project
+11:00:19.247 INFO  Sensor Generic Coverage Report
+11:00:19.247 INFO  Parsing /Users/phs/github/Grisselbav/dbLinter-Server/database/src/coverage.xml
+11:00:19.263 INFO  Imported coverage data for 12 files
+11:00:19.263 INFO  Sensor Generic Coverage Report (done) | time=17ms
+11:00:19.263 INFO  Sensor Zero Coverage Sensor
+11:00:19.266 INFO  Sensor Zero Coverage Sensor (done) | time=3ms
+11:00:19.266 INFO  ------------- Gather SCA dependencies on project
+11:00:19.268 INFO  Dependency analysis skipped
+11:00:19.305 INFO  CPD Executor 69 files had no CPD blocks
+11:00:19.305 INFO  CPD Executor Calculating CPD for 187 files
+11:00:19.345 INFO  CPD Executor CPD calculation finished (done) | time=40ms
+11:00:19.351 INFO  SCM revision ID 'ecd5f9dba97729c7befa8d0ee11116c0d707b76b'
+11:00:19.489 INFO  Analysis report generated in 129ms, dir size=2.4 MB
+11:00:20.036 INFO  Analysis report compressed in 547ms, zip size=836.3 kB
+11:00:20.163 INFO  Analysis report uploaded in 127ms
+11:00:20.164 INFO  ANALYSIS SUCCESSFUL, you can find the results at: http://127.0.0.1:61011/dashboard?id=dbLinter
+11:00:20.164 INFO  Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+11:00:20.164 INFO  More about the report processing at http://127.0.0.1:61011/api/ce/task?id=0f43ddbb-0cc7-447f-817b-daeece477c99
+11:00:20.276 INFO  Analysis total time: 17.885 s
+11:00:20.277 INFO  SonarScanner Engine completed successfully
+11:00:20.380 INFO  EXECUTION SUCCESS
+11:00:20.381 INFO  Total time: 20.397s
+```
