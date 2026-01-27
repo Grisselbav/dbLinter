@@ -191,12 +191,16 @@ The configuration is read from the dbLinter repo when opening a session.
 
 ### Is a fully on-premises subscription planned?
 
-Not yet.
+Kind of.
 
 From a data and privacy perspective, we believe that dbLinter is suitable for use in an enterprise environment, since code analysis is always performed locally.
 This means that neither the code nor your database data ever leaves your local network.
 
-Before we can consider providing an on-premises offer for dbLinter, we need to understand why the current SaaS model is difficult to integrate into your enterprise environment.
+However, we are considering providing a read-only client-side REST API for air-gapped environments.
+This API would serve requests from a local, read-only data store which could be periodically refreshed with a dedicated export file.
+This means that all developers and CI/CD pipelines could use dbLinter even if they don't have internet access.
+
+Nevertheless, in order to manage configurations and custom rules, as well as to export the latest configurations, you will need to use the dbLinter [Web GUI](/dbLinter/tools/web-gui/web-gui-overview/).
 
 Please get in touch so that we can discuss your concerns.
 We are confident that we will find a suitable solution.
