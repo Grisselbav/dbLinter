@@ -92,6 +92,7 @@ click on `Sign in` and then on `Sign up` and follow the instructions.
 
 [The table is generated with https://github.com/Grisselbav/dbLinter-Server/blob/main/database/src/test/demo/query_rules_per_subscription.sql]: #
 
+
 | Rule | Anonymous (Free) |  Starter (Free) | Essential | Professional |
 |------|:----------------:|:---------------:|:---------:|:------------:|
 | [G-1010: Try to label your sub blocks.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-1010) | - | yes | yes | yes |
@@ -156,6 +157,7 @@ click on `Sign in` and then on `Sign up` and follow the instructions.
 | [G-3183: Always specify column aliases instead of expressions in GROUP BY clauses.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-3183) | - | yes | yes | yes |
 | [G-3185: Never use ROWNUM at the same query level as ORDER BY.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-3185) | yes | yes | yes | yes |
 | [G-3190: Avoid using NATURAL JOIN.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-3190) | yes | yes | yes | yes |
+| [G-3192: Avoid joining tables with the USING clause.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-3192) | - | - | yes | yes |
 | [G-3195: Always use wildcards in a LIKE clause.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-3195) | yes | yes | yes | yes |
 | [G-3210: Always use BULK OPERATIONS (BULK COLLECT, FORALL) whenever you have to execute a DML statement for more than 4 times.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-3210) | - | yes | yes | yes |
 | [G-3220: Always process saved exceptions from a FORALL statement.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-3220) | yes | yes | yes | yes |
