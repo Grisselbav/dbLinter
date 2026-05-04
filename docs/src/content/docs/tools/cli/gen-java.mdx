@@ -1,0 +1,138 @@
+---
+title: gen-java
+description: gen-java command
+sidebar:
+  order: 60
+---
+
+This command generates a custom validator Java project using Maven.
+Based on the non-compliant and compliant examples, it generates complete test cases using the rules defined in the dbLinter repository.
+It also generates skeleton classes for the checks.
+
+To apply these custom checks in VS Code, the CLI or SonarQube, upload the resulting validator to the dbLinter repository.
+
+This feature is only available with a [Professional Subscription](/dbLinter/getting-started/professional-subscription/).
+
+## Syntax
+
+```
+dblinter [<options>] gen-java [<args>]
+```
+
+## Options
+
+See [Options](/dbLinter/tools/cli/options/).
+Mandatory options are `tenantName`, `userName`, `accessToken` and `configName`.
+
+## Argument Syntax
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+<Tabs>
+<TabItem label="in Command Line">
+```
+--<argument>=<value>
+```
+</TabItem>
+<TabItem label="in Property File">
+```
+<argument>=<value>
+```
+</TabItem>
+</Tabs>
+
+## Arguments
+
+It is not possible to set arguments using environment variables.
+Beside that, in dbLinter, both arguments and options are treated in the same way.
+Therefore, they can be used in any order. For example, they can be used before or after the command name.
+We use options when the semantics are identical for each applicable command.
+Arguments are used when the semantics change for a command.
+
+- `outputName`<br/>
+  This is the relative path to the root directory of the Java project.
+  Any missing target directories will be created.
+  Any existing files will not be overwritten.
+  The default is `dblinter-validator`.
+
+- `tenantFilter`<br/>
+  This is the regular expression used to filter tenant names.
+  The default is `(?i)^tenantName$`, where `tenantName` is replaced with the value of the `tenantName` option.
+
+- `ruleFilter`<br/>
+  This is the regular expression used to filter rule names.
+  The default is `.+`.
+
+- `groupId`<br/>
+  This is the group ID for the project.
+  The default is `com.tenantName`, where `tenantName` is replaced with the value of the `tenantName` option.
+
+- `packageName`<br/>
+  This is the root package name for the project.
+  The default is `groupId .dblinter.validator`, where `groupId` is replaced with the value of the `groupId` argument.
+
+## Example
+
+```bash
+dbLinter gen-java \
+    --tenantName=Demo \
+    --userName=philipp.salvisberg+42@gmail.com \
+    --accessToken=*** \
+    --configName=Default \
+    --indent=4 \
+    --outputName=dbLinter-Demo-Custom-Validator \
+    --tenantFilter="^Demo$" \
+    --ruleFilter=.+ \
+    --groupId=com.grisselbav \
+    --packageName=grisselbav.com.demo.validator
+```
+
+The console output looks like this:
+
+```
+Using connection to jdbc:oracle:thin:@localhost:1521/freepdb1 with user DBL_READ
+Java custom validator project created in dbLinter-Demo-Custom-Validator
+```
+
+The `Demo` tenant copied rules G-2320, G-4310, G-5070 and G-9010 from the `Core` tenant, but with the prefix `R-` instead of `G-`.
+Accordingly, the previous `gen-java` command produced the following files:
+
+```
+./dbLinter-Demo-Custom-Validator
+./dbLinter-Demo-Custom-Validator/.gitignore
+./dbLinter-Demo-Custom-Validator/.mvn
+./dbLinter-Demo-Custom-Validator/.mvn/wrapper
+./dbLinter-Demo-Custom-Validator/.mvn/wrapper/maven-wrapper.properties
+./dbLinter-Demo-Custom-Validator/mvnw
+./dbLinter-Demo-Custom-Validator/mvnw.cmd
+./dbLinter-Demo-Custom-Validator/pom.xml
+./dbLinter-Demo-Custom-Validator/README.md
+./dbLinter-Demo-Custom-Validator/src
+./dbLinter-Demo-Custom-Validator/src/main
+./dbLinter-Demo-Custom-Validator/src/main/java
+./dbLinter-Demo-Custom-Validator/src/main/java/grisselbav
+./dbLinter-Demo-Custom-Validator/src/main/java/grisselbav/com
+./dbLinter-Demo-Custom-Validator/src/main/java/grisselbav/com/demo
+./dbLinter-Demo-Custom-Validator/src/main/java/grisselbav/com/demo/validator
+./dbLinter-Demo-Custom-Validator/src/main/java/grisselbav/com/demo/validator/DemoR2320.java
+./dbLinter-Demo-Custom-Validator/src/main/java/grisselbav/com/demo/validator/DemoR4310.java
+./dbLinter-Demo-Custom-Validator/src/main/java/grisselbav/com/demo/validator/DemoR5070.java
+./dbLinter-Demo-Custom-Validator/src/main/java/grisselbav/com/demo/validator/DemoR9010.java
+./dbLinter-Demo-Custom-Validator/src/test
+./dbLinter-Demo-Custom-Validator/src/test/java
+./dbLinter-Demo-Custom-Validator/src/test/java/grisselbav
+./dbLinter-Demo-Custom-Validator/src/test/java/grisselbav/com
+./dbLinter-Demo-Custom-Validator/src/test/java/grisselbav/com/demo
+./dbLinter-Demo-Custom-Validator/src/test/java/grisselbav/com/demo/validator
+./dbLinter-Demo-Custom-Validator/src/test/java/grisselbav/com/demo/validator/AbstractTest.java
+./dbLinter-Demo-Custom-Validator/src/test/java/grisselbav/com/demo/validator/DemoR2320Test.java
+./dbLinter-Demo-Custom-Validator/src/test/java/grisselbav/com/demo/validator/DemoR4310Test.java
+./dbLinter-Demo-Custom-Validator/src/test/java/grisselbav/com/demo/validator/DemoR5070Test.java
+./dbLinter-Demo-Custom-Validator/src/test/java/grisselbav/com/demo/validator/DemoR9010Test.java
+./dbLinter-Demo-Custom-Validator/src/test/resources
+./dbLinter-Demo-Custom-Validator/src/test/resources/application.properties
+```
+
+The resulting project is available on [GitHub](https://github.com/Grisselbav/dbLinter-Demo-Custom-Validator).
+The project has been extended to fully implement the rules in scope.
+The initial version is tagged [v1](https://github.com/Grisselbav/dbLinter-Demo-Custom-Validator/tree/v1).

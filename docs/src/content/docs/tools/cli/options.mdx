@@ -154,6 +154,7 @@ grant select any dictionary to dbl_read;
            ```
 
 ## Cache
+
 - `clearCacheThreshold`<br/>
     Memory threshold in megabytes. The default is calculated as follows:<br/><br/>
     ```java
@@ -169,6 +170,14 @@ grant select any dictionary to dbl_read;
     While this frees up memory, subsequent parsing is slower.
     Set the threshold to a negative value to retain the cache.
     The cache is only cleared when analysing a file.
+
+## Formatting
+
+- `pretty`<br/>
+  This defines whether the produced JSON result should be formatted. The valid values are `true` and `false`.<br/>
+
+- `indent`<br/>
+  This defines the number of spaces used for indentation in pretty printing. Valid values range from 1 to 8.
 
 ## Properties File
 
