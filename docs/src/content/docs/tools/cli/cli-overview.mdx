@@ -53,6 +53,8 @@ Options:
   --logFile=<logFile>          Name of the log file.
   --logFormat=<format>         Log format (short, ext1, ext2, ext3).
   --clearCacheThreshold=<mb>   ANTLR memory threshold in megabytes.
+  --pretty=<boolean>           Pretty print JSON output (true, false).
+  --indent=<spaces>            Number of spaces for pretty printing.
   --options=<properties>       Load options from file.
 
 Commands:
@@ -62,13 +64,34 @@ Commands:
                                sonarqube, sarif, checkstyle, github, gitlab).
     --outputName=<name>        Base name of the output files.
     --parallel=<n>             Number of files analysed in parallel.
+    <paths...>                 Files and directories to analyse.
   test [<args>]                Run SQL-based tests.
     --outputFormats=<formats>  Comma-separated list of output formats (vscode,
                                junit).
     --outputName=<name>        Base name of the output files without file extension.
     --parallel=<n>             Number of SQL-based tests executed in parallel.
+  gen-java [<args>]            Generate custom validator Java project using Maven.
+    --outputName=<name>        Root directory name for the Maven project.
+    --tenantFilter=<regEx>     Regular expression to filter tenant names.
+    --ruleFilter=<regEx>       Regular expression to filter rule names.
+    --groupId=<name>           Group ID for the project (e.g. com.company)
+    --packageName=<name>       Root package name for the project (e.g. com.company.dblinter)
+  gen-utplsql [<args>]         Generate utPLSQL PL/SQL package for SQL-based tests.
+    --outputName=<name>        Base name of the output file(s).
+    --specExt=<ext>            File extension for the package specification (.sql, .pks)
+    --bodyExt=<ext>            File extension for the package body (.sql, .pkb)
+    --packageName=<name>       Name of the PL/SQL package.
+    --suitePath=<path>         Name of the utPLSQL suite-path.
+  export-tenants [<args>]      Export tenants to a JSON file.
+    --outputName=<name>        Name of the output file.
+    --tenantFilter=<regEx>     Regular expression to filter tenant names.
+    --planFilter=<regEx>       Regular expression to filter plan names (Free,
+                               Essential, Professional)
+  import-tenants [<args>]      Import tenants from a JSON file.
+    --inputName=<name>         Name of the input file.
+    --tenantFilter=<regEx>     Regular expression to filter tenant names.
   version                      Show version information.
-  help                         Show this help message.
+  help                         Show help message.
 ```
 
 ## Options
