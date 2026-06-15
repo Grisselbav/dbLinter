@@ -64,6 +64,8 @@ Commands:
                                sonarqube, sarif, checkstyle, github, gitlab).
     --outputName=<name>        Base name of the output files.
     --parallel=<n>             Number of files analysed in parallel.
+    --newCodeOnly=<boolean>    Only report issues on new and changed lines.
+    --referenceBranch=<name>   Reference branch name for new and changed lines.
     <paths...>                 Files and directories to analyse.
   test [<args>]                Run SQL-based tests.
     --outputFormats=<formats>  Comma-separated list of output formats (vscode,
@@ -90,6 +92,10 @@ Commands:
   import-tenants [<args>]      Import tenants from a JSON file.
     --inputName=<name>         Name of the input file.
     --tenantFilter=<regEx>     Regular expression to filter tenant names.
+  import-validator [<args>]    Import a validator JAR file.
+    --inputName=<name>         Name of the validator JAR file.
+    --ownerName=<name>         Tenant name owning the validator.
+    --parserVersion=<version>  Required IslandSQL parser version.
   version                      Show version information.
   help                         Show help message.
 ```
