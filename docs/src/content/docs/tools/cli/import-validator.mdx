@@ -1,0 +1,81 @@
+---
+title: import-validator
+description: import-validator command
+sidebar:
+  order: 95
+---
+
+This command imports a validator JAR containing validator check implementations of custom rules into the dbLinter repository.
+The [gen-java](/dbLinter/tools/cli/gen-java) command can be used to create an initial Java Maven project.
+See [dbLinter-Demo-Custom-Validator](https://github.com/Grisselbav/dbLinter-Demo-Custom-Validator) for an example.
+
+This feature is only available with a [Professional Subscription](/dbLinter/getting-started/professional-subscription/).
+
+## Syntax
+
+```
+dblinter [<options>] import-validator [<args>]
+```
+
+## Options
+
+See [Options](/dbLinter/tools/cli/options/).
+Mandatory options are `tenantName`, `userName` and `accessToken`.
+
+## Argument Syntax
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+<Tabs>
+<TabItem label="in Command Line">
+```
+--<argument>=<value>
+```
+</TabItem>
+<TabItem label="in Property File">
+```
+<argument>=<value>
+```
+</TabItem>
+</Tabs>
+
+## Arguments
+
+It is not possible to set arguments using environment variables.
+Beside that, in dbLinter, both arguments and options are treated in the same way.
+Therefore, they can be used in any order. For example, they can be used before or after the command name.
+We use options when the semantics are identical for each applicable command.
+Arguments are used when the semantics change for a command.
+
+- `inputName`<br/>
+  This is the relative path to the JAR file that is to be imported.
+  This argument is required. There is no default.
+
+- `ownerName`<br/>
+  This is the name of the tenant who owns the validator.
+  The default is the value of the `tenantName` option.
+  This argument is applicable only when the access token has access permissions for multiple tenants.
+
+- `parserVersion`
+  The IslandSQL parser version used to compile the validator.
+  The default value is `0.23.0` for the CLI version 1.6.0.
+  The parser is included in the language server, which will request the most compatible validators at runtime.
+
+## Example
+
+```bash
+dbLinter import-validator \
+    --tenantName=Demo \
+    --userName=philipp.salvisberg+42@gmail.com \
+    --accessToken=*** \
+    --inputName=target/custom-validator-1.0.0-SNAPSHOT.jar \
+    --ownerName=Demo \
+    --parserVersion=0.23.0
+```
+
+The console output looks like this:
+
+```
+Importing validator ...
+Validator imported successfully from target/custom-validator-1.0.0-SNAPSHOT.jar
+```
