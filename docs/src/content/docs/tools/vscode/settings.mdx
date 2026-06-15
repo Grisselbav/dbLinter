@@ -98,6 +98,18 @@ grant select any dictionary to dbl_read;
     Otherwise, if this extension is not installed, the `java` executable must be found in the operating system's path.
     A restart or `reload window` is required for the changes to take effect.
 
+- `New Code Only`<br/>
+    If enabled, issues are reported only on new and changed lines.
+    New and changed code is determined using Git and the configured reference branch.
+    Requires `git` to be installed and available in the OS path.
+    Open documents must be re-parsed for changes to take effect.
+
+- `Reference Branch`<br/>
+    Reference branch used to determine new and changed lines when `dblinter.NewCodeOnly` is enabled.
+    Think of it as the target branch in a Git merge or pull request.
+    The new and changed lines are determined by comparing the current local branch with the reference branch.
+    The reference branch contains the existing code, while the local branch contains the proposed changes.
+
 - `Log Level`<br/>
     This is the log level used to write log messages to output panel of dbLinter and to log files when running CLI commands.
     The following levels are valid:<br/>

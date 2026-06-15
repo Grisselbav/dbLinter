@@ -73,6 +73,20 @@ Arguments are used when the semantics change for a command.
     The default maximum heap size for a system with 64 GB of RAM is 16 GB (one quarter), which is sensible for desktop systems.
     In CI/CD environments, however, higher values can improve performance, especially when processing large files.
 
+- `newCodeOnly`<br/>
+    If set to `true`, issues are reported only on new and changed lines.
+    The default is `false`.
+    New and changed code is determined using Git and the configured reference branch.
+    Requires `git` to be installed and available in the OS path.
+
+- `Reference Branch`<br/>
+    Reference branch used to determine new and changed lines when `newCodeOnly` is enabled.
+    The default is `origin/main`.
+    The reference branch can be specified using any Git reference that identifies a commit, including branch names, tag names, and commit hashes.
+    Think of it as the target branch in a Git merge or pull request.
+    The new and changed lines are determined by comparing the current local branch with the reference branch.
+    The reference branch contains the existing code, while the local branch contains the proposed changes.
+
 - `<paths...>`<br/>
     The files and directories to analyse.
     By default, all files in the workspace are included/excluded according to the glob patterns defined in the configuration.
@@ -90,6 +104,8 @@ dbLinter-Demo % dbLinter check \
     --outputFormats=vscode,github \
     --outputName=check \
     --parallel=2 \
+    --newCodeOnly=true \
+    --referenceBranch=706c4307e640253ddba551a54be26f6ff2ef85ed \
     ./*.sql examples/Core-G-1*.sql
 ```
 
@@ -97,33 +113,33 @@ The console output for the [dbLinter-Demo](https://github.com/Grisselbav/dbLinte
 
 ```
 Using connection to jdbc:oracle:thin:@localhost:1521/freepdb1 with user DBL_READ
-Processed examples/Core-G-1010.sql (1/25) in 0.148 sec. Found 4 issues.
-Processed examples/Core-G-1020.sql (2/25) in 0.403 sec. Found 8 issues.
-Processed examples/Core-G-1030.sql (3/25) in 0.280 sec. Found 2 issues.
-Processed examples/Core-G-1050.sql (4/25) in 0.023 sec. Found 3 issues.
-Processed examples/Core-G-1060.sql (5/25) in 0.014 sec. Found 2 issues.
-Processed examples/Core-G-1070.sql (6/25) in 0.005 sec. Found 2 issues.
-Processed examples/Core-G-1080.sql (7/25) in 0.041 sec. Found 1 issue.
-Processed examples/Core-G-1110.sql (8/25) in 0.027 sec. Found 2 issues.
-Processed examples/Core-G-1120.sql (9/25) in 0.003 sec.
-Processed examples/Core-G-1130.sql (10/25) in 0.003 sec.
-Processed examples/Core-G-1140.sql (11/25) in 0.001 sec.
-Processed examples/Core-G-1150.sql (12/25) in 0.001 sec.
-Processed examples/Core-G-1210.sql (13/25) in 0.027 sec.
-Processed examples/Core-G-1040.sql (14/25) in 0.186 sec. Found 8 issues.
-Processed examples/Core-G-1220.sql (15/25) in 0.054 sec.
-Processed examples/Core-G-1230.sql (16/25) in 0.110 sec. Found 2 issues.
-Processed examples/Core-G-1240.sql (17/25) in 0.071 sec. Found 2 issues.
-Processed examples/Core-G-1260.sql (18/25) in 0.009 sec. Found 1 issue.
-Processed examples/Core-G-1250.sql (19/25) in 0.017 sec. Found 2 issues.
-Processed examples/Core-G-1270.sql (20/25) in 0.008 sec. Found 1 issue.
-Processed examples/Core-G-1310.sql (21/25) in 0.004 sec. Found 1 issue.
-Processed examples/Core-G-1280.sql (22/25) in 0.009 sec. Found 1 issue.
-Processed examples/Core-G-1920.sql (23/25) in 0.003 sec. Found 1 issue.
-Processed examples/Core-G-1910.sql (24/25) in 0.014 sec. Found 2 issues.
-Processed install.sql (25/25) in 0.235 sec.
+Processed examples/Core-G-1010.sql (1/25) in 0.172 sec. Found 4 issues.
+Processed examples/Core-G-1030.sql (2/25) in 0.250 sec. Found 2 issues.
+Processed examples/Core-G-1020.sql (3/25) in 0.426 sec. Found 8 issues.
+Processed examples/Core-G-1050.sql (4/25) in 0.069 sec. Found 3 issues.
+Processed examples/Core-G-1060.sql (5/25) in 0.056 sec. Found 2 issues.
+Processed examples/Core-G-1070.sql (6/25) in 0.049 sec. Found 2 issues.
+Processed examples/Core-G-1040.sql (7/25) in 0.189 sec. Found 8 issues.
+Processed examples/Core-G-1080.sql (8/25) in 0.067 sec. Found 1 issue.
+Processed examples/Core-G-1110.sql (9/25) in 0.066 sec. Found 3 issues.
+Processed examples/Core-G-1120.sql (10/25) in 0.048 sec.
+Processed examples/Core-G-1130.sql (11/25) in 0.047 sec.
+Processed examples/Core-G-1140.sql (12/25) in 0.045 sec.
+Processed examples/Core-G-1150.sql (13/25) in 0.045 sec.
+Processed examples/Core-G-1210.sql (14/25) in 0.062 sec.
+Processed examples/Core-G-1220.sql (15/25) in 0.091 sec.
+Processed examples/Core-G-1240.sql (16/25) in 0.098 sec. Found 2 issues.
+Processed examples/Core-G-1230.sql (17/25) in 0.136 sec. Found 2 issues.
+Processed examples/Core-G-1260.sql (18/25) in 0.051 sec. Found 1 issue.
+Processed examples/Core-G-1250.sql (19/25) in 0.055 sec. Found 2 issues.
+Processed examples/Core-G-1270.sql (20/25) in 0.053 sec. Found 1 issue.
+Processed examples/Core-G-1280.sql (21/25) in 0.052 sec. Found 1 issue.
+Processed examples/Core-G-1310.sql (22/25) in 0.048 sec. Found 1 issue.
+Processed examples/Core-G-1910.sql (23/25) in 0.055 sec. Found 1 issue.
+Processed examples/Core-G-1920.sql (24/25) in 0.046 sec. Found 1 issue.
+Processed install.sql (25/25) in 0.225 sec. Found 2 issues.
 Check Summary
-- Duration:                   0.964 sec.
+- Duration:                   1.347 sec.
 - Files:                      25
 - Characters:                 17,073
 - Lines:                      590
@@ -136,6 +152,6 @@ Check Summary
 - Max CC per unit:            3
 - Avg CC per unit:            2
 - Errors:                     15
-- Warnings:                   29
-- Infos:                      1
+- Warnings:                   32
+- Infos:                      0
 ```
