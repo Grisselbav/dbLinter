@@ -30,7 +30,7 @@ A given language ID can be supported by an unlimited number of VS Code extension
 
 Default file extensions only apply if they have not been overridden or extended by a user- or workspace-level setting for the `files.associations` property.
 
-Only [fenced code blocks](https://github.github.com/gfm/#fenced-code-blocks) are checked for Markdown and APEXlang. Code blocks marked for a non-SQL languages or using `~~~` will be ignored.
+Only [fenced code blocks](https://github.github.com/gfm/#fenced-code-blocks) using ```` ``` ```` are checked for Markdown and APEXlang. Code blocks marked for languages other than `sql` or  `plsql` are ignored. Code blocks without a language specifier are considered.
 
 ## Scope & Configuration
 
