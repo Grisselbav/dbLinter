@@ -58,7 +58,7 @@ Arguments are used when the semantics change for a command.
 
 - `parserVersion`
   The IslandSQL parser version used to compile the validator.
-  The default value is `0.23.0` for the CLI version 1.6.0.
+  The default value is `0.23.1` for the CLI version 1.7.0.
   The parser is included in the language server, which will request the most compatible validators at runtime.
 
 ## Example
@@ -70,7 +70,7 @@ dbLinter import-validator \
     --accessToken=*** \
     --inputName=target/custom-validator-1.0.0-SNAPSHOT.jar \
     --ownerName=Demo \
-    --parserVersion=0.23.0
+    --parserVersion=0.23.1
 ```
 
 The console output looks like this:

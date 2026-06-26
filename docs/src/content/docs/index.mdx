@@ -25,7 +25,7 @@ import { Card, CardGrid } from "@astrojs/starlight/components";
 
 <CardGrid>
   <Card title="Static Code Analysis" icon="magnifier">
-    Analyse your SQL, PL/SQL, PL/pgSQL, SQL*Plus, SQLcl and psql files. Without connecting to a database.
+    Analyse your SQL, PL/SQL, PL/pgSQL, SQL*Plus, SQLcl, psql and APEXlang files. Without connecting to a database.
   </Card>
   <Card title="SQL-based Tests" icon="seti:db">
     Run SQL queries against your database. Each result row represents a problem that needs to be solved.
@@ -92,9 +92,9 @@ click on `Sign in` and then on `Sign up` and follow the instructions.
 
 [The table is generated with https://github.com/Grisselbav/dbLinter-Server/blob/main/database/src/test/demo/query_rules_per_subscription.sql]: #
 
-
 | Rule | Anonymous (Free) |  Starter (Free) | Essential | Professional |
 |------|:----------------:|:---------------:|:---------:|:------------:|
+| [A-1010: Never allow application pages within an HTML frame.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-1010) | - | yes | yes | yes |
 | [G-1010: Try to label your sub blocks.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-1010) | - | yes | yes | yes |
 | [G-1020: Always have a matching loop or block label.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-1020) | - | yes | yes | yes |
 | [G-1030: Avoid defining variables that are not used.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-1030) | yes | yes | yes | yes |
@@ -203,6 +203,7 @@ click on `Sign in` and then on `Sign up` and follow the instructions.
 | [G-7110: Try to use named notation when calling program units.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-7110) | - | yes | yes | yes |
 | [G-7120: Always add the name of the program unit to its end keyword.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-7120) | - | yes | yes | yes |
 | [G-7125: Always use CREATE OR REPLACE instead of CREATE alone.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-7125) | - | yes | yes | yes |
+| [G-7127: Always use the FORCE option when creating views.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-7127) | - | yes | yes | yes |
 | [G-7130: Always use parameters or pull in definitions rather than referencing external variables in a local program unit.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-7130) | - | yes | yes | yes |
 | [G-7140: Always ensure that locally defined procedures or functions are referenced.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-7140) | yes | yes | yes | yes |
 | [G-7150: Try to remove unused parameters.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-7150) | - | yes | yes | yes |

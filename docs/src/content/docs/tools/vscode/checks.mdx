@@ -24,13 +24,13 @@ The following table shows the languages that activate dbLinter checks.
 | PLSQL     | `plsql` | [Language PL/SQL](https://marketplace.visualstudio.com/items?itemName=xyz.plsql-language) | `.sql` `.ddl` `.dml` `.pkh` `.pks` `.pkb` `.pck` `.pls` `.plb` `.bdy` `.fnc` `.idx` `.mv` `.prc` `.prg` `.sch` `.seq` `.spc` `.syn` `.tab` `.tbl` `.tbp` `.tps` `.trg` `.typ` `.vw` |
 | Postgres  | `postgres` | [PostgreSQL](https://marketplace.visualstudio.com/items?itemName=ckolkman.vscode-postgres) | `.pgsql`, `.psql` |
 | Markdown  | `markdown` | [Markdown (embedded)](https://github.com/microsoft/vscode/blob/main/extensions/markdown-basics) | `.md`, `.mkd`, `.mdwn`, `.mdown`, `.markdown`, `.markdn`, `.mdtxt`, `.mdtext`, `.workbook` |
-| APEXlang  | `apexlang` | [Oracle SQL Developer Extension for VSCode](https://marketplace.visualstudio.com/items?itemName=Oracle.sql-developer) | `.apex` |
+| APEXlang  | `apexlang` | [Oracle SQL Developer Extension for VSCode](https://marketplace.visualstudio.com/items?itemName=Oracle.sql-developer) | `.apx` |
 
 A given language ID can be supported by an unlimited number of VS Code extensions. However, dbLinter will only activate for the language IDs listed above.
 
 Default file extensions only apply if they have not been overridden or extended by a user- or workspace-level setting for the `files.associations` property.
 
-Only [fenced code blocks](https://github.github.com/gfm/#fenced-code-blocks) are checked for Markdown and APEXlang. Code blocks marked for a non-SQL languages or using `~~~` will be ignored.
+Only [fenced code blocks](https://github.github.com/gfm/#fenced-code-blocks) using ```` ``` ```` are checked for Markdown and APEXlang. Code blocks marked for languages other than `sql` or  `plsql` are ignored. Code blocks without a language specifier are considered.
 
 ## Scope & Configuration
 

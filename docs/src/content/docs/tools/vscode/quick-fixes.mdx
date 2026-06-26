@@ -63,10 +63,11 @@ If you omit the `tenantName`, the `ruleName` is expected to exist in the `Core` 
 
 ### Scope
 
-If the dbLinter marker comment is not the first token on a line, the scope is limited to that line only.
+If the dbLinter marker comment is not the only visible token on a line, the scope is limited to that line only.
 
-If the dbLinter marker comment is the first token on a line, the scope is determined by the most inner IslandSQL parser rule context that fully contains the comment.
-The following IslandSQL parser rules are considered:
+If the dbLinter marker comment is the only visible token on a line, the scope is determined by the most inner parser rule context that fully contains the comment.
+
+The following [IslandSQL](https://github.com/IslandSQL/IslandSQL) parser rules are considered:
 
 - [statement](https://islandsql.github.io/IslandSQL/grammar.html#statement)
 - [functionDefinition](https://islandsql.github.io/IslandSQL/grammar.html#functionDefinition)
@@ -75,9 +76,17 @@ The following IslandSQL parser rules are considered:
 - [funcDeclInType](https://islandsql.github.io/IslandSQL/grammar.html#funcDeclInType)
 - [procDeclInType](https://islandsql.github.io/IslandSQL/grammar.html#procDeclInType)
 
-If the dbLinter marker comment is placed before the first token recognised by the IslandSQL parser, the scope is the whole file.
+The following [APEXlang](https://github.com/Grisselbav/APEXlang-Parser) parser rules are considered:
 
-### Examples
+- [componentBody](https://grisselbav.github.io/APEXlang-Parser/grammar.html#componentBody)
+- [groupBody](https://grisselbav.github.io/APEXlang-Parser/grammar.html#groupBody)
+
+If the dbLinter marker comment is placed before the first token recognised by the parser, the scope is the whole file.
+
+Please note that APEXlang does not allow comments after a [propertyValue](https://grisselbav.github.io/APEXlang-Parser/grammar.html#propertyValue)
+because the comment would be interpreted as part of the property value.
+
+### PL/SQL Examples
 
 The scope of the dbLinter marker comment is visualised using highlighted lines in the examples below.
 
@@ -184,6 +193,48 @@ begin
 end;
 /
 ```
+
+### APEXlang Examples
+
+The scope of the dbLinter marker comment is visualised using highlighted lines in the examples below.
+
+```apexlang {3} title="Scope: Single-Line"
+app demo (
+    security {
+        /* @dblinter ignore(A-1010) */ embedInFrames: allow
+    }
+)
+```
+
+```apexlang {2-4} title="Scope: Group security"
+app demo (
+    security {
+        // @dblinter ignore(A-1010)
+        embedInFrames: allow
+    }
+)
+```
+
+```apexlang {1-6} title="Scope: Component app"
+app demo (
+    // @dblinter ignore(A-1010)
+    security {
+        embedInFrames: allow
+    }
+)
+// more...
+```
+
+```apexlang {1-7} title="Scope: APEX file"
+// @dblinter ignore(A-1010)
+app demo (
+    security {
+        embedInFrames: allow
+    }
+)
+// more...
+```
+
 
 ## AI Fixes
 

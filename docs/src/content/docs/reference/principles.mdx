@@ -11,7 +11,7 @@ dbLinter principles for provided rules and quick fixes.
 
 ### Don't Copy the Compiler
 
-A rule must not report anything that can be deduced by the compiler (PL/SQL stored objects or views).
+A rule must not report anything that can be deduced by the compiler (PL/SQL stored objects, views or APEXlang files).
 Such rules would not provide any additional value,
 even if some value may be considered for code in scripts that are not deployed to the database.
 This is not the scope of the dbLinter ruleset.
