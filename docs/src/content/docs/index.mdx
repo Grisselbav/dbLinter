@@ -94,7 +94,14 @@ click on `Sign in` and then on `Sign up` and follow the instructions.
 
 | Rule | Anonymous (Free) |  Starter (Free) | Essential | Professional |
 |------|:----------------:|:---------------:|:---------:|:------------:|
-| [A-1010: Never allow application pages within an HTML frame.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-1010) | - | yes | yes | yes |
+| [A-0700: Always enable Session State Protection at the application level.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-0700) | - | yes | yes | yes |
+| [A-0720: Always enable Page Access Protection.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-0720) | - | yes | yes | yes |
+| [A-0730: Always give an alias to pages.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-0730) | - | yes | yes | yes |
+| [A-0770: Never allow application pages within an HTML frame.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-0770) | - | yes | yes | yes |
+| [A-0950: Always follow naming conventions for application items.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-0950) | - | yes | yes | yes |
+| [A-1130: Always follow naming conventions for page items.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-1130) | - | yes | yes | yes |
+| [A-1340: Avoid pages without an authorization scheme.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-1340) | - | yes | yes | yes |
+| [A-1410: Never set session lifetime or idle time to 0 (unlimited).](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-1410) | - | yes | yes | yes |
 | [G-1010: Try to label your sub blocks.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-1010) | - | yes | yes | yes |
 | [G-1020: Always have a matching loop or block label.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-1020) | - | yes | yes | yes |
 | [G-1030: Avoid defining variables that are not used.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-1030) | yes | yes | yes | yes |
@@ -284,3 +291,5 @@ click on `Sign in` and then on `Sign up` and follow the instructions.
 | [G-9603: Never reference an unknown table/alias.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-9603) | - | - | yes | yes |
 | [G-9604: Never use an invalid stats method.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-9604) | - | - | yes | yes |
 | [G-9605: Never use an invalid stats keyword.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-9605) | - | - | yes | yes |
+
+The former rule A-1010 was renamed A-0770 to match the naming conventions, as we plan to bring the [APEX Project Eye](https://www.united-codes.com/products/apexprojecteye/) rules to dbLinter.
