@@ -14,8 +14,21 @@ Releases of the dbLinter CLI are published in the [Releases](https://github.com/
 
 ## Installation
 
-import { Steps } from '@astrojs/starlight/components';
+import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 
+<Tabs>
+<TabItem label="Homebrew">
+<Steps>
+1. Install dbLinter via [Homebrew](https://brew.sh/) (supported on macOS, Linux, and WSL):
+    ```bash
+    brew install grisselbav/dblinter/dblinter
+    ```
+   This installs the `dblinter` command from the [homebrew-dbLinter](https://github.com/Grisselbav/homebrew-dbLinter) repository, ready to use on your `PATH`.
+2. Optionally set the `JAVA_HOME` environment variable before calling dblinter to control the Java version to use.
+3. Optionally set the `JAVA_OPTS` or `DBLINTER_OPTS` environment variable before calling dblinter to control the JVM options to use.
+</Steps>
+</TabItem>
+<TabItem label="ZIP Download">
 <Steps>
 1. Download `dblinter-x.y.z.zip` from https://github.com/Grisselbav/dbLinter/releases.
 2. Extract the contents of the ZIP file to a folder of your choice.
@@ -31,8 +44,29 @@ import { Steps } from '@astrojs/starlight/components';
 
 3. Add the folder containing the dbLinter executable files to your operating system's path.
 4. Optionally set the `JAVA_HOME` environment variable before calling dblinter to control the Java version to use.
-5. Optionally set the `JAVA_OPTS` environment variable before calling dblinter to control the JVM options to use.
+5. Optionally set the `JAVA_OPTS` or `DBLINTER_OPTS` environment variable before calling dblinter to control the JVM options to use.
 </Steps>
+</TabItem>
+</Tabs>
+
+## Update
+
+<Tabs>
+<TabItem label="Homebrew">
+<Steps>
+1. Update the Homebrew formulae and upgrade dblinter to the latest version:
+    ```bash
+    brew update && brew upgrade dblinter
+    ```
+</Steps>
+</TabItem>
+<TabItem label="ZIP Download">
+<Steps>
+1. Download the latest `dblinter-x.y.z.zip` from https://github.com/Grisselbav/dbLinter/releases.
+2. Extract the contents of the ZIP file, replacing the files in your existing dblinter folder (the one already on your operating system's path).
+</Steps>
+</TabItem>
+</Tabs>
 
 ## Usage
 
@@ -118,8 +152,6 @@ connPassword=***
 ```
 
 ## Examples
-
-import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 <Tabs>
 <TabItem label="check">
