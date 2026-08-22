@@ -1,0 +1,61 @@
+---
+title: Compatibility
+description: Compatibility between dbLinter clients and the validators in the dbLinter repository.
+sidebar:
+    order: 15
+---
+
+The dbLinter [CLI](/dbLinter/tools/cli/cli-overview/), [VS Code Extension](/dbLinter/tools/vscode/vscode-overview/)
+and [SonarQube Plugin](/dbLinter/tools/sonarqube/sonarqube-overview/) each embed a
+[Language Server](/dbLinter/reference/architecture/#language-server) with specific versions
+of [IslandSQL](https://github.com/IslandSQL/IslandSQL) and [APEXlang-Parser](https://github.com/Grisselbav/APEXlang-Parser).
+
+The Language Server requests a configuration that includes Core and custom validators for the required parser version.
+If the requested version is unavailable, the next lower available version is used instead.
+If no lower version is available, no validator is considered.
+As a result, no rules will be checked and no issues will be reported.
+
+:::tip
+Update your clients regularly to ensure that your code is checked with the latest validators.
+:::
+
+## Core Validators
+
+The following table lists all the currently supported and provided Core validator versions.
+
+Although the parser version is based on the IslandSQL version, it is actually a combination of all the parsers used.
+
+| Parser Version | Last Update | Notes                                                     |
+| :------------: | :---------: | --------------------------------------------------------- |
+|     0.24.0     |   ongoing   | More APEXlang checks requiring APEXlang-Parser v0.2.0     |
+|     0.23.1     | 2026-06-30  | First APEXlang check for A-1010 (later renamed to A-0770) |
+|     0.23.0     | 2026-06-26  |                                                           |
+|     0.21.0     | 2026-06-09  |                                                           |
+
+:::note
+Only the latest validator is updated with bug fixes, changes and enhancements.
+:::
+
+## Custom Validators
+
+Custom validators are managed on a per-tenant basis. Consequently, they cannot be listed here.
+
+## Client Versions
+
+As the CLI, the VS Code extension and the SonarQube plugin were all released at the same time, the client version reflects this by having the same version number.
+
+| Client Version | IslandSQL Version | APEXlang-Parser Version | Parser Version |
+| :------------: | :---------------: | :---------------------: | :------------: |
+|     1.10.0     |      0.25.0       |          0.2.0          |     0.25.0     |
+|     1.9.0      |      0.24.0       |          0.2.0          |     0.24.0     |
+|     1.8.0      |      0.23.0       |          0.1.0          |     0.23.1     |
+|     1.7.0      |      0.23.0       |          0.1.0          |     0.23.1     |
+|     1.6.0      |      0.23.0       |            -            |     0.23.0     |
+|     1.5.0      |      0.22.0       |            -            |     0.21.0     |
+|     1.4.0      |      0.21.1       |            -            |     0.21.0     |
+|     1.3.0      |      0.21.0       |            -            |     0.21.0     |
+|     1.2.0      |      0.20.0       |            -            |     0.20.0     |
+
+:::danger
+dbLinter will not run any checks if you are using a client version 1.2.0 or older.
+:::
