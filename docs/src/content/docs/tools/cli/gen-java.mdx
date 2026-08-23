@@ -75,16 +75,17 @@ Arguments are used when the semantics change for a command.
 
 ```bash
 dbLinter gen-java \
+    --repoUrl=https://api.dblinter.app/ \
     --tenantName=Demo \
     --userName=philipp.salvisberg+42@gmail.com \
-    --accessToken=*** \
+    --accessToken=$DBLINTER_DEMO_ACCESS_TOKEN \
     --configName=Default \
     --indent=4 \
     --outputName=dbLinter-Demo-Custom-Validator \
     --tenantFilter="^Demo$" \
     --ruleFilter=.+ \
     --groupId=com.grisselbav \
-    --packageName=grisselbav.com.demo.validator
+    --packageName=com.grisselbav.demo.validator
 ```
 
 The console output looks like this:
@@ -94,45 +95,31 @@ Using connection to jdbc:oracle:thin:@localhost:1521/freepdb1 with user DBL_READ
 Java custom validator project created in dbLinter-Demo-Custom-Validator
 ```
 
-The `Demo` tenant copied rules G-2320, G-4310, G-5070 and G-9010 from the `Core` tenant, but with the prefix `R-` instead of `G-`.
-Accordingly, the previous `gen-java` command produced the following files:
+The `Demo` tenant copied rules A-0770, G-2320, G-4310, G-5070 and G-9010 from the `Core` tenant, but with the prefix `R-` instead of `G-`.
+Accordingly, the previous `gen-java` command produced the following files in the `dbLinter-Demo-Custom-Validator` folder:
 
 ```
-./dbLinter-Demo-Custom-Validator
-./dbLinter-Demo-Custom-Validator/.gitignore
-./dbLinter-Demo-Custom-Validator/.mvn
-./dbLinter-Demo-Custom-Validator/.mvn/wrapper
-./dbLinter-Demo-Custom-Validator/.mvn/wrapper/maven-wrapper.properties
-./dbLinter-Demo-Custom-Validator/mvnw
-./dbLinter-Demo-Custom-Validator/mvnw.cmd
-./dbLinter-Demo-Custom-Validator/pom.xml
-./dbLinter-Demo-Custom-Validator/README.md
-./dbLinter-Demo-Custom-Validator/src
-./dbLinter-Demo-Custom-Validator/src/main
-./dbLinter-Demo-Custom-Validator/src/main/java
-./dbLinter-Demo-Custom-Validator/src/main/java/grisselbav
-./dbLinter-Demo-Custom-Validator/src/main/java/grisselbav/com
-./dbLinter-Demo-Custom-Validator/src/main/java/grisselbav/com/demo
-./dbLinter-Demo-Custom-Validator/src/main/java/grisselbav/com/demo/validator
-./dbLinter-Demo-Custom-Validator/src/main/java/grisselbav/com/demo/validator/DemoR2320.java
-./dbLinter-Demo-Custom-Validator/src/main/java/grisselbav/com/demo/validator/DemoR4310.java
-./dbLinter-Demo-Custom-Validator/src/main/java/grisselbav/com/demo/validator/DemoR5070.java
-./dbLinter-Demo-Custom-Validator/src/main/java/grisselbav/com/demo/validator/DemoR9010.java
-./dbLinter-Demo-Custom-Validator/src/test
-./dbLinter-Demo-Custom-Validator/src/test/java
-./dbLinter-Demo-Custom-Validator/src/test/java/grisselbav
-./dbLinter-Demo-Custom-Validator/src/test/java/grisselbav/com
-./dbLinter-Demo-Custom-Validator/src/test/java/grisselbav/com/demo
-./dbLinter-Demo-Custom-Validator/src/test/java/grisselbav/com/demo/validator
-./dbLinter-Demo-Custom-Validator/src/test/java/grisselbav/com/demo/validator/AbstractTest.java
-./dbLinter-Demo-Custom-Validator/src/test/java/grisselbav/com/demo/validator/DemoR2320Test.java
-./dbLinter-Demo-Custom-Validator/src/test/java/grisselbav/com/demo/validator/DemoR4310Test.java
-./dbLinter-Demo-Custom-Validator/src/test/java/grisselbav/com/demo/validator/DemoR5070Test.java
-./dbLinter-Demo-Custom-Validator/src/test/java/grisselbav/com/demo/validator/DemoR9010Test.java
-./dbLinter-Demo-Custom-Validator/src/test/resources
-./dbLinter-Demo-Custom-Validator/src/test/resources/application.properties
+.gitignore
+.mvn/wrapper/maven-wrapper.properties
+mvnw
+mvnw.cmd
+pom.xml
+README.md
+src/main/java/com/grisselbav/demo/validator/DemoR0770.java
+src/main/java/com/grisselbav/demo/validator/DemoR2320.java
+src/main/java/com/grisselbav/demo/validator/DemoR4310.java
+src/main/java/com/grisselbav/demo/validator/DemoR5070.java
+src/main/java/com/grisselbav/demo/validator/DemoR9010.java
+src/test/java/com/grisselbav/demo/validator/AbstractApxTest.java
+src/test/java/com/grisselbav/demo/validator/AbstractJdbcTest.java
+src/test/java/com/grisselbav/demo/validator/AbstractTest.java
+src/test/java/com/grisselbav/demo/validator/DemoR0770Test.java
+src/test/java/com/grisselbav/demo/validator/DemoR2320Test.java
+src/test/java/com/grisselbav/demo/validator/DemoR4310Test.java
+src/test/java/com/grisselbav/demo/validator/DemoR5070Test.java
+src/test/java/com/grisselbav/demo/validator/DemoR9010Test.java
+src/test/resources/application.properties
 ```
 
 The resulting project is available on [GitHub](https://github.com/Grisselbav/dbLinter-Demo-Custom-Validator).
 The project has been extended to fully implement the rules in scope.
-The initial version is tagged [v1](https://github.com/Grisselbav/dbLinter-Demo-Custom-Validator/tree/v1).

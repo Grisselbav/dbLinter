@@ -81,6 +81,15 @@ Example as parameter of `sonar-scanner` call to override global/project/property
     This configuration determines which rules are enabled and, consequently, checked.
     Therefore, you should ensure that all rules are enabled in the active quality profiles.
 
+- **Allow Insecure TLS** `sonar.dblinter.allow.insecure.tls`<br/>
+    Disable TLS certificate and hostname verification for dbLinter repository API calls.
+    This should only be used as a last resort if your organisation cannot configure a TLS-inspection bypass for dbLinter endpoints.
+    The default is `false`.
+
+    ::::caution
+    Disabling TLS verification exposes API calls to man-in-the-middle attacks. Only enable this setting as a last resort, such as when connecting through a trusted TLS-inspecting proxy, and never on an untrusted network.
+    ::::
+
 ## 3) Read-only DB Access
 
 Read-only access is recommended to achieve the best check results.

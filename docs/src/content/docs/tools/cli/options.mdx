@@ -67,7 +67,8 @@ $env:DBLINTER_ACCESS_TOKEN="IGsLxJQLnfZPFAkbMCaJntBjIaKtmYSOjnYiRTIlfYJYRggZgG"
 
 - `repoUrl`<br/>
     This is the URL of the dbLinter REST API. The default is https://api.dblinter.app/.
-    You only need to change this URL when developing and testing custom rules.
+    You only need to change this URL when developing and testing custom rules in [dbLinter's test repository](https://test.dblinter.app/).
+    The URL of test REST API is https://test-api.dblinter.app/.
     This requires a [Professional subscription](/dbLinter/getting-started/professional-subscription).
 
 - `tenantName`<span class="required">*</span><br/>
@@ -85,6 +86,15 @@ $env:DBLINTER_ACCESS_TOKEN="IGsLxJQLnfZPFAkbMCaJntBjIaKtmYSOjnYiRTIlfYJYRggZgG"
     This is the name of the configuration to be used for checks and SQL-based tests.
     This configuration consists of include/exclude file patterns and JDBC connection details.
     It also includes enabled rules, parameters, and test results to be ignored.
+
+- `allowInsecureTls`<br/>
+    Disable TLS certificate and hostname verification for dbLinter repository API calls.
+    This should only be used as a last resort if your organisation cannot configure a TLS-inspection bypass for dbLinter endpoints.
+    The default is `false`.
+
+    ::::caution
+    Disabling TLS verification exposes API calls to man-in-the-middle attacks. Only enable this setting as a last resort, such as when connecting through a trusted TLS-inspecting proxy, and never on an untrusted network.
+    ::::
 
 ## Read-only Database Access
 

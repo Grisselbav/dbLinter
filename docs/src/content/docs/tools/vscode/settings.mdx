@@ -22,6 +22,17 @@ In VS Code, settings are scoped to control where they apply.
 
 In other words, use `User` settings for preferences you want everywhere, and `Workspace` settings for project-specific behaviour.
 
+## Environment Variable Expansion
+
+String-based settings that are not restricted to a fixed set of values (unlike, for example, `Log Level`) support environment variable expansion using the `${env:NAME}` syntax, where `NAME` is the name of an environment variable.
+This is useful to keep sensitive values, such as `Access Token` or `Conn Password`, out of `settings.json`.
+
+For example:
+
+```json
+"dblinter.AccessToken": "${env:DBLINTER_ACCESS_TOKEN}"
+```
+
 ## Remote Access
 
 If you have created an account at https://dblinter.app, you can view your options in [How to set up VS Code](https://dblinter.app/ords/r/dblinter/dblinter-console/set-up-vs-code).
@@ -58,6 +69,14 @@ If you have created an account at https://dblinter.app, you can view your option
     | <span style="white-space: nowrap">`Anonymous`</span> | Enables around 50 free rules from the `Essential` and `Balanced` profiles. Which is a reasonable set for any project. |
     | `pg` | A subset of the `Anonymous` configuration which is applicable for PostgreSQL projects. |
 
+- `Allow Insecure Tls`<br/>
+    Disable TLS certificate and hostname verification for dbLinter repository API calls.
+    This should only be used as a last resort if your organisation cannot configure a TLS-inspection bypass for dbLinter endpoints.
+    The default is `false`.
+
+    ::::caution
+    Disabling TLS verification exposes API calls to man-in-the-middle attacks. Only enable this setting as a last resort, such as when connecting through a trusted TLS-inspecting proxy, and never on an untrusted network.
+    ::::
 
 ## Read-only Access
 
