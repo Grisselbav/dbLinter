@@ -55,6 +55,22 @@ $env:DBLINTER_ACCESS_TOKEN="IGsLxJQLnfZPFAkbMCaJntBjIaKtmYSOjnYiRTIlfYJYRggZgG"
 </TabItem>
 </Tabs>
 
+## Order of Precedence
+
+When dbLinter starts, it reads these sources once, in the following order:
+
+1. **Command line.** Use `--<option>=<value>`.
+2. **Property file passed via `--options`.** This is the file referenced by the `options` command-line argument.
+3. **Default property file.** This is `dblinter.properties` in the [workspace](#workspace), if present.
+4. **Property file passed via `DBLINTER_OPTIONS`.** This is the file referenced by this environment variable.
+5. **Environment variable.** Use `DBLINTER_<OPTION>`.
+
+Each source is only used to fill in options that are still unset. So, if the same option is set in more than one place, the value from the earliest source in the list above is used, and the rest are ignored. Values are never merged.
+
+:::note
+`workspace` cannot be set in a property file. It is needed to locate the property files, so it must already be known before they are read. It can only be set via the command line or the `DBLINTER_WORKSPACE` environment variable. If neither is set, the current directory is used instead.
+:::
+
 ## Workspace
 
 - `workspace`<br/>
