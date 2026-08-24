@@ -95,6 +95,10 @@ Java custom validator project created in dbLinter-Demo-Custom-Validator
 ```
 
 The `Demo` tenant copied rules A-0770, G-2320, G-4310, G-5070 and G-9010 from the `Core` tenant, but with the prefix `R-` instead of `G-`.
+
+Additionally the `Demo` tenants contains the rule **R-3131: Never use ANSI SQL-92 join syntax**, which will never be added as a `Core` rule,
+because it is violating the [Not Contradictory](/dbLinter/reference/principles/#not-contradictory) principle.
+
 Accordingly, the previous `gen-java` command produced the following files in the `dbLinter-Demo-Custom-Validator` folder:
 
 ```
@@ -106,6 +110,7 @@ pom.xml
 README.md
 src/main/java/com/grisselbav/demo/validator/DemoR0770.java
 src/main/java/com/grisselbav/demo/validator/DemoR2320.java
+src/main/java/com/grisselbav/demo/validator/DemoR3131.java
 src/main/java/com/grisselbav/demo/validator/DemoR4310.java
 src/main/java/com/grisselbav/demo/validator/DemoR5070.java
 src/main/java/com/grisselbav/demo/validator/DemoR9010.java
@@ -114,6 +119,7 @@ src/test/java/com/grisselbav/demo/validator/AbstractJdbcTest.java
 src/test/java/com/grisselbav/demo/validator/AbstractTest.java
 src/test/java/com/grisselbav/demo/validator/DemoR0770Test.java
 src/test/java/com/grisselbav/demo/validator/DemoR2320Test.java
+src/test/java/com/grisselbav/demo/validator/DemoR3131Test.java
 src/test/java/com/grisselbav/demo/validator/DemoR4310Test.java
 src/test/java/com/grisselbav/demo/validator/DemoR5070Test.java
 src/test/java/com/grisselbav/demo/validator/DemoR9010Test.java
