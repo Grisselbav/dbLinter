@@ -82,10 +82,14 @@ Arguments are used when the semantics change for a command.
 - `Reference Branch`<br/>
     Reference branch used to determine new and changed lines when `newCodeOnly` is enabled.
     The default is `origin/main`.
-    The reference branch can be specified using any Git reference that identifies a commit, including branch names, tag names, and commit hashes.
+    The reference branch can be specified using any Git reference that identifies a commit, including branch names,
+    tag names, and commit hashes, provided that it is available in the local Git repository
     Think of it as the target branch in a Git merge or pull request.
     The new and changed lines are determined by comparing the current local branch with the reference branch.
     The reference branch contains the existing code, while the local branch contains the proposed changes.
+    If the reference branch is not available locally, fetch it first before running dbLinter.
+    If dbLinter cannot resolve the reference branch, it logs a warning and **does not filter issues to new and changed lines**.
+    dbLinter does not refresh Git refs automatically to avoid unexpected changes to the local repository state.
 
 - `<paths...>`<br/>
     The files and directories to analyse.
