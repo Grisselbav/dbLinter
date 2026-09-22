@@ -1,6 +1,6 @@
 ---
 name: dblinter
-description: Run dbLinter (a static code analysis and SQL-based testing tool for Oracle and PostgreSQL SQL/PL/SQL code) via its CLI, then parse and act on the results. Use this skill whenever the user asks to "lint", "check", "analyse", or "test" SQL/PL/SQL code with dbLinter, mentions the `dblinter` command, references files like `dblinter.sarif.sarif` / `dblinter.sonarqube.json` / `dblinter.junit.xml`, asks to find issues in PL/SQL packages/procedures/functions/views/tables, or wants to interpret or fix issues reported by a previous dbLinter run. Also trigger when the user mentions environment variables prefixed with `DBLINTER_` (e.g. `DBLINTER_TENANT_NAME`, `DBLINTER_ACCESS_TOKEN`, `DBLINTER_CONFIG_NAME`).
+description: Run dbLinter (a static code analysis and SQL-based testing tool for Oracle and PostgreSQL SQL/PL/SQL code) via its CLI, then parse and act on the results. Use this skill whenever the user asks to "lint", "check", "analyse", or "test" SQL/PL/SQL code with dbLinter, mentions the `dblinter` command, references files like `dblinter.sarif.sarif` / `dblinter.sonarqube.json` / `dblinter.junit.xml`, asks to find issues in PL/SQL packages/procedures/functions/views/tables, or wants to interpret or fix issues reported by a previous dbLinter run. Also trigger when the user wants to check only specific files/directories or only new/changed code (`newCodeOnly`), wants to verify the `dblinter` CLI is installed or find its version, or mentions environment variables prefixed with `DBLINTER_` (e.g. `DBLINTER_TENANT_NAME`, `DBLINTER_ACCESS_TOKEN`, `DBLINTER_CONFIG_NAME`).
 license: Apache-2.0
 ---
 
@@ -10,13 +10,24 @@ dbLinter is a static analysis and SQL-based testing tool for Oracle Database and
 
 ## What this skill helps with
 
-The skill covers three things, in this order:
+The skill covers four things, in this order:
 
-1. **Picking the right `dblinter` invocation** for the user's task — `check` (static analysis) vs `test` (SQL-based tests), choosing output formats, and tuning `--parallel`.
+1. **Picking the right `dblinter` invocation** for the user's task — `check` (static analysis) vs `test` (SQL-based tests) vs `version` (installation/version check), choosing output formats, scoping `check` to specific files/directories or to new/changed code only, and tuning `--parallel`.
 2. **Running the command** in the user's working directory.
 3. **Parsing the resulting reports** (especially SARIF and SonarQube JSON) to summarise issues, group by rule/severity, or guide fixes in the SQL/PL/SQL source files.
+4. **Re-checking efficiently** after fixes, by scoping the re-run to the files that changed instead of the whole workspace.
 
 If the user only asks for one of these (e.g. "just give me the command"), do that and stop.
+
+## Checking the CLI is installed
+
+If you're unsure whether `dblinter` is installed/on the `PATH`, or which version, run:
+
+```bash
+dblinter version
+```
+
+This takes no options, needs no authentication or environment variables, and prints something like `dbLinter version 1.10.0`. It's the cheapest possible sanity check before attempting a `check` or `test` run — if it fails with `command not found`, don't try to install it yourself; point the user to the install instructions at <https://grisselbav.github.io/dbLinter/tools/cli/cli-overview/#installation> (Homebrew, or a downloadable ZIP; JDK 17+ required).
 
 ## Authentication and environment
 
@@ -36,6 +47,8 @@ You generally never need to read or echo these values. If a `dblinter` run fails
 
 Runs the configured rules over SQL/PL/SQL files in the workspace. No database connection is strictly required (though the configured one will be used if available, for better results).
 
+Syntax: `dblinter [<options>] check [<args>] [<paths...>]`
+
 Output formats (comma-separated via `--outputFormats`, default = all):
 
 - `sarif` → `dblinter.sarif.sarif` (JSON, industry-standard, **best choice for Claude to parse**)
@@ -44,6 +57,48 @@ Output formats (comma-separated via `--outputFormats`, default = all):
 - `github` → annotations printed to stdout (for GitHub Actions)
 - `gitlab` → `dblinter.gitlab.json` (Code Quality format)
 - `vscode` → `dblinter.vscode.md` (human-readable Markdown)
+
+`check`-specific arguments, beyond the shared ones below:
+
+- `<paths...>` — optional files and/or directories, given as plain positional arguments **at the end** of the command. See "Scoping `check` to specific files or directories" below.
+- `--newCodeOnly=true|false` — if `true`, only issues on new/changed lines are reported. Default `false`. Requires the workspace to be a Git repository. See "Checking only new/changed code" below.
+- `--referenceBranch=<branch>` — the branch `newCodeOnly` diffs against to determine new/changed lines. Default `origin/main`.
+
+#### Scoping `check` to specific files or directories
+
+For large workspaces, running `check` over every configured file every time is wasteful — most of the runtime is spent re-analysing files that haven't changed. Pass one or more files or directories as plain positional arguments **after** all `--option=value` flags to limit analysis to just those paths:
+
+```bash
+# check a single file
+dblinter check --outputFormats=sarif examples/Core-G-1050.sql
+
+# check a directory (and everything under it) plus one extra file
+dblinter check --outputFormats=sarif src/packages/ src/views/hr_view.sql
+
+# glob expansion is handled by the shell, not dblinter itself
+dblinter check --outputFormats=sarif ./*.sql examples/Core-G-1*.sql
+```
+
+Notes:
+
+- This is **an additional filter on top of** the workspace's configured include/exclude patterns — it can only narrow the set of files analysed, never widen it. A path outside the configured include patterns will simply yield no results for that path, not an error.
+- Use this whenever the user asks to check "just this file", "the files I changed", or names specific files/directories — don't run a full-workspace check when a narrower one answers the question and is faster.
+- This is also the right tool for **tight fix-and-verify loops**: after editing a file to address a reported issue, re-run `check` scoped to just that file (or the small set of files you touched) rather than the whole workspace, then read the fresh report to confirm the issue is gone. dbLinter's checks are scoped to a single file — no rule inspects or depends on other files — so the scoped result is exactly as reliable as an unscoped one; there's no need to also run a full-workspace check to confirm.
+
+#### Checking only new/changed code
+
+`--newCodeOnly=true` reports issues only on lines that are new or changed relative to `--referenceBranch` (default `origin/main`). This needs Git and a resolvable reference branch. Before relying on it:
+
+1. Confirm the workspace is inside a Git repository (`git rev-parse --is-inside-work-tree`).
+2. Confirm `--referenceBranch` resolves locally (`git rev-parse --verify --quiet <branch>`). If it doesn't and the branch looks like it lives on a remote (e.g. `origin/main`), fetch just that ref without touching the working tree, e.g. `git fetch origin main`, then re-check.
+3. If the reference still can't be resolved, **don't silently fall back to an unfiltered `check`** — that produces a much larger, differently-scoped report than the user asked for. Report the problem (e.g. "`referenceBranch=origin/release-2.0` doesn't exist locally or on the remote") and let the user tell you how to proceed.
+
+```bash
+git fetch origin main   # only if origin/main isn't already resolvable locally
+dblinter check --outputFormats=sarif --newCodeOnly=true --referenceBranch=origin/main
+```
+
+`--newCodeOnly` and `<paths...>` can be combined — e.g. check only new/changed lines within a specific directory.
 
 ### `dblinter test` — SQL-based tests
 
@@ -54,13 +109,22 @@ Output formats (default = all):
 - `junit` → `dblinter.junit.xml`
 - `vscode` → `dblinter.vscode.md`
 
+`test` does not accept `<paths...>` — it runs the SQL-based tests defined by the configuration, not an ad-hoc subset of files. To narrow scope, adjust the configuration's included tests in the Web GUI, or use `--outputName`/`--parallel` as below.
+
+### `dblinter version` — installation / version check
+
+Prints the installed CLI version, e.g. `dbLinter version 1.10.0`, and nothing else. Takes no arguments and needs no authentication or environment variables. Use it to confirm `dblinter` is installed and on the `PATH` before attempting `check` or `test` (see "Checking the CLI is installed" above), or when the user simply asks which version they have.
+
 ### Other arguments worth knowing
+
+These apply to both `check` and `test` (see the [Options reference](https://grisselbav.github.io/dbLinter/tools/cli/options/) for the full list):
 
 - `--outputName=<name>` — base name of output files (default `dblinter`). E.g. `--outputName=mycheck` produces `mycheck.sarif.sarif`, `mycheck.sonarqube.json`, etc.
 - `--parallel=<n>` — files (for `check`) or tests (for `test`) processed in parallel; default `1`. Higher values are faster on machines with spare cores and RAM. For large codebases on CI, `--parallel=4` or `8` is reasonable.
-- `--workspace=<dir>` — working directory; default is the current directory.
-- `--options=<file>` — load options from a `dblinter.properties` file.
+- `--workspace=<dir>` — absolute path to the working directory; default is the current directory.
+- `--options=<file>` — load options and command arguments from a Java properties file (e.g. `dblinter.properties`).
 - `--logLevel=<level>` — `off|error|warning|info|debug|trace`; default `info`.
+- `--connJdbcUrl`, `--connUserName`, `--connPassword` — JDBC connection for read-only database access; mandatory for `test` unless already configured in the Web GUI for the chosen `configName`, optional for `check` (used opportunistically for better results when available).
 
 ## Choosing the right invocation
 
@@ -69,7 +133,9 @@ When the user asks something like "lint my SQL" or "run dbLinter":
 1. **Default to `check`** unless the user explicitly mentions tests, assertions, or a database connection.
 2. **Default output formats**: if the user wants a quick summary or wants you to analyse the results, run with `--outputFormats=sarif` so you have one structured file to read. If they want the full set (e.g. for CI), omit `--outputFormats` so all formats are produced.
 3. **Default `--parallel`**: leave it unset (=`1`) for small ad-hoc runs. For large workspaces (hundreds of files) suggest `--parallel=4`.
-4. **Run from the right directory**. The user's SQL files must be in (or under) the working directory. If the user invokes you from a directory that doesn't look like a SQL project, ask before running.
+4. **Scope `check` down whenever you can.** If the user names specific files/directories, or is iterating on a fix, pass those as `<paths...>` instead of checking the whole workspace — same rules, far less to process. If the user is asking about "my changes"/"the diff"/"new code", use `--newCodeOnly=true` (with the Git preflight described above) instead of a full run. Fall back to a full, unscoped `check` for a first-time run, a pre-release/CI gate, or whenever the user wants the complete picture.
+5. **Run from the right directory**. The user's SQL files must be in (or under) the working directory. If the user invokes you from a directory that doesn't look like a SQL project, ask before running.
+6. **Unsure `dblinter` is installed?** Run `dblinter version` first — it's near-instant and needs no auth.
 
 ### Examples
 
@@ -77,6 +143,19 @@ Quick check, parsable output only:
 
 ```bash
 dblinter check --outputFormats=sarif --parallel=4
+```
+
+Check only specific files/directories (fast, for large workspaces or fix-verify loops):
+
+```bash
+dblinter check --outputFormats=sarif src/packages/pkg_orders.pkb src/views/
+```
+
+Check only new/changed lines against `origin/main`:
+
+```bash
+git fetch origin main   # only if origin/main isn't already resolvable locally
+dblinter check --outputFormats=sarif --newCodeOnly=true --referenceBranch=origin/main
 ```
 
 Full set of reports for a CI pipeline:
@@ -104,6 +183,7 @@ The simplest forms also work and use sensible defaults:
 ```bash
 dblinter check
 dblinter test
+dblinter version
 ```
 
 ## Running the command
@@ -133,8 +213,8 @@ For `test` runs, parse `dblinter.junit.xml` similarly — failed `<testcase>` el
 When the user asks you to **fix** the issues dbLinter found:
 
 1. Parse the report and group issues by file.
-2. For each file with issues, read the source, locate the regions referenced by the report, and propose fixes consistent with the rule message. dbLinter rule ids (e.g. `Core-G-1050`) map to documented best practices — when uncertain, quote the rule message rather than guessing.
-3. Apply changes one file at a time. To verify the fix, **re-run `dblinter check` on the whole workspace** — the CLI processes whatever SQL files match the configured include/exclude patterns under the workspace and does not currently accept individual file arguments. For tight loops on a single file, copy that file (and only that file) into a scratch directory and run `dblinter check --workspace=<scratch-dir>`; just be aware that rules depending on cross-file context may produce different results in isolation.
+2. For each file with issues, read the source, locate the regions referenced by the report, and propose fixes consistent with the rule message. dbLinter rule ids (e.g. `Core-G-1050`) map to documented good practices — when uncertain, quote the rule message rather than guessing.
+3. Apply changes one file at a time. To verify each fix, **re-run `check` scoped to just the file(s) you changed** — pass them as `<paths...>` (e.g. `dblinter check --outputFormats=sarif path/to/fixed_file.sql`) rather than re-checking the whole workspace; it's the same rule set, applied faster. dbLinter's checks are scoped to a single file — no rule inspects or depends on other files — so there's no need to re-check the entire workspace afterward.
 4. Never silently disable rules or add suppressions to make issues go away; if a rule genuinely doesn't apply, surface that to the user and let them decide.
 
 ## Pitfalls
@@ -142,5 +222,7 @@ When the user asks you to **fix** the issues dbLinter found:
 - **Don't echo secrets.** `DBLINTER_ACCESS_TOKEN` is a credential. Don't `echo $DBLINTER_ACCESS_TOKEN`, don't print the env, don't include it in any command you suggest the user paste.
 - **Don't override env-supplied auth on the CLI** unless the user asked. Mixing `--tenantName=...` with the env var can mask bugs.
 - **`test` needs DB access.** If `dblinter test` errors out about a connection, check that the configured JDBC URL/user/password are correct, or pass them explicitly via `--connJdbcUrl`, `--connUserName`, `--connPassword`.
+- **`<paths...>` only narrows, never widens, `check`'s scope.** A file outside the workspace's configured include/exclude patterns won't be analysed just because you named it — it will silently produce no results for that path. If a file you expect issues for shows nothing, check the configuration before assuming it's clean.
+- **Don't guess at `--newCodeOnly`'s reference branch.** If `--referenceBranch` (default `origin/main`) can't be resolved locally, resolve it (e.g. `git fetch origin main`) or ask the user which branch to diff against — don't silently drop `--newCodeOnly` and run an unfiltered check instead, that answers a different question than the one asked.
 - **The double `.sarif.sarif` extension is intentional.** Don't rename outputs in scripts based on assumptions.
 - **`check` and `test` are licensed features** (Essential or Professional subscription). A 401/403 from the API likely means the configured tenant lacks the right subscription — surface that rather than retrying.

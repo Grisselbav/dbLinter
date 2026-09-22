@@ -1,0 +1,33 @@
+---
+title: Agent Skill Overview
+description: Purpose of the dbLinter Agent Skill.
+sidebar:
+  order: 10
+---
+
+The dbLinter Agent Skill teaches AI coding agents — such as [Claude Code](https://claude.com/claude-code),
+[OpenAI Codex](https://developers.openai.com/codex/), and [GitHub Copilot](https://github.com/features/copilot) — how
+to use the dbLinter CLI on your behalf: choosing `check`, `test`, or `version`, scoping a `check` run to specific
+files/directories or to new and changed code only, parsing the resulting SARIF/SonarQube reports, and fixing reported
+issues without disabling rules just to get a clean report.
+
+It is a single `SKILL.md` file (plus a short reference for parsing report output), following the open
+[Agent Skills](https://agentskills.io/) standard: YAML frontmatter (`name`, `description`, `license`) followed by
+Markdown instructions. Any agent that supports this standard can use it once it is installed into that agent's skills
+directory — see [Compatibility](/dbLinter/tools/agent-skill/compatibility/) for which agents that includes.
+
+The skill only teaches an agent how to *call* the CLI correctly and interpret its output — it does not install,
+configure, or authenticate the CLI itself. See the [CLI Overview](/dbLinter/tools/cli/cli-overview/) for that, and
+one of the [subscription pages](/dbLinter/getting-started/starter-subscription/) for the credentials `check`/`test`
+require.
+
+Source and license (Apache-2.0): [`skills/dblinter`](https://github.com/Grisselbav/dbLinter/tree/main/skills/dblinter)
+in the dbLinter GitHub repository.
+
+## Where to go next
+
+- [Installation](/dbLinter/tools/agent-skill/installation/) — install/update via `npx skills`, which agent(s) to
+  select, and how to verify it's working.
+- [Usage](/dbLinter/tools/agent-skill/usage/) — what to ask your agent for, and which `dblinter` command it maps to.
+- [Compatibility](/dbLinter/tools/agent-skill/compatibility/) — which agents support Agent Skills today and how each
+  one reads them.

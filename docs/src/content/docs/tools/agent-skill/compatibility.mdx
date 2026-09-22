@@ -1,0 +1,19 @@
+---
+title: Compatibility
+description: Which AI coding agents support Agent Skills, and how each reads them.
+sidebar:
+  order: 40
+---
+
+The [Agent Skills](https://agentskills.io/) standard, originally introduced by Anthropic for Claude Code, is an open
+format now adopted by several AI coding agents, including:
+
+| Agent | Skills support |
+| --- | --- |
+| [Claude Code](https://code.claude.com/docs/en/skills) | Native support since the introduction of Agent Skills. Reads only its own `.claude/skills/` (project) or `~/.claude/skills/` (personal) — not the shared `.agents/skills/` location. |
+| [OpenAI Codex](https://learn.chatgpt.com/docs/build-skills) | Reads the shared `.agents/skills/` directory (project and personal) directly; no dedicated Codex-specific directory needed. |
+| [GitHub Copilot](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills) | Supported in the Copilot CLI, the Copilot app, agent mode (VS Code, JetBrains, Visual Studio), and code review. Reads `.github/skills/`, `.claude/skills/`, or the shared `.agents/skills/` — no dedicated directory required. |
+
+See the full [Agent Skills client list](https://agentskills.io/clients) for other compatible agents — any of them can
+use this skill the same way, by installing it into that agent's own skills directory. See
+[Installation](/dbLinter/tools/agent-skill/installation/) for how `npx skills add` handles this automatically.

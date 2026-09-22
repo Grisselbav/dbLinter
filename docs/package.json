@@ -16,5 +16,8 @@
     "starlight-image-zoom": "^0.13.2",
     "starlight-links-validator": "^0.17.2",
     "astro-mermaid": "1.1.0"
+  },
+  "volta": {
+    "node": "26.8.2"
   }
 }
