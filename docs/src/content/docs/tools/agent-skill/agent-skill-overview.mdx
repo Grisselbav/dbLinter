@@ -1,0 +1,148 @@
+---
+title: Agent Skill Overview
+description: Purpose of the dbLinter Agent Skill.
+sidebar:
+  order: 10
+---
+
+The dbLinter Agent Skill teaches AI coding agents — such as [Claude Code](https://claude.com/claude-code),
+[OpenAI Codex](https://developers.openai.com/codex/), and [GitHub Copilot](https://github.com/features/copilot) — how
+to use the dbLinter CLI on your behalf: choosing `check`, `test`, or `version`, scoping a `check` run to specific
+files/directories or to new and changed code only, parsing the resulting SARIF/SonarQube reports, and fixing reported
+issues without disabling rules just to get a clean report.
+
+It is a single `SKILL.md` file (plus a short reference for parsing report output), following the open
+[Agent Skills](https://agentskills.io/) standard: YAML frontmatter (`name`, `description`, `license`) followed by
+Markdown instructions. Any agent that supports this standard can use it once it is installed into that agent's skills
+directory — see [Compatibility](#compatibility) below.
+
+The skill only teaches an agent how to *call* the CLI correctly and interpret its output — it does not install,
+configure, or authenticate the CLI itself. See the [CLI Overview](/dbLinter/tools/cli/cli-overview/) for that, and
+one of the [subscription pages](/dbLinter/getting-started/starter-subscription/) for the credentials `check`/`test`
+require.
+
+Source and license (Apache-2.0): [`skills/dblinter`](https://github.com/Grisselbav/dbLinter/tree/main/skills/dblinter)
+in the dbLinter GitHub repository.
+
+## Installation
+
+import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+<Tabs>
+<TabItem label="via skills CLI (recommended)">
+<Steps>
+1. From the root of your project, install the skill with [`npx skills`](https://www.npmjs.com/package/skills):
+    ```bash
+    npx skills add Grisselbav/dbLinter
+    ```
+   If you don't pass `-a`, this asks you interactively **which agent(s)** to install the skill for — see
+   [Which agent(s) should I select?](#which-agents-should-i-select) below before answering.
+2. Make sure the `dblinter` CLI itself is installed and authenticated — see the
+   [CLI Overview](/dbLinter/tools/cli/cli-overview/#installation). The skill assumes `dblinter` is already on your
+   `PATH`.
+</Steps>
+</TabItem>
+<TabItem label="Manual">
+<Steps>
+1. Copy or symlink the `skills/dblinter` directory from the
+   [dbLinter GitHub repository](https://github.com/Grisselbav/dbLinter/tree/main/skills/dblinter) into
+   `.agents/skills/dblinter/` at the root of your project (or `~/.agents/skills/dblinter/` to make it available in
+   every project). This shared, "universal" location is read directly by most Agent-Skills-compatible agents,
+   including OpenAI Codex and GitHub Copilot — see [Which agent(s) should I select?](#which-agents-should-i-select).
+2. Claude Code is the exception: it only reads its own `.claude/skills/` directory, not `.agents/skills/`. If you use
+   Claude Code, also copy or symlink `skills/dblinter` into `.claude/skills/dblinter/` (or `~/.claude/skills/dblinter/`
+   for every project).
+3. Make sure the `dblinter` CLI itself is installed and authenticated — see the
+   [CLI Overview](/dbLinter/tools/cli/cli-overview/#installation).
+</Steps>
+</TabItem>
+</Tabs>
+
+### Which agent(s) should I select?
+
+Running `npx skills add Grisselbav/dbLinter` without `-a` prompts you to choose which agent(s) to install for.
+That prompt lists **every agent the tool supports** (dozens of them) — it does not narrow the list down to only the
+agents already set up in your project, so don't be surprised to see a long list even if you only use one or two of
+them day to day. If the tool detects it is itself being run from inside a supported agent (for example, you asked
+Claude Code to run the install command for you), it may skip the prompt entirely and install non-interactively
+instead — worth double-checking the result if that happens and it's not what you expected.
+
+Pick explicitly to skip the prompt:
+
+```bash
+# install for Claude Code and Codex only
+npx skills add Grisselbav/dbLinter -a claude-code -a codex
+
+# install for every supported agent
+npx skills add Grisselbav/dbLinter -a '*'
+```
+
+**Not every agent needs its own dedicated directory.** The tool creates one real copy of the skill at
+`./.agents/skills/dblinter/` — a shared location that most agents, including **OpenAI Codex** and **GitHub Copilot**,
+read directly, with no per-agent copy needed. **Claude Code is the exception**: it only reads its own
+`.claude/skills/`, so the tool additionally creates a *symlink* from `.claude/skills/dblinter/` back to the shared
+copy for it (and, similarly, for the handful of other agents that also require their own dedicated directory).
+Either way, a single `npx skills update` keeps everything — the shared copy and every symlink — in sync; you don't
+need to think about which agents got a real copy versus a symlink.
+
+## Update
+
+<Tabs>
+<TabItem label="via skills CLI (recommended)">
+<Steps>
+1. Update the skill to the latest published version:
+    ```bash
+    npx skills update dblinter -p
+    ```
+</Steps>
+</TabItem>
+<TabItem label="Manual">
+<Steps>
+1. Re-copy the `skills/dblinter` directory from the
+   [dbLinter GitHub repository](https://github.com/Grisselbav/dbLinter/tree/main/skills/dblinter), overwriting the
+   version in your agent's skills directory.
+</Steps>
+</TabItem>
+</Tabs>
+
+## Verifying the installation
+
+Ask your agent what skills are available to it — for example, in Claude Code run `/skills` — and confirm `dblinter`
+is listed. Check your agent's own docs (linked in [Compatibility](#compatibility) below) for the equivalent command
+if you're not using Claude Code. Then give it a prompt that matches an everyday task, for example:
+
+```text
+Check my SQL files with dblinter and summarize the issues.
+```
+
+A working installation picks this up without you having to name the skill or the CLI flags yourself.
+
+## Usage
+
+Once installed, describe what you want in plain language — the agent picks the right `dblinter` command and flags:
+
+| You ask for...                                             | The agent runs...                                                    |
+| ------------------------------------------------------------ | ---------------------------------------------------------------------- |
+| "Lint my SQL"                                                 | `dblinter check --outputFormats=sarif`                                  |
+| "Just check the files I changed" / "check src/packages/"      | `dblinter check --outputFormats=sarif <paths...>`                       |
+| "Only check new code compared to main"                         | `dblinter check --outputFormats=sarif --newCodeOnly=true --referenceBranch=origin/main` |
+| "Run the SQL-based tests"                                      | `dblinter test --outputFormats=junit`                                   |
+| "Is dbLinter installed?"                                       | `dblinter version`                                                      |
+| "Fix the issues dbLinter found"                                 | parses the report, proposes fixes per file, then re-checks just the changed file(s) |
+
+For the full command reference behind these, see [`check`](/dbLinter/tools/cli/check/),
+[`test`](/dbLinter/tools/cli/test/), and [`version`](/dbLinter/tools/cli/version/).
+
+## Compatibility
+
+The [Agent Skills](https://agentskills.io/) standard, originally introduced by Anthropic for Claude Code, is an open
+format now adopted by several AI coding agents, including:
+
+| Agent | Skills support |
+| --- | --- |
+| [Claude Code](https://code.claude.com/docs/en/skills) | Native support since the introduction of Agent Skills. Reads only its own `.claude/skills/` (project) or `~/.claude/skills/` (personal) — not the shared `.agents/skills/` location. |
+| [OpenAI Codex](https://learn.chatgpt.com/docs/build-skills) | Reads the shared `.agents/skills/` directory (project and personal) directly; no dedicated Codex-specific directory needed. |
+| [GitHub Copilot](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills) | Supported in the Copilot CLI, the Copilot app, agent mode (VS Code, JetBrains, Visual Studio), and code review. Reads `.github/skills/`, `.claude/skills/`, or the shared `.agents/skills/` — no dedicated directory required. |
+
+See the full [Agent Skills client list](https://agentskills.io/clients) for other compatible agents — any of them can
+use this skill the same way, by installing it into that agent's own skills directory.
