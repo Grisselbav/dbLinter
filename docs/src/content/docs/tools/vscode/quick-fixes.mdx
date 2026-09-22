@@ -198,7 +198,7 @@ end;
 
 The scope of the dbLinter marker comment is visualised using highlighted lines in the examples below.
 
-```apexlang {3} title="Scope: Single-Line"
+```txt {3} title="Scope: Single-Line"
 app demo (
     security {
         /* @dblinter ignore(A-1010) */ embedInFrames: allow
@@ -206,7 +206,7 @@ app demo (
 )
 ```
 
-```apexlang {2-4} title="Scope: Group security"
+```txt {2-4} title="Scope: Group security"
 app demo (
     security {
         // @dblinter ignore(A-1010)
@@ -215,7 +215,7 @@ app demo (
 )
 ```
 
-```apexlang {1-6} title="Scope: Component app"
+```txt {1-6} title="Scope: Component app"
 app demo (
     // @dblinter ignore(A-1010)
     security {
@@ -225,7 +225,7 @@ app demo (
 // more...
 ```
 
-```apexlang {1-7} title="Scope: APEX file"
+```txt {1-7} title="Scope: APEX file"
 // @dblinter ignore(A-1010)
 app demo (
     security {
