@@ -1,0 +1,20 @@
+---
+title: Usage
+description: What to ask your agent for, and which dblinter command it runs.
+sidebar:
+  order: 30
+---
+
+Once installed, describe what you want in plain language — the agent picks the right `dblinter` command and flags:
+
+| You ask for...                                             | The agent runs...                                                    |
+| ------------------------------------------------------------ | ---------------------------------------------------------------------- |
+| "Lint my SQL"                                                 | `dblinter check --outputFormats=sarif`                                  |
+| "Just check the files I changed" / "check src/packages/"      | `dblinter check --outputFormats=sarif <paths...>`                       |
+| "Only check new code compared to main"                         | `dblinter check --outputFormats=sarif --newCodeOnly=true --referenceBranch=origin/main` |
+| "Run the SQL-based tests"                                      | `dblinter test --outputFormats=junit`                                   |
+| "Is dbLinter installed?"                                       | `dblinter version`                                                      |
+| "Fix the issues dbLinter found"                                 | parses the report, proposes fixes per file, then re-checks just the changed file(s) |
+
+For the full command reference behind these, see [`check`](/dbLinter/tools/cli/check/),
+[`test`](/dbLinter/tools/cli/test/), and [`version`](/dbLinter/tools/cli/version/).
