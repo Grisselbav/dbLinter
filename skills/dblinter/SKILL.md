@@ -1,6 +1,7 @@
 ---
 name: dblinter
 description: Run dbLinter (a static code analysis and SQL-based testing tool for Oracle and PostgreSQL SQL/PL/SQL code) via its CLI, then parse and act on the results. Use this skill whenever the user asks to "lint", "check", "analyse", or "test" SQL/PL/SQL code with dbLinter, mentions the `dblinter` command, references files like `dblinter.sarif.sarif` / `dblinter.sonarqube.json` / `dblinter.junit.xml`, asks to find issues in PL/SQL packages/procedures/functions/views/tables, or wants to interpret or fix issues reported by a previous dbLinter run. Also trigger when the user mentions environment variables prefixed with `DBLINTER_` (e.g. `DBLINTER_TENANT_NAME`, `DBLINTER_ACCESS_TOKEN`, `DBLINTER_CONFIG_NAME`).
+license: Apache-2.0
 ---
 
 # dbLinter
