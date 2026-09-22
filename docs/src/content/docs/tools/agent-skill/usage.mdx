@@ -11,7 +11,7 @@ Once installed, describe what you want in plain language — the agent picks the
 | ------------------------------------------------------------ | ---------------------------------------------------------------------- |
 | "Lint my SQL"                                                 | `dblinter check --outputFormats=sarif`                                  |
 | "Just check the files I changed" / "check src/packages/"      | `dblinter check --outputFormats=sarif <paths...>`                       |
-| "Only check new code compared to main"                         | `dblinter check --outputFormats=sarif --newCodeOnly=true --referenceBranch=origin/main` |
+| "Only check new code compared to main"                         | `dblinter check --outputFormats=sarif --newCodeOnly=true --referenceBranch=main $(git diff --name-only --diff-filter=ACMR main)` — `--newCodeOnly` alone doesn't limit which files are scanned, so the agent also passes the changed files explicitly. Note: `main` (the local branch) and `origin/main` (the remote-tracking ref) can differ — the agent uses whichever one you actually meant, not a silent default |
 | "Run the SQL-based tests"                                      | `dblinter test --outputFormats=junit`                                   |
 | "Is dbLinter installed?"                                       | `dblinter version`                                                      |
 | "Fix the issues dbLinter found"                                 | parses the report, proposes fixes per file, then re-checks just the changed file(s) |
