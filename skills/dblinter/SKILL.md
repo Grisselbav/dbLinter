@@ -1,12 +1,12 @@
 ---
 name: dblinter
-description: Run dbLinter (a static code analysis and SQL-based testing tool for Oracle and PostgreSQL SQL/PL/SQL code) via its CLI, then parse and act on the results. Use this skill whenever the user asks to "lint", "check", "analyse", or "test" SQL/PL/SQL code with dbLinter, mentions the `dblinter` command, references files like `dblinter.sarif.sarif` / `dblinter.sonarqube.json` / `dblinter.junit.xml`, asks to find issues in PL/SQL packages/procedures/functions/views/tables, or wants to interpret or fix issues reported by a previous dbLinter run. Also trigger when the user wants to check only specific files/directories or only new/changed code (`newCodeOnly`), wants to verify the `dblinter` CLI is installed or find its version, or mentions environment variables prefixed with `DBLINTER_` (e.g. `DBLINTER_TENANT_NAME`, `DBLINTER_ACCESS_TOKEN`, `DBLINTER_CONFIG_NAME`).
+description: Run dbLinter (a static code analysis and SQL-based testing tool for Oracle Database code — SQL, PL/SQL, SQL*Plus, SQLcl, APEXlang — and PostgreSQL code — SQL, PL/pgSQL, psql — including SQL in Markdown code blocks and SQL notebooks) via its CLI, then parse and act on the results. Use this skill whenever the user asks to "lint", "check", "analyse", or "test" SQL, PL/SQL, PL/pgSQL, APEXlang, SQL*Plus/SQLcl, or psql code with dbLinter, mentions the `dblinter` command, references files like `dblinter.sarif.sarif` / `dblinter.sonarqube.json` / `dblinter.junit.xml`, asks to find issues in PL/SQL packages/procedures/functions/views/tables, APEX pages, or SQL scripts/notebooks, or wants to interpret or fix issues reported by a previous dbLinter run. Also trigger when the user wants to check only specific files/directories or only new/changed code (`newCodeOnly`), wants to verify the `dblinter` CLI is installed or find its version, or mentions environment variables prefixed with `DBLINTER_` (e.g. `DBLINTER_TENANT_NAME`, `DBLINTER_ACCESS_TOKEN`, `DBLINTER_CONFIG_NAME`).
 license: Apache-2.0
 ---
 
 # dbLinter
 
-dbLinter is a static analysis and SQL-based testing tool for Oracle Database and PostgreSQL SQL/PL/SQL code, from Grisselbav / United Codes. It is run via the `dblinter` CLI and produces machine-readable reports in several formats (SARIF, SonarQube, Checkstyle, JUnit, GitHub Actions, GitLab, VS Code Markdown). Documentation: <https://grisselbav.github.io/dbLinter/tools/cli/cli-overview/>.
+dbLinter is a static analysis and SQL-based testing tool for Oracle Database code (SQL, PL/SQL, SQL*Plus, SQLcl, APEXlang) and PostgreSQL code (SQL, PL/pgSQL, psql), including SQL in Markdown code blocks and SQL notebooks, from Grisselbav / United Codes. It is run via the `dblinter` CLI and produces machine-readable reports in several formats (SARIF, SonarQube, Checkstyle, JUnit, GitHub Actions, GitLab, VS Code Markdown). Documentation: <https://grisselbav.github.io/dbLinter/tools/cli/cli-overview/>.
 
 ## What this skill helps with
 
@@ -14,7 +14,7 @@ The skill covers four things, in this order:
 
 1. **Picking the right `dblinter` invocation** for the user's task — `check` (static analysis) vs `test` (SQL-based tests) vs `version` (installation/version check), choosing output formats, scoping `check` to specific files/directories or to new/changed code only, and tuning `--parallel`.
 2. **Running the command** in the user's working directory.
-3. **Parsing the resulting reports** (especially SARIF and SonarQube JSON) to summarise issues, group by rule/severity, or guide fixes in the SQL/PL/SQL source files.
+3. **Parsing the resulting reports** (especially SARIF and SonarQube JSON) to summarise issues, group by rule/severity, or guide fixes in the source files.
 4. **Re-checking efficiently** after fixes, by scoping the re-run to the files that changed instead of the whole workspace.
 
 If the user only asks for one of these (e.g. "just give me the command"), do that and stop.
@@ -45,7 +45,7 @@ You generally never need to read or echo these values. If a `dblinter` run fails
 
 ### `dblinter check` — static code analysis
 
-Runs the configured rules over SQL/PL/SQL files in the workspace. No database connection is strictly required (though the configured one will be used if available, for better results).
+Runs the configured rules over the files in the workspace. No database connection is strictly required (though the configured one will be used if available, for better results).
 
 Syntax: `dblinter [<options>] check [<args>] [<paths...>]`
 
@@ -158,7 +158,7 @@ When the user asks something like "lint my SQL" or "run dbLinter":
 2. **Default output formats**: if the user wants a quick summary or wants you to analyse the results, run with `--outputFormats=sarif` so you have one structured file to read. If they want the full set (e.g. for CI), omit `--outputFormats` so all formats are produced.
 3. **Default `--parallel`**: leave it unset (=`1`) for small ad-hoc runs. For large workspaces (hundreds of files) suggest `--parallel=4`.
 4. **Scope `check` down whenever you can.** If the user names specific files/directories, or is iterating on a fix, pass those as `<paths...>` instead of checking the whole workspace — same rules, far less to process. If the user is asking about "my changes"/"the diff"/"new code", use `--newCodeOnly=true` **together with** `<paths...>` from `git diff --name-only --diff-filter=ACMR <referenceBranch>` (see the Git preflight above) — `--newCodeOnly` alone does not limit which files are analysed, only which issues are reported, so skipping the `<paths...>` part throws away the runtime benefit the user is actually asking for. Fall back to a full, unscoped `check` for a first-time run, a pre-release/CI gate, or whenever the user wants the complete picture.
-5. **Run from the right directory**. The user's SQL files must be in (or under) the working directory. If the user invokes you from a directory that doesn't look like a SQL project, ask before running.
+5. **Run from the right directory**. The user's source files must be in (or under) the working directory. If the user invokes you from a directory that doesn't look like a database code project, ask before running.
 6. **Unsure `dblinter` is installed?** Run `dblinter version` first — it's near-instant and needs no auth.
 
 ### Examples
