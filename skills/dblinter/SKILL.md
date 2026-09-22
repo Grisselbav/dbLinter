@@ -106,20 +106,20 @@ This needs Git and a resolvable reference branch:
 3. If the reference still can't be resolved, **don't silently fall back to an unfiltered `check`** — that produces a much larger, differently-scoped report than the user asked for. Report the problem (e.g. "`referenceBranch=origin/release-2.0` doesn't exist locally or on the remote") and let the user tell you how to proceed.
 4. Get the changed file list and pass it as `<paths...>` alongside `--newCodeOnly`/`--referenceBranch` — this is what actually limits the files analysed, not just the reported issues:
    ```bash
-   git diff --name-only --diff-filter=ACMR <branch>
+   git diff --name-only --diff-filter=ACMR --relative <branch>
    ```
-   `--diff-filter=ACMR` excludes deleted files (nothing for dblinter to check in a file that no longer exists).
+   `--diff-filter=ACMR` excludes deleted files (nothing for dblinter to check in a file that no longer exists). **Always include `--relative`**: `git diff --name-only` prints paths relative to the repo root, but `dblinter` resolves `<paths...>` relative to the current working directory. Without `--relative`, running the command from any directory other than the repo root (e.g. a `database/` subdirectory) produces paths like `database/src/main/install.sql` that don't exist relative to that subdirectory — dblinter silently finds nothing to check. `--relative` rewrites the list to `src/main/install.sql` instead, matching `dblinter`'s own default working directory (see `--workspace` above). This also correctly narrows the list to files under the current directory when the repo has changes elsewhere that aren't part of this workspace.
 5. If that list is empty, there's nothing new to check — say so and skip running `check` at all. Running it anyway with no `<paths...>` would silently fall back to analysing the whole workspace, which answers a different question than "what's new".
 
 ```bash
 # comparing against the local main branch
 dblinter check --outputFormats=sarif --newCodeOnly=true --referenceBranch=main \
-  $(git diff --name-only --diff-filter=ACMR main)
+  $(git diff --name-only --diff-filter=ACMR --relative main)
 
 # comparing against origin/main specifically (fetch first if it isn't already resolvable locally)
 git fetch origin main
 dblinter check --outputFormats=sarif --newCodeOnly=true --referenceBranch=origin/main \
-  $(git diff --name-only --diff-filter=ACMR origin/main)
+  $(git diff --name-only --diff-filter=ACMR --relative origin/main)
 ```
 
 Combining `--newCodeOnly` with `<paths...>` doesn't lose correctness: it still only reports issues on lines that actually changed within each file, so pre-existing issues elsewhere in a partially-modified file stay suppressed.
@@ -179,7 +179,7 @@ Check only new/changed lines against the **local** `main` branch (scoped to the 
 
 ```bash
 dblinter check --outputFormats=sarif --newCodeOnly=true --referenceBranch=main \
-  $(git diff --name-only --diff-filter=ACMR main)
+  $(git diff --name-only --diff-filter=ACMR --relative main)
 ```
 
 Same, but explicitly against `origin/main` (the remote-tracking ref, not the local branch — see
@@ -188,7 +188,7 @@ Same, but explicitly against `origin/main` (the remote-tracking ref, not the loc
 ```bash
 git fetch origin main   # only if origin/main isn't already resolvable locally
 dblinter check --outputFormats=sarif --newCodeOnly=true --referenceBranch=origin/main \
-  $(git diff --name-only --diff-filter=ACMR origin/main)
+  $(git diff --name-only --diff-filter=ACMR --relative origin/main)
 ```
 
 Full set of reports for a CI pipeline:
@@ -257,6 +257,7 @@ When the user asks you to **fix** the issues dbLinter found:
 - **`test` needs DB access.** If `dblinter test` errors out about a connection, check that the configured JDBC URL/user/password are correct, or pass them explicitly via `--connJdbcUrl`, `--connUserName`, `--connPassword`.
 - **`<paths...>` only narrows, never widens, `check`'s scope.** A file outside the workspace's configured include/exclude patterns won't be analysed just because you named it — it will silently produce no results for that path. If a file you expect issues for shows nothing, check the configuration before assuming it's clean.
 - **Don't guess at `--newCodeOnly`'s reference branch, and don't silently swap `main` for `origin/main` (or vice versa)** — they're different refs and can point to different commits (unpushed local work, or a local branch that's behind). Pass exactly what the user asked for; if it can't be resolved, resolve it properly (e.g. `git fetch origin main` only when the user actually meant the remote ref) or ask which branch to diff against — don't silently drop `--newCodeOnly` and run an unfiltered check instead, that answers a different question than the one asked.
+- **Always pass `--relative` to the `git diff --name-only` used for `<paths...>`.** Without it, paths are repo-root-relative, but dblinter resolves `<paths...>` relative to the current working directory — running the documented command from any subdirectory of the repo then silently finds no files to check (the paths just don't exist there). If a `--newCodeOnly` run reports zero issues unexpectedly, check whether it was run from a subdirectory without `--relative`.
 - **`--newCodeOnly=true` by itself does not limit the runtime.** It only filters which *issues* are reported, not which *files* dblinter processes — passing it without `<paths...>` still analyses the entire configured workspace. Always pair it with the changed-file list from `git diff --name-only --diff-filter=ACMR <referenceBranch>` when the user's goal (as it usually is) is to check new code *faster*, not just to see a filtered report.
 - **The double `.sarif.sarif` extension is intentional.** Don't rename outputs in scripts based on assumptions.
 - **`check` and `test` are licensed features** (Essential or Professional subscription). A 401/403 from the API likely means the configured tenant lacks the right subscription — surface that rather than retrying.
