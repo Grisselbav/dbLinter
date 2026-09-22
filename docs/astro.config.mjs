@@ -46,6 +46,10 @@ export default defineConfig({
 					autogenerate : { directory: "tools/cli" },
 				},
 				{
+					label: "Agent Skill",
+					autogenerate : { directory: "tools/agent-skill" },
+				},
+				{
 					label: "SonarQub Plugin",
 					autogenerate : { directory: "tools/sonarqube" },
 				},

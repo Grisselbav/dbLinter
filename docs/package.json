@@ -3,10 +3,10 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
+    "dev": "node ./scripts/run-astro.mjs dev",
+    "start": "node ./scripts/run-astro.mjs dev",
+    "build": "node ./scripts/run-astro.mjs build",
+    "preview": "node ./scripts/run-astro.mjs preview",
     "astro": "astro"
   },
   "dependencies": {
