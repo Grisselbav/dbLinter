@@ -5,11 +5,9 @@ sidebar:
   order: 10
 ---
 
-The dbLinter Agent Skill teaches AI coding agents — such as [Claude Code](https://claude.com/claude-code),
-[OpenAI Codex](https://developers.openai.com/codex/), and [GitHub Copilot](https://github.com/features/copilot) — how
-to use the dbLinter CLI on your behalf: choosing `check`, `test`, or `version`, scoping a `check` run to specific
-files/directories or to new and changed code only, parsing the resulting SARIF/SonarQube reports, and fixing reported
-issues without disabling rules just to get a clean report.
+The dbLinter Agent Skill teaches coding agents to run `check`, `test` and `version`, scope checks to selected
+files/directories or new and changed code, interpret SARIF/SonarQube reports, and fix issues without disabling rules.
+See [Compatibility](/dbLinter/tools/agent-skill/compatibility/) for supported agents.
 
 It is a single `SKILL.md` file (plus a short reference for parsing report output), following the open
 [Agent Skills](https://agentskills.io/) standard: YAML frontmatter (`name`, `description`, `license`) followed by
