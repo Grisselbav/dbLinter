@@ -101,8 +101,10 @@ click on `Sign in` and then on `Sign up` and follow the instructions.
 | [A-0950: Always follow naming conventions for application items.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-0950) | - | yes | yes | yes |
 | [A-0960: Try to give modal dialogs a Cancel button.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-0960) | - | yes | yes | yes |
 | [A-0970: Never place branches after an unconditional branch.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-0970) | yes | yes | yes | yes |
+| [A-0980: Try to set the compatibility mode to the latest version.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-0980) | - | yes | yes | yes |
 | [A-0990: Always name buttons in uppercase.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-0990) | - | yes | yes | yes |
 | [A-1060: Try to assign applications to an application group.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-1060) | - | yes | yes | yes |
+| [A-1070: Always reload pages with editable Interactive Grids only for success.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-1070) | - | yes | yes | yes |
 | [A-1080: Avoid defining CSS inline at page level.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-1080) | - | yes | yes | yes |
 | [A-1100: Try to keep hidden page items protected.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-1100) | yes | yes | yes | yes |
 | [A-1120: Always define an icon for buttons using an icon template.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-1120) | - | yes | yes | yes |
@@ -110,6 +112,7 @@ click on `Sign in` and then on `Sign up` and follow the instructions.
 | [A-1140: Try to assign pages to a page group.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-1140) | - | yes | yes | yes |
 | [A-1250: Avoid components with the condition type "Never".](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-1250) | yes | yes | yes | yes |
 | [A-1340: Avoid pages without an authorization scheme.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-1340) | - | yes | yes | yes |
+| [A-1390: Avoid buttons defined by dynamic action without a dynamic action.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-1390) | - | yes | yes | yes |
 | [A-1400: Never keep the default name New for components.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-1400) | yes | yes | yes | yes |
 | [A-1410: Never set session lifetime or idle time to 0 (unlimited).](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-1410) | yes | yes | yes | yes |
 | [A-1680: Always define an ordering for reporting regions.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-1680) | - | yes | yes | yes |
@@ -117,7 +120,18 @@ click on `Sign in` and then on `Sign up` and follow the instructions.
 | [A-1860: Avoid NOT NULL validations; use the item's Value Required setting.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-1860) | yes | yes | yes | yes |
 | [A-2300: Never use the HTML (Unsafe) format on Display-Only items.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-2300) | yes | yes | yes | yes |
 | [A-2420: Avoid regions without a template.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-2420) | yes | yes | yes | yes |
+| [A-2430: Avoid page items without a label template.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-2430) | - | yes | yes | yes |
 | [A-3060: Always define a primary key column for editable Interactive Grids.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-3060) | yes | yes | yes | yes |
+| [A-3070: Try to define a default value for Interactive Grid checkbox and switch columns.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-3070) | - | yes | yes | yes |
+| [A-3080: Avoid making Interactive Grid columns read-only with CSS only.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-3080) | - | yes | yes | yes |
+| [A-3090: Never mark Interactive Grid columns with the is-readonly class as required.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-3090) | - | yes | yes | yes |
+| [A-3100: Avoid LOV items on single-column Interactive Grid primary keys.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-3100) | - | yes | yes | yes |
+| [A-3110: Always define a primary key item for forms with a DML process.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-3110) | - | yes | yes | yes |
+| [A-3130: Always define a primary key column for master Interactive Grids.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-3130) | - | yes | yes | yes |
+| [A-3150: Avoid a null entry on required LOV items and Interactive Grid columns.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-3150) | - | yes | yes | yes |
+| [A-3160: Try to give regions an HTML DOM ID.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-3160) | - | yes | yes | yes |
+| [A-3190: Try to use a required label template for required page items.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-3190) | - | yes | yes | yes |
+| [A-3220: Avoid regions in the dialogs position without a dialog template.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20a-3220) | - | yes | yes | yes |
 | [G-0010: Always format database code consistently.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-0010) | - | yes | yes | yes |
 | [G-1010: Try to label your sub blocks.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-1010) | - | yes | yes | yes |
 | [G-1020: Always have a matching loop or block label.](https://dblinter.app/ords/r/dblinter/dblinter-console/rules#P1000_SHOW_RULE=core%20g-1020) | - | yes | yes | yes |
