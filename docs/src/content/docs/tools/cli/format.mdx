@@ -27,6 +27,15 @@ dblinter [<options>] format [<args>]
 See [Options](/dbLinter/tools/cli/options/).
 Mandatory options are `tenantName`, `userName`, `accessToken` and `configName`.
 
+Additionally, all formatter options described in the sections below, starting with [Scope](#scope), can be used.
+Values are case-insensitive. For example, `--formattingStrategy=normalised_compact` and
+`--formattingStrategy=NORMALISED_COMPACT` are equivalent.
+Unset formatter options use their default values.
+Like any other option, a formatter option can also be set using an environment variable.
+For example, `DBLINTER_TAB_SIZE=2` for `tabSize`.
+Store the formatter options in a [property file](/dbLinter/tools/cli/options/#properties-file)
+to share them within a team.
+
 ## Argument Syntax
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -59,14 +68,6 @@ Arguments are used when the semantics change for a command.
     To achieve better performance with higher values, you need enough free system resources.
     Also consider increasing the maximum heap space using the `JAVA_OPTS` environment variable.
     For example, `export JAVA_OPTS=-Xmx=32G` to set the maximum heap size to 32GB.
-
-- `<formatter options>`<br/>
-    All formatter options described in the sections below, starting with [Scope](#scope).
-    Values are case-insensitive. For example, `--formattingStrategy=normalised_compact` and
-    `--formattingStrategy=NORMALISED_COMPACT` are equivalent.
-    Unset formatter options use their default values.
-    Store the formatter options in a [property file](/dbLinter/tools/cli/options/#properties-file)
-    to share them within a team.
 
 - `<paths...>`<br/>
     The files and directories to format.
@@ -415,7 +416,7 @@ In other words, it can make sense to set `shortExpressionSize` to an extreme val
 
 ### `tabSize`
 
-Default: `3`, valid: `2` to `8`.<br/>
+Default: `3`, valid: `1` to `8`.<br/>
 Number of spaces per indentation level (tab).
 A statement and certain keywords within a statement increase or decrease the indentation level.
 Depending on other options such as [`dmlStyle`](#dmlstyle), [`parameterDeclarationStyle`](#parameterdeclarationstyle), [`inListStyle`](#inliststyle), and [`subqueryStyle`](#subquerystyle),
