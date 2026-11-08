@@ -39,6 +39,7 @@ dbLinter manages the following features:
 | Plugin     | Manage custom plugin for validator with checks. |
 | Export     | Export rules and configurations. |
 | Import     | Import rules and configurations. |
+| Format     | Format SQL and PL/SQL code. |
 | Plan       | Manage subscription plans. Only available for product administrators. |
 
 ### Subscription Features
@@ -47,10 +48,10 @@ The range of features available depends on the dbLinter subscription plan select
 
 | Subscription Plan | Features |
 | ----------------- | -------- |
-| Anonymous (Free)  | Check, VSCode |
-| Starter (Free)    | View, Config, Check, Test, VSCode |
-| Essential         | View, Config, Check, Test, VSCode, FullScope, QuickFix, CLI, Users |
-| Professional      | View, Config, Check, Test, VSCode, FullScope, QuickFix, CLI, Users, SonarQube, Rules, GenJava, GenUtPLSQL, Plugin, Export, Import |
+| Anonymous (Free)  | Check, VSCode, Format |
+| Starter (Free)    | View, Config, Check, Test, VSCode, Format |
+| Essential         | View, Config, Check, Test, VSCode, FullScope, QuickFix, CLI, Users, Format |
+| Professional      | View, Config, Check, Test, VSCode, FullScope, QuickFix, CLI, Users, SonarQube, Rules, GenJava, GenUtPLSQL, Plugin, Export, Import, Format |
 
 ### Role Features
 
@@ -59,11 +60,11 @@ To simplify access management for users and access tokens, features are grouped 
 | Role            | Features |
 | --------------- | -------- |
 | Access-Request  | (none)<sup>1</sup> |
-| DB-Developer    | View, Check, Test, VSCode, FullScope, QuickFix, CLI, SonarQube |
+| DB-Developer    | View, Check, Test, VSCode, FullScope, QuickFix, CLI, SonarQube, Format |
 | Configurator    | View, Config |
 | Rules-Developer | View, Rules, GenJava, GenUtPLSQL, Plugin |
 | Transporter     | View, Export, Import |
-| Tenant-Admin    | View, Config, Check, Test, VSCode, FullScope, QuickFix, CLI, Users, SonarQube, Rules, GenJava, GenUtPLSQL, Plugin, Export, Import |
+| Tenant-Admin    | View, Config, Check, Test, VSCode, FullScope, QuickFix, CLI, Users, SonarQube, Rules, GenJava, GenUtPLSQL, Plugin, Export, Import, Format |
 
 <sup>1</sup> The Access-Request role is temporary. It is assigned when access to a tenant is requested.
 
