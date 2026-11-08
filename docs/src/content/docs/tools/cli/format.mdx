@@ -1,0 +1,1086 @@
+---
+title: format
+description: format command
+sidebar:
+  order: 45
+---
+
+This command formats SQL and PL/SQL code in the workspace using the formatter options described below.
+This feature is only available with an [Essential](/dbLinter/getting-started/essential-subscription/)
+or [Professional Subscription](/dbLinter/getting-started/professional-subscription/).
+
+The files are formatted in place. They are expected to be under version control.
+Therefore, the content of changed files is replaced without creating a backup.
+The character set, the byte order mark and the line separator of a file are preserved.
+Files that cannot be formatted, for example due to syntax errors, are left unchanged.
+The reason is logged in the [log file](/dbLinter/tools/cli/options/#logging).
+The command returns exit code `1` if a formatted file cannot be written, otherwise `0`.
+
+## Syntax
+
+```
+dblinter [<options>] format [<args>]
+```
+
+## Options
+
+See [Options](/dbLinter/tools/cli/options/).
+Mandatory options are `tenantName`, `userName`, `accessToken` and `configName`.
+
+## Argument Syntax
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+<Tabs>
+<TabItem label="in Command Line">
+```
+--<argument>=<value>
+```
+</TabItem>
+<TabItem label="in Property File">
+```
+<argument>=<value>
+```
+</TabItem>
+</Tabs>
+
+## Arguments
+
+It is not possible to set arguments using environment variables.
+Beside that, in dbLinter, both arguments and options are treated in the same way.
+Therefore, they can be used in any order. For example, they can be used before or after the command name.
+The only exception is `<paths...>`, which must always be placed at the end.
+We use options when the semantics are identical for each applicable command.
+Arguments are used when the semantics change for a command.
+
+- `parallel`<br/>
+    The number of files formatted in parallel.
+    The default is `1`.
+    To achieve better performance with higher values, you need enough free system resources.
+    Also consider increasing the maximum heap space using the `JAVA_OPTS` environment variable.
+    For example, `export JAVA_OPTS=-Xmx=32G` to set the maximum heap size to 32GB.
+
+- `<formatter options>`<br/>
+    All formatter options described in the sections below, starting with [Scope](#scope).
+    Values are case-insensitive. For example, `--formattingStrategy=normalised_compact` and
+    `--formattingStrategy=NORMALISED_COMPACT` are equivalent.
+    Unset formatter options use their default values.
+    Store the formatter options in a [property file](/dbLinter/tools/cli/options/#properties-file)
+    to share them within a team.
+
+- `<paths...>`<br/>
+    The files and directories to format.
+    By default, all files in the workspace are included/excluded according to the glob patterns defined in the configuration.
+    Any files and directories that are passed are treated as an additional filter.
+    In other words, files and directories outside of the workspace cannot be formatted.
+
+## Example
+
+```bash
+dbLinter-Demo % dbLinter format \
+    --tenantName=Demo \
+    --userName=philipp.salvisberg+42@gmail.com \
+    --accessToken=$DBLINTER_DEMO_ACCESS_TOKEN \
+    --configName=Default \
+    --parallel=2 \
+    --keywordCase=upper \
+    ./*.sql examples/Core-G-1*.sql
+```
+
+The console output for the [dbLinter-Demo](https://github.com/Grisselbav/dbLinter-Demo) project on GitHub looks like this:
+
+```
+Using connection to jdbc:oracle:thin:@localhost:1521/freepdb1 with user DBL_READ
+Processed examples/Core-G-1010.sql (1/25) in 0.075 sec. Formatted.
+Processed examples/Core-G-1030.sql (2/25) in 0.201 sec. Formatted.
+Processed examples/Core-G-1020.sql (3/25) in 0.283 sec. Formatted.
+Processed examples/Core-G-1050.sql (4/25) in 0.028 sec. Formatted.
+Processed examples/Core-G-1060.sql (5/25) in 0.011 sec. Formatted.
+Processed examples/Core-G-1070.sql (6/25) in 0.003 sec. Formatted.
+Processed examples/Core-G-1080.sql (7/25) in 0.033 sec. Formatted.
+Processed examples/Core-G-1110.sql (8/25) in 0.022 sec.
+Processed examples/Core-G-1120.sql (9/25) in 0.003 sec. Formatted.
+Processed examples/Core-G-1130.sql (10/25) in 0.003 sec.
+Processed examples/Core-G-1140.sql (11/25) in 0.002 sec. Formatted.
+Processed examples/Core-G-1150.sql (12/25) in 0.001 sec. Formatted.
+Processed examples/Core-G-1210.sql (13/25) in 0.029 sec.
+Processed examples/Core-G-1040.sql (14/25) in 0.152 sec. Formatted.
+Processed examples/Core-G-1220.sql (15/25) in 0.048 sec.
+Processed examples/Core-G-1240.sql (16/25) in 0.040 sec.
+Processed examples/Core-G-1230.sql (17/25) in 0.080 sec.
+Processed examples/Core-G-1260.sql (18/25) in 0.008 sec.
+Processed examples/Core-G-1250.sql (19/25) in 0.011 sec.
+Processed examples/Core-G-1270.sql (20/25) in 0.006 sec.
+Processed examples/Core-G-1280.sql (21/25) in 0.005 sec.
+Processed examples/Core-G-1310.sql (22/25) in 0.003 sec.
+Processed examples/Core-G-1920.sql (23/25) in 0.002 sec.
+Processed examples/Core-G-1910.sql (24/25) in 0.010 sec. Formatted.
+Processed install.sql (25/25) in 0.165 sec.
+Formatted 12 of 25 files.
+```
+
+## Formatter Options
+
+The examples illustrate each option with the default settings applied to all other options, 
+unless an override is specified.
+Since [`formattingStrategy = LIGHTWEIGHT`](#lightweight-default) is the default, the result also depends on the input whitespace.
+SQL fragments are used where a complete statement is unnecessary.
+The defaults are marked with `(default)` in the option description.
+
+## Scope
+
+The formatter is based on the [IslandSQL](https://github.com/IslandSQL/IslandSQL#statements) grammar, which
+supports a subset of statements for OracleDB and PostgreSQL.
+Unsupported statements are passed by IslandSQL as hidden tokens.
+These tokens are not formatted, and the original whitespace is preserved.
+
+## Scope Reductions
+
+To preserve the original whitespace of certain code sections, use the following case-insensitive marker comments:
+
+- `@formatter:off` or `noformat start` to disable formatting
+- `@formatter:on` or `noformat end` to enable formatting
+
+Here is an example of a formatter off/on code section that is challenging for any formatter to format it in this way:
+
+```sql
+-- @formatter:off
+select decode(dummy, 'X', 1
+                   , 'Y', 2
+                   , 'Z', 3
+                        , 0) /* @formatter:on */
+  from dual;
+```
+
+The scope of the marker comments remains unchanged.
+This means that the standard formatting rules apply to these comments.
+
+## Indentation of out-of-scope and hidden tokens
+
+Tokens in [conditional compilation directives](https://github.com/IslandSQL/IslandSQL/blob/main/limitations.md#conditional-compilation-selection-directives)
+and in [shallow parsed clauses](https://github.com/IslandSQL/IslandSQL/blob/main/limitations.md#shallow-parsed-clauses)
+are indented according to the formatter options, but otherwise the original whitespace is preserved.
+
+Leading comments are indented according to the current indentation level.
+The indentation of consecutive lines within multiline comments is determined by the difference in indentation between the comment token and the subsequent line.
+
+## Styles
+
+### `formattingStrategy`
+
+Overall formatting strategy.
+
+#### `LIGHTWEIGHT` (default)
+
+This strategy preserves the original whitespace between tokens and then applies only a subset of options.
+Therefore, the formatting result is determined by the existing whitespace, meaning that the same code
+can be formatted differently due to the optional nature of line breaks in various places.
+
+- The following options are irrelevant with this strategy:
+    - [`parameterDeclarationStyle`](#parameterdeclarationstyle)
+    - [`inListStyle`](#inliststyle)
+    - [`blankLinesBetweenStatementMode`](#blanklinesbetweenstatementmode)
+    - [`minStatementLines`](#minstatementlines)
+
+- And the following options are irrelevant when set to `false`, but enforced when set to `true`:
+    - [`leadingConcatenationOperator`](#leadingconcatenationoperator)
+    - [`leadingLogicalOperator`](#leadinglogicaloperator)
+    - [`labelOnSeparateLine`](#labelonseparateline)
+    - [`loopKeywordOnSeparateLine`](#loopkeywordonseparateline)
+    - [`thenKeywordOnSeparateLine`](#thenkeywordonseparateline)
+    - [`joinOnKeywordOnSeparateLine`](#joinonkeywordonseparateline)
+    - [`alignTrailingComments`](#aligntrailingcomments)
+
+- All other options are applied.
+
+#### `NORMALISED_COMPACT`
+
+This strategy places a space between tokens as a first formatter step and then all other options are applied.
+The original whitespace between tokens does not affect the result of the formatter, except in excluded regions where whitespace is preserved.
+This strategy generally produces fewer lines than the `NORMALISED_EXPANDED` strategy.
+
+- The following options are irrelevant with this style:
+    - [`removeDuplicateBlankLines`](#removeduplicateblanklines)
+
+#### `NORMALISED_EXPANDED`
+
+This strategy places a newline between tokens as the first formatter step and then all other options are applied.
+The original whitespace between tokens does not affect the result of the formatter, except in excluded regions where whitespace is preserved.
+This strategy generally produces more lines than the `NORMALISED_COMPACT` strategy.
+
+- The following options are irrelevant with this style:
+    - [`removeDuplicateBlankLines`](#removeduplicateblanklines)
+    - [`preserveSingleLineStatements`](#preservesinglelinestatements)
+
+### `dmlStyle`
+
+Style of DML statements (SELECT, INSERT, UPDATE, DELETE, MERGE).
+
+#### `DEDICATED_KEYWORD_LINES`
+
+```sql
+select
+   col1,
+   col2
+from
+   tab1,
+   tab2;
+```
+
+#### `RIGHT_ALIGNED_KEYWORDS` (default)
+
+```sql
+select col1,
+       col2
+  from tab1,
+       tab2;
+```
+
+#### `LEFT_ALIGNED_KEYWORDS_ALIGN_CONTINUATIONS`
+
+```sql
+select col1,
+       col2
+from tab1,
+     tab2;
+```
+
+#### `LEFT_ALIGNED_KEYWORDS_INDENT_CONTINUATIONS`
+
+```sql
+select col1,
+   col2
+from tab1,
+   tab2;
+```
+
+#### `PADDED_KEYWORDS`
+
+```sql
+select col1,
+       col2
+from   tab1,
+       tab2;
+```
+
+### `parameterDeclarationStyle`
+
+Parentheses style for parameter declarations.
+
+These examples use [`formattingStrategy = NORMALISED_EXPANDED`](#normalised_expanded). 
+This option is ignored by `LIGHTWEIGHT`.
+
+#### `BLOCK` (default)
+
+```sql
+procedure p(
+   in_param1 in integer,
+   in_param2 in varchar
+)
+```
+
+#### `BLOCK_NEXT_LINE`
+
+```sql
+procedure p
+(
+   in_param1 in integer,
+   in_param2 in varchar
+)
+```
+
+#### `HANGING`
+
+```sql
+procedure p(in_param1 in integer,
+            in_param2 in varchar)
+```
+
+### `inListStyle`
+
+Parentheses style for IN-lists.
+
+These examples use [`formattingStrategy = NORMALISED_COMPACT`](#normalised_compact) and [`maxLineSize = 42`](#maxlinesize). 
+This option is ignored by `LIGHTWEIGHT`.
+
+#### `BLOCK` (default)
+
+```sql
+in (
+   11111111111, 22222222222, 33333333333,
+   44444444444, 55555555555, 66666666666,
+   77777777777, 88888888888, 99999999999
+)
+```
+
+#### `BLOCK_NEXT_LINE`
+
+```sql
+in
+(
+   11111111111, 22222222222, 33333333333,
+   44444444444, 55555555555, 66666666666,
+   77777777777, 88888888888, 99999999999
+)
+```
+
+#### `HANGING`
+
+```sql
+in (11111111111, 22222222222, 33333333333,
+    44444444444, 55555555555, 66666666666,
+    77777777777, 88888888888, 99999999999)
+```
+
+### `subqueryStyle`
+
+Parentheses style for subqueries.
+
+#### `BLOCK` (default)
+
+```sql
+not exists (
+   select 42
+     from t
+)
+```
+
+#### `BLOCK_NEXT_LINE`
+
+```sql
+not exists
+(
+   select 42
+     from t
+)
+```
+
+#### `HANGING`
+
+```sql
+not exists (select 42
+              from t)
+```
+
+## Case and Size
+
+### `keywordCase`
+
+Case transformation policy for SQL keywords.
+
+| Value             | Result for `AuToNoMoUs_TrAnSaCtIoN` |
+|-------------------|-------------------------------------|
+| `UPPER`           | `AUTONOMOUS_TRANSACTION`            |
+| `LOWER` (default) | `autonomous_transaction`            |
+| `INITCAP`         | `Autonomous_transaction`            |
+| `WORDCAP`         | `Autonomous_Transaction`            |
+| `PRESERVE`        | `AuToNoMoUs_TrAnSaCtIoN`            |
+
+### `identifierCase`
+
+Case transformation policy for SQL identifiers.
+
+| Value             | Result for `AbC_dEf` |
+|-------------------|----------------------|
+| `UPPER`           | `ABC_DEF`            |
+| `LOWER` (default) | `abc_def`            |
+| `INITCAP`         | `Abc_def`            |
+| `WORDCAP`         | `Abc_Def`            |
+| `PRESERVE`        | `AbC_dEf`            |
+
+### `maxLineSize`
+
+Default: `120`, valid: `40` to `1000`.<br/>
+Maximum line size in characters. 
+It should be seen as a target.
+Where possible and reasonable, the formatter will insert line breaks to ensure that lines do not exceed this target.
+Generally, the formatter prioritises other options over the `maxLineSize`.
+This can result in line breaks being skipped to avoid overruns.
+This may occur, for example, when adding a trailing comma.
+Furthermore, it is expected that the limit will be exceeded when it is low, and the identifiers are long.
+
+Short expressions are controlled independently by [`shortExpressionSize`](#shortexpressionsize).
+Its default (`60`) is half the default `maxLineSize` (`120`), but changing `maxLineSize` does not change [`shortExpressionSize`](#shortexpressionsize).
+
+### `shortExpressionSize`
+
+Default: `60`, valid: `1` to `1000`.<br/>
+Maximum size of a short expression in characters.
+Expressions whose size is less than or equal to `shortExpressionSize` are collapsed.
+In a subsequent step, the expression is split into multiple lines if it exceeds the [`maxLineSize`](#maxlinesize).
+Setting the `shortExpressionSize` to low or high values can influence the normalisation strategy.
+In other words, it can make sense to set `shortExpressionSize` to an extreme value.
+
+## Indentation and Whitespace
+
+### `tabSize`
+
+Default: `3`, valid: `2` to `8`.<br/>
+Number of spaces per indentation level (tab).
+A statement and certain keywords within a statement increase or decrease the indentation level.
+Depending on other options such as [`dmlStyle`](#dmlstyle), [`parameterDeclarationStyle`](#parameterdeclarationstyle), [`inListStyle`](#inliststyle), and [`subqueryStyle`](#subquerystyle),
+the indentation may not be a multiple of the tab size.
+
+The semantics are the same as for [LSP FormattingOptions tabSize](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.18/specification/#formattingOptions).
+
+### `insertSpaces`
+
+Default: `true`.<br/>
+Use spaces rather than tabs for indentation.
+Technically, the formatter first indents using [`tabSize`](#tabsize) spaces per level.
+If `insertSpaces` is disabled, it converts leading spaces to tabs as a final step.
+The result should look the same, provided your editor's tab size matches the formatter's indentation size.
+
+The semantics are the same as for [LSP FormattingOptions insertSpaces](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.18/specification/#formattingOptions).
+
+### `trimTrailingWhitespace`
+
+Default: `true`.<br/>
+Trim trailing whitespace on a line.
+
+The semantics are the same as for [LSP FormattingOptions trimTrailingWhitespace](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.18/specification/#formattingOptions).
+
+### `removeDuplicateBlankLines`
+
+Default: `true`.<br/>
+Remove duplicate blank lines. In other words, blank lines are collapsed to a single blank line.
+
+### `trimLeadingNewlines`
+
+Default: `true`.<br/>
+Trim all newlines at the start of the file before the first content line.
+However, the indentation of the first content line is preserved.
+
+### `trimFinalNewlines`
+
+Default: `true`.<br/>
+Trim all newlines after the final newline at the end of the file.
+This option has no effect if there is no final newline at the end of the file.
+
+The semantics are the same as for [LSP FormattingOptions trimFinalNewlines](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.18/specification/#formattingOptions).
+
+### `insertFinalNewline`
+
+Default: `true`.<br/>
+Insert a newline character at the end of the file if one does not exist.
+In combination with [`trimFinalNewlines`](#trimfinalnewlines), this option ensures that the file ends with a single newline character.
+
+The semantics are the same as for [LSP FormattingOptions insertFinalNewline](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.18/specification/#formattingOptions).
+
+### `blankLinesBetweenStatementMode`
+
+Strategy for inserting blank lines between statements. Ignored if [`formattingStrategy = LIGHTWEIGHT`](#lightweight-default).
+
+The following examples are based on the options [`formattingStrategy = NORMALISED_COMPACT`](#normalised_compact) and [`maxLineSize = 33`](#maxlinesize).
+
+#### `NEVER`
+
+Never insert blank lines between statements. This option is useful for compact formatting.
+
+```sql
+select count(*) from t1;
+select col2
+  from t1
+ where col1 = 42;
+delete from t2 where col1 = 42;
+commit;
+```
+
+#### `ALWAYS`
+
+Always insert a blank line between statements. This option is useful for expanded formatting.
+
+```sql
+select count(*) from t1;
+
+select col2
+  from t1
+ where col1 = 42;
+
+delete from t2 where col1 = 42;
+
+commit;
+```
+
+#### `BY_STATEMENT_LINES` (default)
+
+Insert a blank line between each statement, depending on how many lines it contains.
+This option is useful for controlling the spacing between statements in a more granular way.
+
+```sql
+select count(*) from t1;
+
+select col2
+  from t1
+ where col1 = 42;
+
+delete from t2 where col1 = 42;
+commit;
+```
+
+### `minStatementLines`
+
+Default: `2`, valid: `1` to `1000`.<br/>
+Minimum number of lines in a statement before blank lines are added around it.
+Applicable only with option [`blankLinesBetweenStatementMode = BY_STATEMENT_LINES`](#by_statement_lines-default).
+
+## Line Breaks Within Statements
+
+### `preserveSingleLineStatements`
+
+Preserve statements that fit on a single line.
+Ignored when [`formattingStrategy = NORMALISED_EXPANDED`](#normalised_expanded).
+
+#### `true` (default)
+
+```sql
+select col1, col2 from t where col3 = 42 order by col2;
+```
+
+#### `false`
+
+```sql
+select col1, col2
+  from t
+ where col3 = 42
+ order by col2;
+```
+
+### `preserveSingleLineCaseExpressions`
+
+Preserve case expressions that fit on a single line.
+The case expression must not exceed the [`shortExpressionSize`](#shortexpressionsize) option.
+
+The example uses [`shortExpressionSize = 100`](#shortexpressionsize) to demonstrate the effect of this option.
+
+#### `true` (default)
+
+```sql
+select ename,
+       case when sal > 3000 then 'high' when sal > 2000 then 'medium' else 'low' end as sal_range
+  from emp;
+```
+
+#### `false`
+
+```sql
+select ename,
+       case
+          when sal > 3000 then
+             'high'
+          when sal > 2000 then
+             'medium'
+          else
+             'low'
+       end as sal_range
+  from emp;
+```
+
+### `leadingComma`
+
+Place commas at the beginning of continuation lines.
+
+#### `true`
+
+```sql
+select col1
+     , col2
+     , col3
+  from t1;
+```
+
+#### `false` (default)
+
+```sql
+select col1,
+       col2,
+       col3
+  from t1;
+```
+
+### `leadingConcatenationOperator`
+
+Place the concatenation operator `||` at the beginning of continuation lines.
+Applies only to expressions that exceed the [`shortExpressionSize`](#shortexpressionsize) option.
+
+The example uses [`shortExpressionSize = 10`](#shortexpressionsize) to demonstrate the effect of this option.
+
+#### `true` (default)
+
+```sql
+select col1
+       || col2
+       || col3 as result
+  from t1;
+```
+
+#### `false`
+
+```sql
+select col1 ||
+       col2 ||
+       col3 as result
+  from t1;
+```
+
+### `leadingLogicalOperator`
+
+Default: `true`.<br/>
+Place logical operators (`AND`/`OR`) at the beginning of continuation lines.
+
+#### `true` (default)
+
+```sql
+select col1
+  from t1
+ where col2 = 42
+   and col3 = 43
+    or col4 = 44;
+```
+
+#### `false`
+
+```sql
+select col1
+  from t1
+ where col2 = 42 and
+       col3 = 43 or
+       col4 = 44;
+```
+
+### `labelOnSeparateLine`
+
+Place PL/SQL labels on a separate line.
+
+#### `true` (default)
+
+```sql
+begin
+   <<a_simple_loop>>
+   for i in 1..10 loop
+      null;
+   end loop a_simple_loop;
+end;
+```
+
+#### `false`
+
+```sql
+begin
+   <<a_simple_loop>> for i in 1..10 loop
+      null;
+   end loop a_simple_loop;
+end;
+```
+
+### `loopKeywordOnSeparateLine`
+
+Place the LOOP keyword on a separate line.
+
+#### `true`
+
+```sql
+begin
+   for i in 1..10
+   loop
+      null;
+   end loop;
+end;
+```
+
+#### `false` (default)
+
+```sql
+begin
+   for i in 1..10 loop
+      null;
+   end loop;
+end;
+```
+
+### `thenKeywordOnSeparateLine`
+
+Place the `THEN` keyword on a separate line.
+
+#### `true`
+
+```sql
+begin
+   if to_char(sysdate, 'DD-MM') = '01-01'
+   then
+      sys.dbms_output.put_line('New Year!');
+   end if;
+end;
+```
+
+#### `false` (default)
+
+```sql
+begin
+   if to_char(sysdate, 'DD-MM') = '01-01' then
+      sys.dbms_output.put_line('New Year!');
+   end if;
+end;
+```
+
+### `joinOnKeywordOnSeparateLine`
+
+Place the `ON` keyword of join clauses on a separate line.
+
+#### `true`
+
+```sql
+select e.ename, d.dname
+  from emp e
+  join dept d
+    on e.deptno = d.deptno;
+```
+
+#### `false` (default)
+
+```sql
+select e.ename, d.dname
+  from emp e
+  join dept d on e.deptno = d.deptno;
+```
+
+## Spacing
+
+### `spaceAfterComma`
+
+Insert a space after commas.
+
+#### `true` (default)
+
+```sql
+select ename, sal from emp;
+```
+
+#### `false`
+
+```sql
+select ename,sal from emp;
+```
+
+### `spaceAfterCommaInDatatypes`
+
+Insert a space after commas in datatype declarations.
+For these commas, this option takes precedence over [`spaceAfterComma`](#spaceaftercomma).
+
+#### `true`
+
+```sql
+declare
+   l_value number(10, 2);
+begin
+   null;
+end;
+```
+
+#### `false` (default)
+
+```sql
+declare
+   l_value number(10,2);
+begin
+   null;
+end;
+```
+
+### `spaceAroundOperators`
+
+Insert spaces around operators.
+
+#### `true` (default)
+
+```sql
+select 1 + 2 * 3 as result;
+```
+
+#### `false`
+
+```sql
+select 1+2*3 as result;
+```
+
+### `spaceInsideParentheses`
+
+Add spaces after opening and before closing parentheses.
+
+#### `true`
+
+```sql
+select ( 1 + 2 ) * 3, json { 'key': 'value' }, json [ 1, 2, 3 ];
+```
+
+#### `false` (default)
+
+```sql
+select (1 + 2) * 3, json {'key': 'value'}, json [1, 2, 3];
+```
+
+### `spaceAroundParentheses`
+
+Add spaces before opening and after closing parentheses.
+
+#### `true` (default)
+
+```sql
+select 1 * (2 + 3) * 4;
+```
+
+#### `false`
+
+```sql
+select 1 *(2 + 3)* 4;
+```
+
+To achieve a more condensed expression, combine this option with [`spaceAroundOperators = false`](#false-6).
+
+```sql
+select 1*(2+3)*4;
+```
+
+### `spaceBeforeFunctionParentheses`
+
+Default: `false`.<br/>
+Insert a space between a function/procedure/method name and its opening parenthesis.
+At this boundary, this option takes precedence over [`spaceAroundParentheses`](#spacearoundparentheses).
+
+#### `true`
+
+```sql
+select round (42.42), json [42], json {'key': 'value'};
+```
+
+#### `false` (default)
+
+```sql
+select round(42.42), json[42], json{'key': 'value'};
+
+```
+
+## Alignment
+
+### `alignTypeDeclarations`
+
+Align type declarations vertically.
+
+#### `true` (default)
+
+```sql
+declare
+   l_num       number(10,2);
+   l_string    varchar2(100);
+   l_date      date;
+   co_constant constant integer := 42;
+begin
+   null;
+end;
+```
+
+#### `false`
+
+```sql
+declare
+   l_num number(10,2);
+   l_string varchar2(100);
+   l_date date;
+   co_constant constant integer := 42;
+begin
+   null;
+end;
+```
+
+### `alignColumnAliases`
+
+Align column aliases vertically.
+
+#### `true` (default)
+
+```sql
+select ename  as employee_name,
+       deptno as department_number,
+       sal       salary
+  from emp;
+```
+
+#### `false`
+
+```sql
+select ename as employee_name,
+       deptno as department_number,
+       sal salary
+  from emp;
+```
+
+### `alignTableAliases`
+
+Align table aliases vertically.
+
+#### `true`
+
+```sql
+select e.ename, d.dname
+  from emp  e
+  join dept d on e.deptno = d.deptno;
+```
+
+#### `false` (default)
+
+```sql
+select e.ename, d.dname
+  from emp e
+  join dept d on e.deptno = d.deptno;
+```
+
+### `alignNamedArguments`
+
+Align named arguments `=>` vertically.
+
+#### `true` (default)
+
+```sql
+begin
+   my_procedure(
+      in_a         => 42,
+      in_bcde      => 'Hello',
+      io_fghijklmn => l_var1,
+      out_opqr     => l_var2
+   );
+end;
+```
+
+#### `false`
+
+```sql
+begin
+   my_procedure(
+      in_a => 42,
+      in_bcde => 'Hello',
+      io_fghijklmn => l_var1,
+      out_opqr => l_var2
+   );
+end;
+```
+
+### `alignAssignments`
+
+Align assignment operators `:=` vertically.
+
+#### `true` (default)
+
+```sql
+begin
+   l_a       := 1;
+   l_bcdefgh := 2;
+   l_ijk     := 3;
+end;
+```
+
+#### `false`
+
+```sql
+begin
+   l_a := 1;
+   l_bcdefgh := 2;
+   l_ijk := 3;
+end;
+```
+
+### `alignEqualityOperators`
+
+Align equality operators `=` vertically.
+
+#### `true`
+
+```sql
+select col3
+  from t
+ where col1        = 42
+   and longer_col2 = 43;
+```
+
+#### `false` (default)
+
+```sql
+select col3
+  from t
+ where col1 = 42
+   and longer_col2 = 43;
+```
+
+### `alignLogicalOperatorsWithKeywords`
+
+Align logical operators (`AND`/`OR`) with SQL keyword columns.
+
+#### `true` (default)
+
+```sql
+select col4
+  from t
+ where col1 = 42
+   and col2 = 43
+    or col3 = 44;
+```
+
+#### `false`
+
+```sql
+select col4
+  from t
+ where col1 = 42
+       and col2 = 43
+       or col3 = 44;
+```
+
+### `alignCommentAsterisks`
+
+Aligns existing leading asterisks in multiline comments. Missing asterisks are not added.
+
+#### `true` (default)
+
+Aligns the asterisks in multiline comments but does not add missing asterisks.
+The indentation of lines without leading asterisks is preserved.
+
+```sql
+/*
+ * This is a comment.
+ * It has multiple lines.
+ */
+```
+
+#### `false`
+
+The indentation of all lines is preserved.
+
+### `alignTrailingComments`
+
+Aligns trailing single-line comments within the same SQL statement.
+
+#### `true`
+
+If there are multiple single-line comments in a SQL statement, they are aligned after the space before them has been normalised.
+
+```sql
+select first_name,
+       last_name,
+       email                -- contact information
+  from employees
+ where phone_number is null -- we need to gather missing phone numbers
+/
+```
+
+#### `false` (default)
+
+The indentation is preserved in the lightweight formatting strategy,
+and a single space before the comment is enforced in normalised formatting strategies.
+
+```sql
+select first_name,
+       last_name,
+       email -- contact information
+  from employees
+ where phone_number is null -- we need to gather missing phone numbers
+/
+```
