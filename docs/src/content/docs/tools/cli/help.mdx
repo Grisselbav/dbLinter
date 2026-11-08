@@ -34,6 +34,7 @@ Options:
   --connJdbcUrl=<jdbcUrl>      JDBC URL for read-only database access.
   --connUserName=<user>        JDBC user for read-only database access.
   --connPassword=<password>    JDBC password for read-only database access.
+  --allowInsecureTls=<boolean> Disable TLS certificate and hostname verification (true, false).
   --logLevel=<level>           Log level (off, error, warning, info, debug, trace).
   --logFile=<logFile>          Name of the log file.
   --logFormat=<format>         Log format (short, ext1, ext2, ext3).
@@ -41,6 +42,9 @@ Options:
   --pretty=<boolean>           Pretty print JSON output (true, false).
   --indent=<spaces>            Number of spaces for pretty printing.
   --options=<properties>       Load options from file.
+  --<formatterOption>=<value>
+                               Formatter option used by format command. See
+                               https://grisselbav.github.io/dbLinter/tools/cli/format/#formatter-options
 
 Commands:
   ls                           Start language server.
@@ -52,6 +56,9 @@ Commands:
     --newCodeOnly=<boolean>    Only report issues on new and changed lines.
     --referenceBranch=<name>   Reference branch name for new and changed lines.
     <paths...>                 Files and directories to analyse.
+  format [<args>]              Format SQL and PL/SQL code in current directory.
+    --parallel=<n>             Number of files formatted in parallel.
+    <paths...>                 Files and directories to format.
   test [<args>]                Run SQL-based tests.
     --outputFormats=<formats>  Comma-separated list of output formats (vscode,
                                junit).
