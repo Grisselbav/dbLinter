@@ -14,7 +14,8 @@ Therefore, the content of changed files is replaced without creating a backup.
 The character set, the byte order mark and the line separator of a file are preserved.
 Files that cannot be formatted, for example due to syntax errors, are left unchanged.
 The reason is logged in the [log file](/dbLinter/tools/cli/options/#logging).
-The command returns exit code `1` if a formatted file cannot be written, otherwise `0`.
+The command returns exit code `1` if a formatted file cannot be written, an option is invalid, or the
+language server reports an error (for example, an authentication error). Otherwise, it returns `0`.
 
 ## Syntax
 
@@ -34,7 +35,10 @@ Unset formatter options use their default values.
 Like any other option, a formatter option can also be set using an environment variable.
 For example, `DBLINTER_TAB_SIZE=2` for `tabSize`.
 Store the formatter options in a [property file](/dbLinter/tools/cli/options/#properties-file)
-to share them within a team.
+to share them within a team. A `dblinter.properties` file in the workspace is loaded automatically.
+If an option is set in more than one place, the [order of precedence](/dbLinter/tools/cli/options/#order-of-precedence)
+applies. For example, `--leadingComma=true` on the command line overrides `leadingComma=false` in `dblinter.properties`.
+Option names are case-sensitive. Unknown options and invalid values are reported before any file is formatted.
 
 ## Argument Syntax
 
@@ -117,7 +121,7 @@ Processed examples/Core-G-1310.sql (22/25) in 0.003 sec.
 Processed examples/Core-G-1920.sql (23/25) in 0.002 sec.
 Processed examples/Core-G-1910.sql (24/25) in 0.010 sec. Formatted.
 Processed install.sql (25/25) in 0.165 sec.
-Formatted 12 of 25 files.
+Formatted 12 of 25 files in 1.873 sec.
 ```
 
 ## Formatter Options
