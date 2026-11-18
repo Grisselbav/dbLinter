@@ -19,15 +19,14 @@ The skill covers four things, in this order:
 
 If the user only asks for one of these (e.g. "just give me the command"), do that and stop.
 
-## Checking the CLI is installed
+## Checking the CLI version: only on errors
 
-If you're unsure whether `dblinter` is installed/on the `PATH`, or which version, run:
+**Don't run `dblinter version` before `check`, `test`, or `format`.** Run the requested command directly; it fails fast and clearly when something is wrong. Run `dblinter version` only:
 
-```bash
-dblinter version
-```
+- when the user asks whether `dblinter` is installed or which version they have, or
+- after a command failed with `command not found`, `Unknown command <name>.`, or `Unknown option <name>.` for an option this skill documents. These usually mean the CLI is missing or too old (e.g. `format` needs 1.14.0 or later).
 
-This takes no options, needs no authentication or environment variables, and prints something like `dbLinter version 1.10.0`. It's the cheapest possible sanity check before attempting a `check` or `test` run — if it fails with `command not found`, don't try to install it yourself; point the user to the install instructions at <https://grisselbav.github.io/dbLinter/tools/cli/cli-overview/#installation> (Homebrew, or a downloadable ZIP; JDK 17+ required).
+`dblinter version` needs no authentication and prints something like `dbLinter version 1.14.0`. If `dblinter` isn't found, don't try to install it yourself; point the user to the install instructions at <https://grisselbav.github.io/dbLinter/tools/cli/cli-overview/#installation> (Homebrew, or a downloadable ZIP; JDK 17+ required).
 
 ## Authentication and environment
 
@@ -175,7 +174,7 @@ Report the `Formatted X of Y files in T sec.` summary, the formatter flags used 
 
 ### `dblinter version` — installation / version check
 
-Prints the installed CLI version, e.g. `dbLinter version 1.10.0`, and nothing else. Takes no arguments and needs no authentication or environment variables. Use it to confirm `dblinter` is installed and on the `PATH` before attempting `check`, `test`, or `format` (see "Checking the CLI is installed" above), or when the user simply asks which version they have.
+Prints the installed CLI version, e.g. `dbLinter version 1.10.0`, and nothing else. Takes no arguments and needs no authentication or environment variables. Use it only when the user asks which version they have, or to diagnose a failed command (see "Checking the CLI version: only on errors" above). Never run it as a routine first step.
 
 ### Other arguments worth knowing
 
@@ -211,7 +210,7 @@ When the user asks something like "lint my SQL" or "run dbLinter":
 3. **Default `--parallel`**: leave it unset (=`1`) for small ad-hoc runs. For large workspaces (hundreds of files) suggest `--parallel=4`.
 4. **Scope `check` down whenever you can.** If the user names specific files/directories, or is iterating on a fix, pass those as `<paths...>` instead of checking the whole workspace — same rules, far less to process. If the user is asking about "my changes"/"the diff"/"new code", use `--newCodeOnly=true` **together with** `<paths...>` from `git diff --name-only --diff-filter=ACMR <referenceBranch>` (see the Git preflight above) — `--newCodeOnly` alone does not limit which files are analysed, only which issues are reported, so skipping the `<paths...>` part throws away the runtime benefit the user is actually asking for. Fall back to a full, unscoped `check` for a first-time run, a pre-release/CI gate, or whenever the user wants the complete picture.
 5. **Run from the right directory**. The user's source files must be in (or under) the working directory. If the user invokes you from a directory that doesn't look like a database code project, ask before running.
-6. **Unsure `dblinter` is installed?** Run `dblinter version` first — it's near-instant and needs no auth.
+6. **Run the requested command directly**, without a `dblinter version` call first. Check the version only after a failure, as described in "Checking the CLI version: only on errors" above.
 
 ### Examples
 
