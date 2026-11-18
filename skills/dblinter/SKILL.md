@@ -1,20 +1,20 @@
 ---
 name: dblinter
-description: Run dbLinter (a static code analysis and SQL-based testing tool for Oracle Database code — SQL, PL/SQL, SQL*Plus, SQLcl, APEXlang — and PostgreSQL code — SQL, PL/pgSQL, psql — including SQL in Markdown code blocks and SQL notebooks) via its CLI, then parse and act on the results. Use this skill whenever the user asks to "lint", "check", "analyse", or "test" SQL, PL/SQL, PL/pgSQL, APEXlang, SQL*Plus/SQLcl, or psql code with dbLinter, mentions the `dblinter` command, references files like `dblinter.sarif.sarif` / `dblinter.sonarqube.json` / `dblinter.junit.xml`, asks to find issues in PL/SQL packages/procedures/functions/views/tables, APEX pages, or SQL scripts/notebooks, or wants to interpret or fix issues reported by a previous dbLinter run. Also trigger when the user wants to check only specific files/directories or only new/changed code (`newCodeOnly`), wants to verify the `dblinter` CLI is installed or find its version, or mentions environment variables prefixed with `DBLINTER_` (e.g. `DBLINTER_TENANT_NAME`, `DBLINTER_ACCESS_TOKEN`, `DBLINTER_CONFIG_NAME`).
+description: Run the dbLinter CLI (`dblinter`) to lint, test, or format Oracle code (SQL, PL/SQL, SQL*Plus, SQLcl, APEXlang) and PostgreSQL code (SQL, PL/pgSQL, psql), including SQL in Markdown and notebooks, then act on the results. Use whenever the user asks to lint, check, analyse, or test such code with dbLinter; to format, beautify, or reformat SQL/PL/SQL, optionally with style wishes like "leading commas" or "uppercase keywords"; to check only some files or only new/changed code; to interpret or fix issues from reports like `dblinter.sarif.sarif`, `dblinter.sonarqube.json`, or `dblinter.junit.xml`; to verify the CLI install or version; or mentions `DBLINTER_*` environment variables.
 license: Apache-2.0
 ---
 
 # dbLinter
 
-dbLinter is a static analysis and SQL-based testing tool for Oracle Database code (SQL, PL/SQL, SQL*Plus, SQLcl, APEXlang) and PostgreSQL code (SQL, PL/pgSQL, psql), including SQL in Markdown code blocks and SQL notebooks, from Grisselbav / United Codes. It is run via the `dblinter` CLI and produces machine-readable reports in several formats (SARIF, SonarQube, Checkstyle, JUnit, GitHub Actions, GitLab, VS Code Markdown). Documentation: <https://grisselbav.github.io/dbLinter/tools/cli/cli-overview/>.
+dbLinter is a static analysis and SQL-based testing tool for Oracle Database code (SQL, PL/SQL, SQL*Plus, SQLcl, APEXlang) and PostgreSQL code (SQL, PL/pgSQL, psql), including SQL in Markdown code blocks and SQL notebooks, from Grisselbav / United Codes. It is run via the `dblinter` CLI and produces machine-readable reports in several formats (SARIF, SonarQube, Checkstyle, JUnit, GitHub Actions, GitLab, VS Code Markdown). Its `format` command also formats SQL and PL/SQL code in place. Documentation: <https://grisselbav.github.io/dbLinter/tools/cli/cli-overview/>.
 
 ## What this skill helps with
 
 The skill covers four things, in this order:
 
-1. **Picking the right `dblinter` invocation** for the user's task — `check` (static analysis) vs `test` (SQL-based tests) vs `version` (installation/version check), choosing output formats, scoping `check` to specific files/directories or to new/changed code only, and tuning `--parallel`.
+1. **Picking the right `dblinter` invocation** for the user's task — `check` (static analysis) vs `test` (SQL-based tests) vs `format` (in-place code formatting) vs `version` (installation/version check), choosing output formats or formatter options, scoping `check`/`format` to specific files/directories or to new/changed code only, and tuning `--parallel`.
 2. **Running the command** in the user's working directory.
-3. **Parsing the resulting reports** (especially SARIF and SonarQube JSON) to summarise issues, group by rule/severity, or guide fixes in the source files.
+3. **Parsing the resulting reports** (especially SARIF and SonarQube JSON) to summarise issues, group by rule/severity, or guide fixes in the source files — or, for `format`, summarising which files changed.
 4. **Re-checking efficiently** after fixes, by scoping the re-run to the files that changed instead of the whole workspace.
 
 If the user only asks for one of these (e.g. "just give me the command"), do that and stop.
@@ -135,26 +135,76 @@ Output formats (default = all):
 
 `test` does not accept `<paths...>` — it runs the SQL-based tests defined by the configuration, not an ad-hoc subset of files. To narrow scope, adjust the configuration's included tests in the Web GUI, or use `--outputName`/`--parallel` as below.
 
+### `dblinter format` — in-place code formatting
+
+Formats SQL and PL/SQL code using the formatter options. Available since dbLinter 1.14.0 — if the CLI reports `format` as an unknown command, run `dblinter version` and tell the user to upgrade. Documentation: <https://grisselbav.github.io/dbLinter/tools/cli/format/>.
+
+Syntax: `dblinter [<options>] format [--parallel=<n>] [--<formatterOption>=<value>...] [<paths...>]`
+
+What the command does:
+
+- **Overwrites files in place, without backups.** Character set, byte order mark, and line separator are preserved.
+- Selects files like `check` does: the configuration's include/exclude glob patterns, optionally narrowed by `<paths...>` (which must come last). Scoping works exactly as described for `check` above, including the `git diff --name-only --diff-filter=ACMR --relative <branch>` recipe for "format my changes" — there's just no `--newCodeOnly` flag, so whole files are formatted.
+- Files that can't be formatted (e.g. syntax errors) are left unchanged. The reason goes to the log file only, and **no log file is written unless `--logFile` is given** — so always pass `--logFile=dblinter.format.log`.
+- Produces no report files; `--outputFormats` and `--outputName` don't apply. The console prints one `Processed <file> (i/n) in <t> sec.` line per file, with `Formatted.` appended when the file changed, and ends with `Formatted X of Y files in T sec.`
+- Exit code `1` if a formatted file couldn't be written (also printed to stderr), if the options are invalid, or if the language server reports an error (e.g. authentication or configuration); `0` otherwise. Unlike `check`, a non-zero exit here is always a real failure.
+
+#### Formatter options: defaults unless the user asks otherwise
+
+**When the user just says "format", pass no formatter options.** dbLinter then resolves each option from the first source that sets it (see "Where option values come from" below), ending with the built-in defaults. A team's shared settings usually live in a `dblinter.properties` file in the workspace, which is loaded automatically. Never add default values explicitly; that would override those shared settings.
+
+When the user adds style wishes — "format with leading commas", "uppercase keywords and 2-space indent" — translate each wish into a `--<option>=<value>` flag and pass only those. **Read `references/formatting.md`** for the full option list, valid values and ranges, typical phrases for each option, and the options that the default `LIGHTWEIGHT` strategy ignores. Tell the user which flags their phrases became, and ask rather than guess when a phrase is ambiguous or doesn't match any option.
+
+A command-line flag always wins over the same option in a properties file or an environment variable, and it applies to this run only. If `dblinter.properties` (or a file named by `--options`/`DBLINTER_OPTIONS`) sets an option the user overrides, mention that the run deviates from the shared settings, so they can decide whether to change the file instead.
+
+Option names are case-sensitive (`--leadingComma`, not `--leadingcomma`); values are not. The CLI validates all options before touching any file. It stops with `Unknown option <name>.` or `Invalid value '<value>' for option <name>. Valid values are: …`, so if a flag you derived is rejected, nothing was formatted. Fix the flag or ask the user.
+
+#### Before formatting: protect uncommitted work
+
+Because files are overwritten without backups, run a preflight check first:
+
+1. `git rev-parse --is-inside-work-tree` — if the workspace isn't a Git repository, **ask before formatting**; the user would have no way to review or undo the changes.
+2. `git status --porcelain -- <paths...>` (or for the whole workspace, `git status --porcelain -- .`) — if files in scope have uncommitted changes, **ask before formatting**: the formatter's changes would be mixed with the user's own edits in the same diff. Suggest committing or stashing first.
+3. Otherwise (clean Git workspace), go ahead without asking.
+
+#### After formatting
+
+Report the `Formatted X of Y files in T sec.` summary, the formatter flags used (or "default settings"), and `git diff --stat` for the scope. A file without `Formatted.` was either already formatted or couldn't be formatted. The console doesn't say which, so check `dblinter.format.log` for errors and warnings and list any files that failed, with the reason. Don't run `check` automatically afterwards; offer it if the user is likely to want it.
+
 ### `dblinter version` — installation / version check
 
-Prints the installed CLI version, e.g. `dbLinter version 1.10.0`, and nothing else. Takes no arguments and needs no authentication or environment variables. Use it to confirm `dblinter` is installed and on the `PATH` before attempting `check` or `test` (see "Checking the CLI is installed" above), or when the user simply asks which version they have.
+Prints the installed CLI version, e.g. `dbLinter version 1.10.0`, and nothing else. Takes no arguments and needs no authentication or environment variables. Use it to confirm `dblinter` is installed and on the `PATH` before attempting `check`, `test`, or `format` (see "Checking the CLI is installed" above), or when the user simply asks which version they have.
 
 ### Other arguments worth knowing
 
-These apply to both `check` and `test` (see the [Options reference](https://grisselbav.github.io/dbLinter/tools/cli/options/) for the full list):
+These apply to `check` and `test`, and except for `--outputName` also to `format` (see the [Options reference](https://grisselbav.github.io/dbLinter/tools/cli/options/) for the full list):
 
 - `--outputName=<name>` — base name of output files (default `dblinter`). E.g. `--outputName=mycheck` produces `mycheck.sarif.sarif`, `mycheck.sonarqube.json`, etc.
-- `--parallel=<n>` — files (for `check`) or tests (for `test`) processed in parallel; default `1`. Higher values are faster on machines with spare cores and RAM. For large codebases on CI, `--parallel=4` or `8` is reasonable.
+- `--parallel=<n>` — files (for `check` and `format`) or tests (for `test`) processed in parallel; default `1`. Higher values are faster on machines with spare cores and RAM. For large codebases on CI, `--parallel=4` or `8` is reasonable.
 - `--workspace=<dir>` — absolute path to the working directory; default is the current directory.
-- `--options=<file>` — load options and command arguments from a Java properties file (e.g. `dblinter.properties`).
+- `--options=<file>` — load options and command arguments from a Java properties file. A `dblinter.properties` file in the workspace is loaded automatically, even without `--options`.
+
+#### Where option values come from
+
+For every option, the first source that sets it wins:
+
+1. Command-line flags (`--name=value`).
+2. The properties file given by `--options=<file>`.
+3. `dblinter.properties` in the workspace.
+4. The properties file named by the `DBLINTER_OPTIONS` environment variable.
+5. `DBLINTER_*` environment variables (camelCase becomes upper snake case, e.g. `tabSize` → `DBLINTER_TAB_SIZE`).
+6. Built-in defaults.
+
+So properties files override environment variables, and command-line flags override both. This matters when a run behaves differently from what the environment variables suggest. Check for a `dblinter.properties` in the workspace before blaming the env vars.
 - `--logLevel=<level>` — `off|error|warning|info|debug|trace`; default `info`.
+- `--logFile=<file>` — log file path relative to the working directory (its directory must exist); no log file is written by default.
 - `--connJdbcUrl`, `--connUserName`, `--connPassword` — JDBC connection for read-only database access; mandatory for `test` unless already configured in the Web GUI for the chosen `configName`, optional for `check` (used opportunistically for better results when available).
 
 ## Choosing the right invocation
 
 When the user asks something like "lint my SQL" or "run dbLinter":
 
-1. **Default to `check`** unless the user explicitly mentions tests, assertions, or a database connection.
+1. **Default to `check`** unless the user explicitly mentions tests, assertions, or a database connection. Use `format` only when the user asks to format, beautify, reformat, or restyle code; never format as a side effect of a lint request, because it rewrites files.
 2. **Default output formats**: if the user wants a quick summary or wants you to analyse the results, run with `--outputFormats=sarif` so you have one structured file to read. If they want the full set (e.g. for CI), omit `--outputFormats` so all formats are produced.
 3. **Default `--parallel`**: leave it unset (=`1`) for small ad-hoc runs. For large workspaces (hundreds of files) suggest `--parallel=4`.
 4. **Scope `check` down whenever you can.** If the user names specific files/directories, or is iterating on a fix, pass those as `<paths...>` instead of checking the whole workspace — same rules, far less to process. If the user is asking about "my changes"/"the diff"/"new code", use `--newCodeOnly=true` **together with** `<paths...>` from `git diff --name-only --diff-filter=ACMR <referenceBranch>` (see the Git preflight above) — `--newCodeOnly` alone does not limit which files are analysed, only which issues are reported, so skipping the `<paths...>` part throws away the runtime benefit the user is actually asking for. Fall back to a full, unscoped `check` for a first-time run, a pre-release/CI gate, or whenever the user wants the complete picture.
@@ -203,6 +253,25 @@ SQL-based tests, JUnit only:
 dblinter test --outputFormats=junit --parallel=4
 ```
 
+Format the whole workspace with the configured/default formatter settings:
+
+```bash
+dblinter format --logFile=dblinter.format.log
+```
+
+Format "with leading commas and uppercase keywords":
+
+```bash
+dblinter format --logFile=dblinter.format.log --leadingComma=true --keywordCase=upper
+```
+
+Format only the files changed relative to the local `main` branch:
+
+```bash
+dblinter format --logFile=dblinter.format.log \
+  $(git diff --name-only --diff-filter=ACMR --relative main)
+```
+
 Both, into a named subfolder of reports:
 
 ```bash
@@ -216,6 +285,7 @@ The simplest forms also work and use sensible defaults:
 ```bash
 dblinter check
 dblinter test
+dblinter format
 dblinter version
 ```
 
@@ -226,7 +296,7 @@ Use `bash_tool` (or whichever shell tool is available) from the user's working d
 A few practical notes:
 
 - `dblinter check` can take a while on large codebases. Stream output rather than buffering silently.
-- The CLI exits with a non-zero status when issues exist (so `set -e` scripts will halt). When running it yourself, treat a non-zero exit as **expected** if the report files were produced — that is the linter doing its job, not a tool failure. Read the report before deciding.
+- `check` and `test` exit with a non-zero status when issues exist (so `set -e` scripts will halt). When running it yourself, treat a non-zero exit as **expected** if the report files were produced — that is the linter doing its job, not a tool failure. Read the report before deciding. `format` is different: exit code `1` means a formatted file couldn't be written, which is a real failure.
 - The CLI produces files like `dblinter.sarif.sarif` (yes, the extension is doubled — `.sarif` base name + `.sarif` format suffix). Don't rename this expecting the tool to follow; that is the actual filename.
 
 ## Parsing the output
@@ -260,4 +330,5 @@ When the user asks you to **fix** the issues dbLinter found:
 - **Always pass `--relative` to the `git diff --name-only` used for `<paths...>`.** Without it, paths are repo-root-relative, but dblinter resolves `<paths...>` relative to the current working directory — running the documented command from any subdirectory of the repo then silently finds no files to check (the paths just don't exist there). If a `--newCodeOnly` run reports zero issues unexpectedly, check whether it was run from a subdirectory without `--relative`.
 - **`--newCodeOnly=true` by itself does not limit the runtime.** It only filters which *issues* are reported, not which *files* dblinter processes — passing it without `<paths...>` still analyses the entire configured workspace. Always pair it with the changed-file list from `git diff --name-only --diff-filter=ACMR <referenceBranch>` when the user's goal (as it usually is) is to check new code *faster*, not just to see a filtered report.
 - **The double `.sarif.sarif` extension is intentional.** Don't rename outputs in scripts based on assumptions.
-- **`check` and `test` are licensed features** (Essential or Professional subscription). A 401/403 from the API likely means the configured tenant lacks the right subscription — surface that rather than retrying.
+- **`format` overwrites files without backups.** Always run the Git preflight from the `format` section first. Don't pass default formatter values explicitly, because that overrides settings from `DBLINTER_*` variables or properties files.
+- **`check`, `test`, and `format` are licensed features** (Essential or Professional subscription). A 401/403 from the API likely means the configured tenant lacks the right subscription — surface that rather than retrying.
