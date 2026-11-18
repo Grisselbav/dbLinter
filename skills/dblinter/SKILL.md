@@ -137,7 +137,9 @@ Output formats (default = all):
 
 ### `dblinter format` — in-place code formatting
 
-Formats SQL and PL/SQL code using the formatter options. Available since dbLinter 1.14.0 — if the CLI reports `format` as an unknown command, run `dblinter version` and tell the user to upgrade. Documentation: <https://grisselbav.github.io/dbLinter/tools/cli/format/>.
+Formats SQL and PL/SQL code using the formatter options. Documentation: <https://grisselbav.github.io/dbLinter/tools/cli/format/>.
+
+Available since dbLinter 1.14.0. On older versions, `format` fails with `Unknown command format.`, or with `Unknown option <name>.` when a formatter option is passed (options are validated before the command). In either case nothing is formatted. Run `dblinter version` and, if it's below 1.14.0, tell the user to upgrade instead of changing the options.
 
 Syntax: `dblinter [<options>] format [--parallel=<n>] [--<formatterOption>=<value>...] [<paths...>]`
 
@@ -157,7 +159,7 @@ When the user adds style wishes — "format with leading commas", "uppercase key
 
 A command-line flag always wins over the same option in a properties file or an environment variable, and it applies to this run only. If `dblinter.properties` (or a file named by `--options`/`DBLINTER_OPTIONS`) sets an option the user overrides, mention that the run deviates from the shared settings, so they can decide whether to change the file instead.
 
-Option names are case-sensitive (`--leadingComma`, not `--leadingcomma`); values are not. The CLI validates all options before touching any file. It stops with `Unknown option <name>.` or `Invalid value '<value>' for option <name>. Valid values are: …`, so if a flag you derived is rejected, nothing was formatted. Fix the flag or ask the user.
+Option names are case-sensitive (`--leadingComma`, not `--leadingcomma`); values are not. The CLI validates all options before touching any file. It stops with `Unknown option <name>.` or `Invalid value '<value>' for option <name>. Valid values are: …`, so if a flag you derived is rejected, nothing was formatted. If the rejected name is spelled exactly as in `references/formatting.md`, the CLI is probably older than 1.14.0 (see above). Otherwise, fix the flag or ask the user.
 
 #### Before formatting: protect uncommitted work
 
